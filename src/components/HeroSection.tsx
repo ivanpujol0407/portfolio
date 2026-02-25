@@ -48,7 +48,7 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex justify-center"
         >
-          <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-lg overflow-hidden border border-border">
+          <div className="relative w-80 h-80 md:w-[28rem] md:h-[28rem] lg:w-[32rem] lg:h-[32rem] rounded-lg overflow-hidden border border-border">
             <img
               src={profileImg}
               alt="Ivan Pujol - Mechanical Engineer"
