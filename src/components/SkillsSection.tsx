@@ -9,7 +9,7 @@ const skills = [
   { name: "3D Printing", level: "Proficient", icon: Cpu },
   { name: "AutoCAD", level: "Proficient", icon: PenTool },
   { name: "CFD", level: "Advanced", icon: Wind },
-  { name: "Python", level: "Scripting", icon: Code },
+  { name: "FEA", level: "Proficient", icon: Cpu },
 ];
 
 const SkillsSection = () => (
