@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Wind, Cpu, Box, Code, PenTool, Layers, Gauge } from "lucide-react";
+import { Wind, Cpu, Box, PenTool, Layers, Gauge } from "lucide-react";
 
 const skills = [
   { name: "STAR-CCM+", level: "Advanced", icon: Wind },
