@@ -1,15 +1,15 @@
 import { motion } from "framer-motion";
-import { Wind, Cpu, Box, Code, PenTool, FileCheck, Layers, Gauge } from "lucide-react";
+import { Wind, Cpu, Box, Code, PenTool, Layers, Gauge } from "lucide-react";
 
 const skills = [
   { name: "STAR-CCM+", level: "Advanced", icon: Wind },
-  { name: "ANSYS Fluent", level: "Proficient", icon: Gauge },
   { name: "OpenFOAM", level: "Intermediate", icon: Layers },
   { name: "SolidWorks", level: "Advanced", icon: Box },
-  { name: "Python", level: "Scripting", icon: Code },
+  { name: "ANSYS", level: "Proficient", icon: Gauge },
+  { name: "3D Printing", level: "Proficient", icon: Cpu },
   { name: "AutoCAD", level: "Proficient", icon: PenTool },
-  { name: "FEA", level: "Proficient", icon: Cpu },
-  { name: "ISO 17025", level: "Certified", icon: FileCheck },
+  { name: "CFD", level: "Advanced", icon: Wind },
+  { name: "Python", level: "Scripting", icon: Code },
 ];
 
 const SkillsSection = () => (
