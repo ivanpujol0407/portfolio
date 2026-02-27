@@ -15,31 +15,73 @@ export interface Project {
   methodology: string;
   results: string;
   lessons: string;
+  futureWork?: string;
+  supplementary?: {
+    title: string;
+    content: string;
+  }[];
+  methodologyPlaceholders?: string[];
+  resultsPlaceholders?: string[];
 }
 
 export const projectsData: Project[] = [
   {
     id: "speedway-aerodynamics",
-    tag: "Master Thesis",
-    title: "Speedway Aerodynamics",
-    description: "CFD analysis of drag forces on motorcycles using STAR-CCM+. Validated with wind tunnel tests.",
+    tag: "Research Paper",
+    title: "CFD Simulations of Speedway Motorcycles",
+    description:
+      "First combined CFD and wind tunnel aerodynamic investigation of a speedway motorcycle. Validated simulations with less than 2% deviation, identified rider as dominant drag contributor, and achieved 9% drag reduction with a new front design.",
     image: projectSpeedway,
-    date: "September 2024",
-    role: "Lead Researcher — DTU, Copenhagen",
+    date: "2025",
+    role: "Lead Researcher — Technical University of Denmark (DTU)",
     overview:
-      "This master's thesis investigates the aerodynamic behaviour of speedway motorcycles through Computational Fluid Dynamics (CFD) simulations. The study aimed to quantify drag forces acting on the rider-motorcycle system and identify geometric modifications to reduce aerodynamic resistance.",
+      "This study presents a computational and experimental aerodynamic analysis of a speedway motorcycle, focusing on drag reduction strategies to enhance performance. Using CFD simulations in Simcenter STAR-CCM+ and wind tunnel experiments, the aerodynamic characteristics of the motorcycle and rider are investigated. Wind tunnel experiments validated the CFD methodology, showing deviations of 2.0% and 0.2% in drag area at 30 m/s and 40 m/s respectively, confirming the reliability of the numerical model. The rider is identified as the primary drag contributor, accounting for over 50% of the total aerodynamic resistance. A new front fairing and hand cover design is proposed, achieving a 9.0% reduction in total drag. This is the first combined CFD and wind tunnel aerodynamic investigation of a speedway motorcycle, addressing a gap in current literature.",
     objectives: [
-      "Quantify aerodynamic drag forces on speedway motorcycle configurations",
-      "Validate CFD simulations against wind tunnel experimental data",
-      "Propose design modifications for improved aerodynamic performance",
-      "Develop a reusable CFD methodology for motorcycle aerodynamics",
+      "Conduct the first CFD aerodynamic study of a speedway motorcycle using a 3D-scanned full-scale model",
+      "Validate CFD simulations against wind tunnel experiments on a 1:6 scale 3D-printed model",
+      "Identify and quantify the main aerodynamic drag contributors on the rider-motorcycle system",
+      "Analyse the effect of rotating vs stationary wheels on aerodynamic performance",
+      "Propose and evaluate new front fairing and hand cover designs for drag reduction",
     ],
     methodology:
-      "The study employed STAR-CCM+ for CFD simulations using a polyhedral mesh with prism layers for boundary layer resolution. The k-ω SST turbulence model was selected for its accuracy in adverse pressure gradient flows. Boundary conditions included a freestream velocity of 25 m/s with a turbulence intensity of 1%. The computational domain extended 5L upstream and 10L downstream of the motorcycle geometry. Grid independence studies were conducted across three mesh refinement levels (4M, 8M, and 16M cells).",
+      "High-fidelity unsteady RANS simulations were performed in Simcenter STAR-CCM+ using the SST k-ω turbulence model with All-y+ wall treatment. The geometry was obtained via 3D scanning (MetraSCAN BLACK+™|Elite) of an actual speedway motorcycle provided by Team Denmark. A polyhedral mesh of approximately 21 million cells was generated with 8 prism layers (total thickness 2 mm) ensuring y+ < 5 in the viscous sublayer. The computational domain extended 12.5L × 6H × 7.5W with a freestream velocity of 30 m/s and turbulence intensity of 1%. A second-order implicit temporal scheme with Δt = 2×10⁻⁴ s was used, maintaining CFL < 1. Wind tunnel validation was conducted on a 1:6 scale 3D-printed PLA model with a blockage ratio of 5.21%. Four simulation scenarios were investigated: base case, wind tunnel replication, rider exclusion, rotating wheels, and front design optimisation.",
+    methodologyPlaceholders: [
+      "3D Scanned Motorcycle Geometry",
+      "Computational Domain & Boundary Conditions",
+      "Polyhedral Mesh Detail",
+      "Wind Tunnel 1:6 Scale Model",
+    ],
     results:
-      "The CFD simulations revealed a total drag coefficient of Cd = 0.78 for the baseline configuration. The rider's body contributed approximately 65% of the total aerodynamic drag, while the motorcycle frame accounted for the remaining 35%. Wind tunnel validation showed agreement within 5.2% for the drag force measurements. A proposed fairing modification reduced the overall drag by 12.3%, translating to an estimated top speed increase of 3.4 km/h.",
+      "The total drag force for the full motorcycle-rider configuration is 261.53 N (C_D = 0.69). The rider contributes approximately 52.4% of total drag, with the front fairing, handlebars, and rider's hands accounting for 28% of total drag in the region between 0.20–0.30 x/L. Wind tunnel validation showed drag area deviations below 2% at 30 m/s and 0.2% at 40 m/s. Wheel rotation increases total drag area by 1.17%, primarily through intensified low-pressure regions around the front wheel. The proposed new front design — removing the original fairing, streamlining the front forks and handlebar, and adding aerodynamic hand covers — achieved a 9.0% reduction in total drag area (from C_DA = 0.491 to 0.447), by minimising high-pressure stagnation zones, promoting smoother flow attachment, and reducing wake turbulence.",
+    resultsPlaceholders: [
+      "Pressure Coefficient Contour (Mid-plane)",
+      "Mean Velocity Field",
+      "Accumulated Drag Force Along Longitudinal Axis",
+      "Vorticity Contours on YZ Planes",
+      "Streamwise Pressure Coefficient — New vs Original Design",
+      "λ₂ Vortex Structures Comparison",
+    ],
     lessons:
-      "The mesh quality around the rider geometry proved critical for accurate results. Initial simulations with insufficient prism layer resolution underestimated drag by 18%. Iterative mesh refinement in the wake region was essential for convergence. The project also highlighted the importance of proper inlet turbulence specification, as varying turbulence intensity from 0.5% to 5% changed drag predictions by up to 8%.",
+      "The mesh quality around the rider geometry proved critical for accurate results — the convergence study confirmed that a base size of 110 mm with 8 prism layers is required to keep all wall-adjacent cells within the viscous sublayer (y+ < 5). The rider's upright posture is the dominant source of drag, creating extensive flow separation and wake formation that cannot be addressed by motorcycle geometry changes alone. Geometric asymmetry in the rider's posture (right leg touching the ground, left leg on foot peg) produces measurable differences in drag under yaw conditions. The front fairing, originally designed for sponsor graphics, contributes significantly to drag — its removal alone reduced drag by 5.6%. Proper wind tunnel validation with carefully controlled blockage ratios and Reynolds number independence studies is essential for CFD credibility.",
+    futureWork:
+      "Future research should explore rider posture optimisation as the rider accounts for over 50% of total drag. Advanced turbulence modelling approaches such as Large Eddy Simulation (LES) or hybrid RANS-LES methods could provide higher-fidelity results for the complex separated flows around the rider. The yaw angle study revealed significant asymmetric drag behaviour that warrants further investigation under realistic cornering conditions. Additionally, the interaction between rotating wheels and the rest of the geometry suggests that integrated wheel-fairing designs could yield further drag reductions. Full-scale wind tunnel or on-track validation of the proposed front design modifications would confirm the predicted 9% drag improvement under real racing conditions.",
+    supplementary: [
+      {
+        title: "Mesh Convergence — Base Size",
+        content:
+          "Six meshes were generated with base sizes ranging from 80 to 130 mm, keeping all other parameters fixed (6 prism layers, total thickness 2 mm, time step 1×10⁻⁴ s). All simulations ran for 0.5 s (~7.25 tU/L). A fitted regression line extrapolated results towards zero base size, predicting a drag area of 0.51. Coarse meshes (120–130 mm) deviated by ~2.5% from the extrapolated ideal. The 110 mm mesh showed only 1.9% deviation, with just 0.25% difference from the finest 80 mm mesh, confirming it as the optimal balance between accuracy and computational cost.",
+      },
+      {
+        title: "Mesh Convergence — Prism Layers",
+        content:
+          "Five simulations were performed with prism layer counts between 4 and 8, maintaining a constant total thickness of 2 mm. Drag force variation across all cases remained below 2%. However, wall y+ distributions revealed critical differences: with 4–5 prism layers, significant cells had y+ > 5 (buffer layer), reducing turbulence model accuracy. Only the 8-layer configuration ensured all wall-adjacent cells remained within the viscous sublayer (y+ < 5). The increase from 7 to 8 layers added only 1.4M cells (19.8M → 21.2M), making 8 layers the selected configuration.",
+      },
+      {
+        title: "Time Step Convergence",
+        content:
+          "Four time steps were tested: 5×10⁻⁵ s, 1×10⁻⁴ s, 2×10⁻⁴ s, and 4×10⁻⁴ s using the validated mesh (110 mm base, 8 prism layers). At Δt = 4×10⁻⁴ s, large domain regions exceeded CFL = 1, discarding this option. At Δt = 5×10⁻⁵ s, CFL < 1 everywhere but with no improvement in results. At Δt = 2×10⁻⁴ s, CFL remained below unity across most of the domain, with elevated values only in localised regions around the front wheel and helmet due to flow acceleration. Average drag area varied by less than 1% across all valid time steps, confirming Δt = 2×10⁻⁴ s as the optimal compromise between fidelity and computational cost.",
+      },
+    ],
   },
   {
     id: "industrial-plant-design",
