@@ -48,23 +48,15 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex justify-center"
         >
-          <div className="relative group">
-            {/* Animated glow ring */}
-            <motion.div
-              className="absolute -inset-1 rounded-lg bg-gradient-to-r from-primary via-primary/50 to-primary opacity-30 blur-lg group-hover:opacity-60 transition-opacity duration-500"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+          <div className="relative w-80 h-80 md:w-[28rem] md:h-[28rem] lg:w-[32rem] lg:h-[32rem] rounded-lg overflow-hidden border border-border">
+            <motion.img
+              src={profileImg}
+              alt="Ivan Pujol - Mechanical Engineer"
+              className="w-full h-full object-cover"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.4 }}
             />
-            <div className="relative w-80 h-80 md:w-[28rem] md:h-[28rem] lg:w-[32rem] lg:h-[32rem] rounded-lg overflow-hidden border border-border">
-              <motion.img
-                src={profileImg}
-                alt="Ivan Pujol - Mechanical Engineer"
-                className="w-full h-full object-cover"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.4 }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
-            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent pointer-events-none" />
           </div>
         </motion.div>
       </div>
