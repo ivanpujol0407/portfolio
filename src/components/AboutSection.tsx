@@ -9,8 +9,8 @@ const fadeUp = {
 };
 
 const timelineItems = [
-  { date: "Sep 2024", title: "Master's Thesis", place: "DTU — Copenhagen", icon: GraduationCap },
   { date: "Sep 2024", title: "Mechanical Engineer", place: "Alfa Laval — Copenhagen", icon: Briefcase },
+  { date: "Sep 2024", title: "Master's Thesis", place: "DTU — Copenhagen", icon: GraduationCap },
   { date: "Apr 2023", title: "Mechanical Design Engineer", place: "Vadecity — Barcelona", icon: Briefcase },
   { date: "Sep 2022", title: "MSc Industrial Engineering", place: "UPC — Barcelona", icon: GraduationCap },
   { date: "Sep 2022", title: "Quality Engineer Intern", place: "SEAT — Martorell, Spain", icon: Briefcase },

@@ -94,7 +94,7 @@ const Navbar = () => {
             </button>
           ))}
           <Button size="sm" className="w-full mt-2" asChild>
-            <a href="#" download>
+            <a href="/CV_Ivan_Pujol.pdf" target="_blank" rel="noopener noreferrer">
               <Download className="mr-2 h-4 w-4" />
               Download CV
             </a>
