@@ -52,11 +52,13 @@ const ProjectPage = () => {
 
             {/* Content */}
             <div className="space-y-12">
+              {/* Overview */}
               <section>
                 <h2 className="text-xl font-semibold mb-4 text-primary">Overview</h2>
                 <p className="text-muted-foreground leading-relaxed">{project.overview}</p>
               </section>
 
+              {/* Objectives */}
               <section>
                 <h2 className="text-xl font-semibold mb-4 text-primary">Objectives</h2>
                 <ul className="space-y-2">
@@ -69,40 +71,96 @@ const ProjectPage = () => {
                 </ul>
               </section>
 
+              {/* Methodology */}
               <section>
                 <h2 className="text-xl font-semibold mb-4 text-primary">Methodology</h2>
                 <p className="text-muted-foreground leading-relaxed">{project.methodology}</p>
-                {/* Placeholder for 3D viewer / CFD images */}
-                <div className="mt-6 grid md:grid-cols-2 gap-4">
-                  <div className="aspect-video rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground">
-                    CFD Mesh Visualization
+                {project.methodologyPlaceholders && (
+                  <div className="mt-6 grid md:grid-cols-2 gap-4">
+                    {project.methodologyPlaceholders.map((label, i) => (
+                      <div
+                        key={i}
+                        className="aspect-video rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground p-4 text-center"
+                      >
+                        {label}
+                      </div>
+                    ))}
                   </div>
-                  <div className="aspect-video rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground">
-                    Boundary Conditions Setup
+                )}
+                {!project.methodologyPlaceholders && (
+                  <div className="mt-6 grid md:grid-cols-2 gap-4">
+                    <div className="aspect-video rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground">
+                      CFD Mesh Visualization
+                    </div>
+                    <div className="aspect-video rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground">
+                      Boundary Conditions Setup
+                    </div>
                   </div>
-                </div>
+                )}
               </section>
 
+              {/* Results & Impact */}
               <section>
                 <h2 className="text-xl font-semibold mb-4 text-primary">Results & Impact</h2>
                 <p className="text-muted-foreground leading-relaxed">{project.results}</p>
-                <div className="mt-6 grid md:grid-cols-3 gap-4">
-                  <div className="aspect-square rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground text-center p-4">
-                    Pressure Contour Plot
+                {project.resultsPlaceholders && (
+                  <div className="mt-6 grid md:grid-cols-3 gap-4">
+                    {project.resultsPlaceholders.map((label, i) => (
+                      <div
+                        key={i}
+                        className="aspect-square rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground text-center p-4"
+                      >
+                        {label}
+                      </div>
+                    ))}
                   </div>
-                  <div className="aspect-square rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground text-center p-4">
-                    Velocity Streamlines
+                )}
+                {!project.resultsPlaceholders && (
+                  <div className="mt-6 grid md:grid-cols-3 gap-4">
+                    <div className="aspect-square rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground text-center p-4">
+                      Pressure Contour Plot
+                    </div>
+                    <div className="aspect-square rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground text-center p-4">
+                      Velocity Streamlines
+                    </div>
+                    <div className="aspect-square rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground text-center p-4">
+                      Before / After Comparison
+                    </div>
                   </div>
-                  <div className="aspect-square rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground text-center p-4">
-                    Before / After Comparison
-                  </div>
-                </div>
+                )}
               </section>
 
+              {/* Lessons Learned */}
               <section>
                 <h2 className="text-xl font-semibold mb-4 text-primary">Lessons Learned</h2>
                 <p className="text-muted-foreground leading-relaxed">{project.lessons}</p>
               </section>
+
+              {/* Future Work */}
+              {project.futureWork && (
+                <section>
+                  <h2 className="text-xl font-semibold mb-4 text-primary">Future Work</h2>
+                  <p className="text-muted-foreground leading-relaxed">{project.futureWork}</p>
+                </section>
+              )}
+
+              {/* Supplementary Material */}
+              {project.supplementary && project.supplementary.length > 0 && (
+                <section>
+                  <h2 className="text-xl font-semibold mb-6 text-primary">Supplementary Material</h2>
+                  <div className="space-y-6">
+                    {project.supplementary.map((item, i) => (
+                      <div key={i} className="rounded-lg border border-border bg-card p-6">
+                        <h3 className="text-lg font-medium mb-3">{item.title}</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{item.content}</p>
+                        <div className="mt-4 aspect-video rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground">
+                          {item.title} — Chart / Figure
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
             </div>
           </motion.div>
         </div>
