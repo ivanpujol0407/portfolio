@@ -22,6 +22,7 @@ export interface Project {
   }[];
   methodologyPlaceholders?: string[];
   resultsPlaceholders?: string[];
+  pdfUrl?: string;
 }
 
 export const projectsData: Project[] = [
