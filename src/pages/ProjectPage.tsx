@@ -2,11 +2,21 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Calendar, User } from "lucide-react";
+import { ArrowLeft, Calendar, User, FileText } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { projectsData } from "@/data/projectsData";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+
+const ImagePlaceholder = ({ label, aspect = "video" }: { label: string; aspect?: "video" | "square" }) => (
+  <div
+    className={`w-full rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground p-6 text-center ${
+      aspect === "square" ? "aspect-[4/3]" : "aspect-video"
+    }`}
+  >
+    {label}
+  </div>
+);
 
 const ProjectPage = () => {
   const { id } = useParams();
@@ -24,6 +34,9 @@ const ProjectPage = () => {
       </div>
     );
   }
+
+  const methodPlaceholders = project.methodologyPlaceholders || ["CFD Mesh Visualization", "Boundary Conditions Setup"];
+  const resPlaceholders = project.resultsPlaceholders || ["Pressure Contour Plot", "Velocity Streamlines", "Before / After Comparison"];
 
   return (
     <div className="min-h-screen bg-background">
@@ -75,25 +88,28 @@ const ProjectPage = () => {
               <section>
                 <h2 className="text-xl font-semibold mb-4 text-primary">Methodology</h2>
                 <p className="text-muted-foreground leading-relaxed">{project.methodology}</p>
-                {project.methodologyPlaceholders && (
-                  <div className="mt-6 grid md:grid-cols-2 gap-4">
-                    {project.methodologyPlaceholders.map((label, i) => (
-                      <div
-                        key={i}
-                        className="aspect-video rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground p-4 text-center"
-                      >
-                        {label}
-                      </div>
-                    ))}
-                  </div>
-                )}
-                {!project.methodologyPlaceholders && (
-                  <div className="mt-6 grid md:grid-cols-2 gap-4">
-                    <div className="aspect-video rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground">
-                      CFD Mesh Visualization
-                    </div>
-                    <div className="aspect-video rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground">
-                      Boundary Conditions Setup
+
+                {/* Placeholders interspersed after text */}
+                <div className="mt-6 space-y-4">
+                  {methodPlaceholders.map((label, i) => (
+                    <ImagePlaceholder key={i} label={label} />
+                  ))}
+                </div>
+
+                {/* Convergence Studies as subsection */}
+                {project.supplementary && project.supplementary.length > 0 && (
+                  <div className="mt-10">
+                    <h3 className="text-lg font-semibold mb-6">Convergence Studies</h3>
+                    <div className="space-y-8">
+                      {project.supplementary.map((item, i) => (
+                        <div key={i}>
+                          <h4 className="text-base font-medium mb-3">{item.title}</h4>
+                          <p className="text-sm text-muted-foreground leading-relaxed">{item.content}</p>
+                          <div className="mt-4">
+                            <ImagePlaceholder label={`${item.title} — Chart / Figure`} />
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}
@@ -103,31 +119,11 @@ const ProjectPage = () => {
               <section>
                 <h2 className="text-xl font-semibold mb-4 text-primary">Results & Impact</h2>
                 <p className="text-muted-foreground leading-relaxed">{project.results}</p>
-                {project.resultsPlaceholders && (
-                  <div className="mt-6 grid md:grid-cols-3 gap-4">
-                    {project.resultsPlaceholders.map((label, i) => (
-                      <div
-                        key={i}
-                        className="aspect-square rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground text-center p-4"
-                      >
-                        {label}
-                      </div>
-                    ))}
-                  </div>
-                )}
-                {!project.resultsPlaceholders && (
-                  <div className="mt-6 grid md:grid-cols-3 gap-4">
-                    <div className="aspect-square rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground text-center p-4">
-                      Pressure Contour Plot
-                    </div>
-                    <div className="aspect-square rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground text-center p-4">
-                      Velocity Streamlines
-                    </div>
-                    <div className="aspect-square rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground text-center p-4">
-                      Before / After Comparison
-                    </div>
-                  </div>
-                )}
+                <div className="mt-6 space-y-4">
+                  {resPlaceholders.map((label, i) => (
+                    <ImagePlaceholder key={i} label={label} />
+                  ))}
+                </div>
               </section>
 
               {/* Lessons Learned */}
@@ -144,22 +140,16 @@ const ProjectPage = () => {
                 </section>
               )}
 
-              {/* Supplementary Material */}
-              {project.supplementary && project.supplementary.length > 0 && (
-                <section>
-                  <h2 className="text-xl font-semibold mb-6 text-primary">Supplementary Material</h2>
-                  <div className="space-y-6">
-                    {project.supplementary.map((item, i) => (
-                      <div key={i} className="rounded-lg border border-border bg-card p-6">
-                        <h3 className="text-lg font-medium mb-3">{item.title}</h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{item.content}</p>
-                        <div className="mt-4 aspect-video rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground">
-                          {item.title} — Chart / Figure
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </section>
+              {/* Download PDF */}
+              {project.pdfUrl && (
+                <div className="pt-4 flex justify-center">
+                  <Button asChild size="lg">
+                    <a href={project.pdfUrl} target="_blank" rel="noopener noreferrer">
+                      <FileText className="mr-2 h-5 w-5" />
+                      Read Full Paper (PDF)
+                    </a>
+                  </Button>
+                </div>
               )}
             </div>
           </motion.div>
