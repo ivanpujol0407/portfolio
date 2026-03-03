@@ -23,6 +23,8 @@ export interface Project {
   methodologyPlaceholders?: string[];
   resultsPlaceholders?: string[];
   pdfUrl?: string;
+  validation?: string;
+  validationPlaceholders?: string[];
 }
 
 export const projectsData: Project[] = [
@@ -34,7 +36,7 @@ export const projectsData: Project[] = [
       "First combined CFD and wind tunnel aerodynamic investigation of a speedway motorcycle. Validated simulations with less than 2% deviation, identified rider as dominant drag contributor, and achieved 9% drag reduction with a new front design.",
     image: projectSpeedway,
     date: "2025",
-    role: "Lead Researcher — Technical University of Denmark (DTU)",
+    role: "Lead Researcher, Technical University of Denmark (DTU)",
     overview:
       "This study presents a computational and experimental aerodynamic analysis of a speedway motorcycle, focusing on drag reduction strategies to enhance performance. Using CFD simulations in Simcenter STAR-CCM+ and wind tunnel experiments, the aerodynamic characteristics of the motorcycle and rider are investigated. Wind tunnel experiments validated the CFD methodology, showing deviations of 2.0% and 0.2% in drag area at 30 m/s and 40 m/s respectively, confirming the reliability of the numerical model. The rider is identified as the primary drag contributor, accounting for over 50% of the total aerodynamic resistance. A new front fairing and hand cover design is proposed, achieving a 9.0% reduction in total drag. This is the first combined CFD and wind tunnel aerodynamic investigation of a speedway motorcycle, addressing a gap in current literature.",
     objectives: [
@@ -52,31 +54,38 @@ export const projectsData: Project[] = [
       "Polyhedral Mesh Detail",
       "Wind Tunnel 1:6 Scale Model",
     ],
+    validation:
+      "Wind tunnel experiments were conducted at the DTU Climate Centre using a 1:6 scale 3D-printed PLA model of the motorcycle. The wind tunnel test section has a cross-section of 2.6 m x 2.0 m, and the scale model resulted in a blockage ratio of 5.21%. Drag force was measured at freestream velocities of 30 m/s and 40 m/s using a calibrated force balance. Reynolds number independence was verified by comparing results across multiple velocities. To replicate wind tunnel conditions in CFD, a separate simulation was set up matching the tunnel geometry, boundary conditions, and the 1:6 scale model. The CFD wind tunnel simulation used the same mesh settings and turbulence model (SST k-omega) as the full-scale case. Comparison of experimental and numerical drag area values showed a deviation of only 2.0% at 30 m/s and 0.2% at 40 m/s, confirming the reliability of the CFD methodology and the mesh configuration used for all subsequent full-scale analyses.",
+    validationPlaceholders: [
+      "Wind Tunnel Test Setup",
+      "1:6 Scale 3D-Printed Model in Wind Tunnel",
+      "CFD vs Wind Tunnel Drag Area Comparison Chart",
+    ],
     results:
-      "The total drag force for the full motorcycle-rider configuration is 261.53 N (C_D = 0.69). The rider contributes approximately 52.4% of total drag, with the front fairing, handlebars, and rider's hands accounting for 28% of total drag in the region between 0.20–0.30 x/L. Wind tunnel validation showed drag area deviations below 2% at 30 m/s and 0.2% at 40 m/s. Wheel rotation increases total drag area by 1.17%, primarily through intensified low-pressure regions around the front wheel. The proposed new front design — removing the original fairing, streamlining the front forks and handlebar, and adding aerodynamic hand covers — achieved a 9.0% reduction in total drag area (from C_DA = 0.491 to 0.447), by minimising high-pressure stagnation zones, promoting smoother flow attachment, and reducing wake turbulence.",
+      "The total drag force for the full motorcycle-rider configuration is 261.53 N (C_D = 0.69). The rider contributes approximately 52.4% of total drag, with the front fairing, handlebars, and rider's hands accounting for 28% of total drag in the region between 0.20 and 0.30 x/L. Wheel rotation increases total drag area by 1.17%, primarily through intensified low-pressure regions around the front wheel. The proposed new front design, which removes the original fairing, streamlines the front forks and handlebar, and adds aerodynamic hand covers, achieved a 9.0% reduction in total drag area (from C_DA = 0.491 to 0.447) by minimising high-pressure stagnation zones, promoting smoother flow attachment, and reducing wake turbulence.",
     resultsPlaceholders: [
       "Pressure Coefficient Contour (Mid-plane)",
       "Mean Velocity Field",
       "Accumulated Drag Force Along Longitudinal Axis",
       "Vorticity Contours on YZ Planes",
-      "Streamwise Pressure Coefficient — New vs Original Design",
+      "Streamwise Pressure Coefficient, New vs Original Design",
       "λ₂ Vortex Structures Comparison",
     ],
     lessons:
-      "The mesh quality around the rider geometry proved critical for accurate results — the convergence study confirmed that a base size of 110 mm with 8 prism layers is required to keep all wall-adjacent cells within the viscous sublayer (y+ < 5). The rider's upright posture is the dominant source of drag, creating extensive flow separation and wake formation that cannot be addressed by motorcycle geometry changes alone. Geometric asymmetry in the rider's posture (right leg touching the ground, left leg on foot peg) produces measurable differences in drag under yaw conditions. The front fairing, originally designed for sponsor graphics, contributes significantly to drag — its removal alone reduced drag by 5.6%. Proper wind tunnel validation with carefully controlled blockage ratios and Reynolds number independence studies is essential for CFD credibility.",
+      "The mesh quality around the rider geometry proved critical for accurate results. The convergence study confirmed that a base size of 110 mm with 8 prism layers is required to keep all wall-adjacent cells within the viscous sublayer (y+ < 5). The rider's upright posture is the dominant source of drag, creating extensive flow separation and wake formation that cannot be addressed by motorcycle geometry changes alone. Geometric asymmetry in the rider's posture (right leg touching the ground, left leg on foot peg) produces measurable differences in drag under yaw conditions. The front fairing, originally designed for sponsor graphics, contributes significantly to drag. Its removal alone reduced drag by 5.6%. Proper wind tunnel validation with carefully controlled blockage ratios and Reynolds number independence studies is essential for CFD credibility.",
     futureWork:
       "Future research should explore rider posture optimisation as the rider accounts for over 50% of total drag. Advanced turbulence modelling approaches such as Large Eddy Simulation (LES) or hybrid RANS-LES methods could provide higher-fidelity results for the complex separated flows around the rider. The yaw angle study revealed significant asymmetric drag behaviour that warrants further investigation under realistic cornering conditions. Additionally, the interaction between rotating wheels and the rest of the geometry suggests that integrated wheel-fairing designs could yield further drag reductions. Full-scale wind tunnel or on-track validation of the proposed front design modifications would confirm the predicted 9% drag improvement under real racing conditions.",
     pdfUrl: "/CFD_simulations_Speedway_motorcycles.pdf",
     supplementary: [
       {
-        title: "Mesh Convergence — Base Size",
+        title: "Mesh Convergence: Base Size",
         content:
-          "Six meshes were generated with base sizes ranging from 80 to 130 mm, keeping all other parameters fixed (6 prism layers, total thickness 2 mm, time step 1×10⁻⁴ s). All simulations ran for 0.5 s (~7.25 tU/L). A fitted regression line extrapolated results towards zero base size, predicting a drag area of 0.51. Coarse meshes (120–130 mm) deviated by ~2.5% from the extrapolated ideal. The 110 mm mesh showed only 1.9% deviation, with just 0.25% difference from the finest 80 mm mesh, confirming it as the optimal balance between accuracy and computational cost.",
+          "Six meshes were generated with base sizes ranging from 80 to 130 mm, keeping all other parameters fixed (6 prism layers, total thickness 2 mm, time step 1×10⁻⁴ s). All simulations ran for 0.5 s (~7.25 tU/L). A fitted regression line extrapolated results towards zero base size, predicting a drag area of 0.51. Coarse meshes (120 to 130 mm) deviated by ~2.5% from the extrapolated ideal. The 110 mm mesh showed only 1.9% deviation, with just 0.25% difference from the finest 80 mm mesh, confirming it as the optimal balance between accuracy and computational cost.",
       },
       {
-        title: "Mesh Convergence — Prism Layers",
+        title: "Mesh Convergence: Prism Layers",
         content:
-          "Five simulations were performed with prism layer counts between 4 and 8, maintaining a constant total thickness of 2 mm. Drag force variation across all cases remained below 2%. However, wall y+ distributions revealed critical differences: with 4–5 prism layers, significant cells had y+ > 5 (buffer layer), reducing turbulence model accuracy. Only the 8-layer configuration ensured all wall-adjacent cells remained within the viscous sublayer (y+ < 5). The increase from 7 to 8 layers added only 1.4M cells (19.8M → 21.2M), making 8 layers the selected configuration.",
+          "Five simulations were performed with prism layer counts between 4 and 8, maintaining a constant total thickness of 2 mm. Drag force variation across all cases remained below 2%. However, wall y+ distributions revealed critical differences: with 4 to 5 prism layers, significant cells had y+ > 5 (buffer layer), reducing turbulence model accuracy. Only the 8-layer configuration ensured all wall-adjacent cells remained within the viscous sublayer (y+ < 5). The increase from 7 to 8 layers added only 1.4M cells (19.8M to 21.2M), making 8 layers the selected configuration.",
       },
       {
         title: "Time Step Convergence",
@@ -91,8 +100,8 @@ export const projectsData: Project[] = [
     title: "Industrial Plant Design",
     description: "Designing mechanical components for Fresh Water Generators at Alfa Laval.",
     image: projectIndustrial,
-    date: "September 2024 — Present",
-    role: "Mechanical Engineer — Alfa Laval, Copenhagen",
+    date: "September 2024 to Present",
+    role: "Mechanical Engineer, Alfa Laval, Copenhagen",
     overview:
       "As a Mechanical Engineer at Alfa Laval, I design and optimize mechanical components and systems for Fresh Water Generators (FWGs). These systems convert seawater into potable water through vacuum distillation, serving maritime and industrial applications worldwide.",
     objectives: [
@@ -114,8 +123,8 @@ export const projectsData: Project[] = [
     title: "Micromobility Stations",
     description: "Product development for Vadecity smart bike stations. Optimization of mechanical assemblies.",
     image: projectMicromobility,
-    date: "April 2023 — August 2024",
-    role: "Mechanical Design Engineer — Vadecity, Barcelona",
+    date: "April 2023 to August 2024",
+    role: "Mechanical Design Engineer, Vadecity, Barcelona",
     overview:
       "At Vadecity, I led the mechanical design of smart micromobility docking stations for urban environments. The product integrates IoT sensors, locking mechanisms, and modular frames designed for rapid deployment in European cities.",
     objectives: [

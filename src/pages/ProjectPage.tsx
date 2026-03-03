@@ -106,7 +106,7 @@ const ProjectPage = () => {
                           <h4 className="text-base font-medium mb-3">{item.title}</h4>
                           <p className="text-sm text-muted-foreground leading-relaxed">{item.content}</p>
                           <div className="mt-4">
-                            <ImagePlaceholder label={`${item.title} — Chart / Figure`} />
+                            <ImagePlaceholder label={`${item.title} Chart / Figure`} />
                           </div>
                         </div>
                       ))}
@@ -114,6 +114,21 @@ const ProjectPage = () => {
                   </div>
                 )}
               </section>
+
+              {/* Validation */}
+              {project.validation && (
+                <section>
+                  <h2 className="text-xl font-semibold mb-4 text-primary">Validation</h2>
+                  <p className="text-muted-foreground leading-relaxed">{project.validation}</p>
+                  {project.validationPlaceholders && project.validationPlaceholders.length > 0 && (
+                    <div className="mt-6 space-y-4">
+                      {project.validationPlaceholders.map((label, i) => (
+                        <ImagePlaceholder key={i} label={label} />
+                      ))}
+                    </div>
+                  )}
+                </section>
+              )}
 
               {/* Results & Impact */}
               <section>
