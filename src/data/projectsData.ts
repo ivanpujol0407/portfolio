@@ -23,6 +23,8 @@ export interface Project {
   methodologyPlaceholders?: string[];
   resultsPlaceholders?: string[];
   pdfUrl?: string;
+  validation?: string;
+  validationPlaceholders?: string[];
 }
 
 export const projectsData: Project[] = [
