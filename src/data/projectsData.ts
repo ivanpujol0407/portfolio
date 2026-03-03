@@ -100,8 +100,8 @@ export const projectsData: Project[] = [
     title: "Industrial Plant Design",
     description: "Designing mechanical components for Fresh Water Generators at Alfa Laval.",
     image: projectIndustrial,
-    date: "September 2024 — Present",
-    role: "Mechanical Engineer — Alfa Laval, Copenhagen",
+    date: "September 2024 to Present",
+    role: "Mechanical Engineer, Alfa Laval, Copenhagen",
     overview:
       "As a Mechanical Engineer at Alfa Laval, I design and optimize mechanical components and systems for Fresh Water Generators (FWGs). These systems convert seawater into potable water through vacuum distillation, serving maritime and industrial applications worldwide.",
     objectives: [
