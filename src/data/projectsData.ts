@@ -57,7 +57,6 @@ export const projectsData: Project[] = [
       "Wind tunnel experiments were conducted at the DTU Climate Centre using a 1:6 scale 3D-printed PLA model of the motorcycle. The wind tunnel test section has a cross-section of 2.6 m x 2.0 m, and the scale model resulted in a blockage ratio of 5.21%. Drag force was measured at freestream velocities of 30 m/s and 40 m/s using a calibrated force balance. Reynolds number independence was verified by comparing results across multiple velocities. To replicate wind tunnel conditions in CFD, a separate simulation was set up matching the tunnel geometry, boundary conditions, and the 1:6 scale model. The CFD wind tunnel simulation used the same mesh settings and turbulence model (SST k-omega) as the full-scale case. Comparison of experimental and numerical drag area values showed a deviation of only 2.0% at 30 m/s and 0.2% at 40 m/s, confirming the reliability of the CFD methodology and the mesh configuration used for all subsequent full-scale analyses.",
     validationPlaceholders: [
       "Wind Tunnel Test Setup",
-      "1:6 Scale 3D-Printed Model in Wind Tunnel",
       "CFD vs Wind Tunnel Drag Area Comparison Chart",
     ],
     results:
