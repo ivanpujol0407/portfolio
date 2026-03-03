@@ -36,7 +36,7 @@ export const projectsData: Project[] = [
       "First combined CFD and wind tunnel aerodynamic investigation of a speedway motorcycle. Validated simulations with less than 2% deviation, identified rider as dominant drag contributor, and achieved 9% drag reduction with a new front design.",
     image: projectSpeedway,
     date: "2025",
-    role: "Lead Researcher — Technical University of Denmark (DTU)",
+    role: "Lead Researcher, Technical University of Denmark (DTU)",
     overview:
       "This study presents a computational and experimental aerodynamic analysis of a speedway motorcycle, focusing on drag reduction strategies to enhance performance. Using CFD simulations in Simcenter STAR-CCM+ and wind tunnel experiments, the aerodynamic characteristics of the motorcycle and rider are investigated. Wind tunnel experiments validated the CFD methodology, showing deviations of 2.0% and 0.2% in drag area at 30 m/s and 40 m/s respectively, confirming the reliability of the numerical model. The rider is identified as the primary drag contributor, accounting for over 50% of the total aerodynamic resistance. A new front fairing and hand cover design is proposed, achieving a 9.0% reduction in total drag. This is the first combined CFD and wind tunnel aerodynamic investigation of a speedway motorcycle, addressing a gap in current literature.",
     objectives: [
