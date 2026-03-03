@@ -68,7 +68,7 @@ export const projectsData: Project[] = [
       "Mean Velocity Field",
       "Accumulated Drag Force Along Longitudinal Axis",
       "Vorticity Contours on YZ Planes",
-      "Streamwise Pressure Coefficient — New vs Original Design",
+      "Streamwise Pressure Coefficient, New vs Original Design",
       "λ₂ Vortex Structures Comparison",
     ],
     lessons:
