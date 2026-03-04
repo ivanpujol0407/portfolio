@@ -34,7 +34,7 @@ export const projectsData: Project[] = [
     title: "CFD Simulations of Speedway Motorcycles",
     description:
       "First combined CFD and wind tunnel aerodynamic investigation of a speedway motorcycle. Validated simulations with less than 2% deviation, identified rider as dominant drag contributor, and achieved 9% drag reduction with a new front design.",
-    image: projectSpeedway,
+    image: projectMeanVelocity,
     date: "2025",
     role: "Lead Researcher, Technical University of Denmark (DTU)",
     overview:
