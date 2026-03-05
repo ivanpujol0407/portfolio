@@ -8,11 +8,56 @@ import { Mail, Phone, MapPin, Linkedin, Send, CheckCircle } from "lucide-react";
 
 const ContactSection = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Placeholder: replace action URL with Formspree/EmailJS endpoint
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const name = String(formData.get("name") || "").trim().slice(0, 100);
+    const email = String(formData.get("email") || "").trim().slice(0, 255);
+    const subject = String(formData.get("subject") || "").trim().slice(0, 150);
+    const message = String(formData.get("message") || "").trim().slice(0, 2000);
+
+    if (!name || !email || !subject || !message) {
+      setSubmitError("Please complete all fields before sending.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/ivanpujol0407@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          subject,
+          message,
+          _captcha: "false",
+          _template: "table",
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
+
+      setSubmitted(true);
+      form.reset();
+    } catch {
+      setSubmitError("Something went wrong while sending your message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -105,9 +150,10 @@ const ContactSection = () => {
                   <Label htmlFor="message">Message</Label>
                   <Textarea id="message" name="message" placeholder="Your message..." rows={5} required className="mt-1" />
                 </div>
-                <Button type="submit" className="w-full">
+                {submitError && <p className="text-sm text-destructive">{submitError}</p>}
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
                   <Send className="mr-2 h-4 w-4" />
-                  Send Message
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             )}
