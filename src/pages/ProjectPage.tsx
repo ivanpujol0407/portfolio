@@ -147,18 +147,19 @@ const chartTooltipStyle = {
 };
 
 const CrosshairCursor = (props: any) => {
-  const { points, width, height, top, left, payloadIndex, payload } = props;
+  const { points, width, height, top, left } = props;
   if (!points || !points.length) return null;
-  // For scatter charts, use the cx/cy from the point which corresponds to the actual dot position
+
   const point = points[0];
-  const x = point.x;
-  const y = point.y;
+  const x = point.cx ?? point.x;
+  const y = point.cy ?? point.y;
+
   return (
     <g>
       <line x1={x} y1={top} x2={x} y2={top + height} stroke="hsl(var(--muted-foreground))" strokeDasharray="4 4" strokeWidth={1} />
       <line x1={left} y1={y} x2={left + width} y2={y} stroke="hsl(var(--muted-foreground))" strokeDasharray="4 4" strokeWidth={1} />
-    </g>);
-
+    </g>
+  );
 };
 
 const BaseSizeChart = ({ figureNumber }: {figureNumber: number;}) =>
