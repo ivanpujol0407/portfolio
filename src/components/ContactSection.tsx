@@ -150,9 +150,10 @@ const ContactSection = () => {
                   <Label htmlFor="message">Message</Label>
                   <Textarea id="message" name="message" placeholder="Your message..." rows={5} required className="mt-1" />
                 </div>
-                <Button type="submit" className="w-full">
+                {submitError && <p className="text-sm text-destructive">{submitError}</p>}
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
                   <Send className="mr-2 h-4 w-4" />
-                  Send Message
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             )}
