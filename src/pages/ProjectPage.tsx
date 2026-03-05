@@ -146,6 +146,18 @@ const chartTooltipStyle = {
   color: "hsl(var(--foreground))",
 };
 
+const CrosshairCursor = (props: any) => {
+  const { points, width, height, top, left } = props;
+  if (!points || !points.length) return null;
+  const { x, y } = points[0];
+  return (
+    <g>
+      <line x1={x} y1={top} x2={x} y2={top + height} stroke="hsl(var(--muted-foreground))" strokeDasharray="4 4" strokeWidth={1} />
+      <line x1={left} y1={y} x2={left + width} y2={y} stroke="hsl(var(--muted-foreground))" strokeDasharray="4 4" strokeWidth={1} />
+    </g>
+  );
+};
+
 const BaseSizeChart = ({ figureNumber }: { figureNumber: number }) => (
   <figure className="my-6">
     <div className="w-full max-w-2xl mx-auto rounded-lg border border-border bg-card p-4">
@@ -169,7 +181,7 @@ const BaseSizeChart = ({ figureNumber }: { figureNumber: number }) => (
             tick={chartAxisStyle}
             stroke="hsl(var(--muted-foreground))"
           />
-          <Tooltip contentStyle={chartTooltipStyle} formatter={(value: number) => [value.toFixed(4), "CᴅA"]} labelFormatter={(l) => `Base size: ${l} mm`} />
+          <Tooltip contentStyle={chartTooltipStyle} formatter={(value: number) => [value.toFixed(4), "CᴅA"]} labelFormatter={(l) => `Base size: ${l} mm`} cursor={<CrosshairCursor />} />
           <Scatter dataKey="cdA" fill="hsl(var(--primary))" stroke="hsl(var(--primary))" r={5} name="CᴅA" />
         </ComposedChart>
       </ResponsiveContainer>
@@ -207,7 +219,7 @@ const PrismLayerChart = ({ figureNumber }: { figureNumber: number }) => (
             tick={chartAxisStyle}
             stroke="hsl(var(--muted-foreground))"
           />
-          <Tooltip contentStyle={chartTooltipStyle} formatter={(value: number) => [value.toFixed(4), "CᴅA"]} labelFormatter={(l) => `Prism layers: ${l}`} />
+          <Tooltip contentStyle={chartTooltipStyle} formatter={(value: number) => [value.toFixed(4), "CᴅA"]} labelFormatter={(l) => `Prism layers: ${l}`} cursor={<CrosshairCursor />} />
           <Scatter dataKey="cdA" fill="hsl(var(--primary))" stroke="hsl(var(--primary))" r={5} name="CᴅA" />
         </ComposedChart>
       </ResponsiveContainer>
@@ -245,7 +257,7 @@ const TimeStepChart = ({ figureNumber }: { figureNumber: number }) => (
             tick={chartAxisStyle}
             stroke="hsl(var(--muted-foreground))"
           />
-          <Tooltip contentStyle={chartTooltipStyle} formatter={(value: number) => [value.toFixed(4), "CᴅA"]} labelFormatter={(l) => `Δt U/L: ${Number(l).toFixed(4)}`} />
+          <Tooltip contentStyle={chartTooltipStyle} formatter={(value: number) => [value.toFixed(4), "CᴅA"]} labelFormatter={(l) => `Δt U/L: ${Number(l).toFixed(4)}`} cursor={<CrosshairCursor />} />
           <Scatter dataKey="cdA" fill="hsl(var(--primary))" stroke="hsl(var(--primary))" r={5} name="CᴅA" />
         </ComposedChart>
       </ResponsiveContainer>
