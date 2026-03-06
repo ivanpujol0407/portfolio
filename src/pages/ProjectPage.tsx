@@ -482,10 +482,29 @@ const ProjectPage = () => {
                   })}
                 </div>
 
-                {/* Convergence Studies */}
+                {/* Methodology subsections */}
+                {project.methodologySections && project.methodologySections.length > 0 &&
+                <div className="mt-8 space-y-8">
+                    {project.methodologySections.map((sec, i) =>
+                  <div key={i}>
+                        <h3 className="text-lg font-semibold mb-3">{sec.title}</h3>
+                        <p className="text-muted-foreground leading-relaxed">{sec.content}</p>
+                        {sec.placeholders && sec.placeholders.length > 0 &&
+                    <div className="mt-4 space-y-4">
+                            {sec.placeholders.map((label, j) =>
+                        <ImagePlaceholder key={j} label={label} />
+                        )}
+                          </div>
+                    }
+                      </div>
+                  )}
+                  </div>
+                }
+
+                {/* Convergence Studies / Additional Details */}
                 {project.supplementary && project.supplementary.length > 0 &&
                 <div className="mt-10">
-                    <h3 className="text-lg font-semibold mb-6">Convergence Studies</h3>
+                    <h3 className="text-lg font-semibold mb-6">{isSpeedway ? "Convergence Studies" : "Additional Details"}</h3>
                     <div className="space-y-8">
                       {project.supplementary.map((item, i) =>
                     <div key={i}>
@@ -540,6 +559,22 @@ const ProjectPage = () => {
                 {isSpeedway ?
                 <div className="mt-6 space-y-4">
                     {renderSpeedwayResults()}
+                  </div> :
+                project.resultsSections && project.resultsSections.length > 0 ?
+                <div className="mt-6 space-y-8">
+                    {project.resultsSections.map((sec, i) =>
+                  <div key={i}>
+                        <h3 className="text-lg font-semibold mb-3">{sec.title}</h3>
+                        <p className="text-muted-foreground leading-relaxed">{sec.content}</p>
+                        {sec.placeholders && sec.placeholders.length > 0 &&
+                    <div className="mt-4 space-y-4">
+                            {sec.placeholders.map((label, j) =>
+                        <ImagePlaceholder key={j} label={label} />
+                        )}
+                          </div>
+                    }
+                      </div>
+                  )}
                   </div> :
 
                 <div className="mt-6 space-y-4">
