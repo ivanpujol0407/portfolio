@@ -41,6 +41,16 @@ import lambda2Standard from "@/assets/speedway/lambda2-standard.png";
 import lambda2Legend from "@/assets/speedway/lambda2-legend.png";
 import wallYPlusImg from "@/assets/speedway/wall-y-plus.png";
 
+// Gripper images
+import gripper3dView from "@/assets/gripper/3d-view.png";
+import gripperDimensions from "@/assets/gripper/dimensions.png";
+import gripperFeBc from "@/assets/gripper/fe-model-bc.png";
+import gripperDisplacement from "@/assets/gripper/displacement-field.png";
+import gripperSigma1 from "@/assets/gripper/principal-stress-sigma1.png";
+import gripperNonlinear from "@/assets/gripper/nonlinear-results.png";
+import gripperExtremePinch from "@/assets/gripper/displacement-extreme-pinch.png";
+import gripperDestructive from "@/assets/gripper/displacement-destructive.png";
+import gripperManufacturing from "@/assets/gripper/manufacturing.png";
 const ImagePlaceholder = ({ label, aspect = "video" }: {label: string;aspect?: "video" | "square";}) =>
 <div
   className={`w-full rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground p-6 text-center ${
