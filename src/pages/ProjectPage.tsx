@@ -521,6 +521,21 @@ const ProjectPage = () => {
 
   };
 
+  const isGripper = id === "pmma-gripper-fea";
+
+  // Helper to resolve an image placeholder label to a Figure or ImagePlaceholder
+  const resolveImage = (label: string, figCounter: () => number) => {
+    if (isSpeedway) {
+      const img = speedwayMethodologyImages[label] || speedwayValidationImages[label];
+      if (img) return <Figure src={img.src} alt={label} caption={img.caption} figureNumber={figCounter()} />;
+    }
+    if (isGripper) {
+      const img = gripperMethodologyImages[label] || gripperResultsImages[label] || gripperSupplementaryImages[label];
+      if (img) return <Figure src={img.src} alt={label} caption={img.caption} figureNumber={figCounter()} />;
+    }
+    return <ImagePlaceholder label={label} />;
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
