@@ -680,7 +680,7 @@ const ProjectPage = () => {
                         {sec.placeholders && sec.placeholders.length > 0 &&
                     <div className="mt-4 space-y-4">
                             {sec.placeholders.map((label, j) =>
-                        <ImagePlaceholder key={j} label={label} />
+                        <div key={j}>{resolveImage(label, nextFigure)}</div>
                         )}
                           </div>
                     }
@@ -690,11 +690,31 @@ const ProjectPage = () => {
 
                 <div className="mt-6 space-y-4">
                     {resPlaceholders.map((label, i) =>
-                  <ImagePlaceholder key={i} label={label} />
+                  <div key={i}>{resolveImage(label, nextFigure)}</div>
                   )}
                   </div>
                 }
               </section>
+
+              {/* Design Optimisation & Manufacturing (gripper only - after results) */}
+              {isGripper && project.supplementary && project.supplementary.length > 0 &&
+                project.supplementary.map((item, i) => (
+                  <section key={`supp-${i}`}>
+                    <h2 className="text-xl font-semibold mb-4 text-primary">{item.title}</h2>
+                    <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{item.content}</p>
+                    {item.title === "Design Optimisation" && (
+                      <div className="mt-6">
+                        <GripperOptimisationChart figureNumber={nextFigure()} />
+                      </div>
+                    )}
+                    {item.title === "Manufacturing & Testing" && (
+                      <div className="mt-6">
+                        <Figure src={gripperManufacturing} alt="Laser cutting of PMMA gripper" caption="Laser cutting of the optimised PMMA gripper profile from a 10 mm acrylic sheet. The CO₂ laser follows the DXF contour exported from SolidWorks." figureNumber={nextFigure()} />
+                      </div>
+                    )}
+                  </section>
+                ))
+              }
 
               {/* Lessons Learned */}
               <section>
