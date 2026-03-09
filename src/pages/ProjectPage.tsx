@@ -41,6 +41,16 @@ import lambda2Standard from "@/assets/speedway/lambda2-standard.png";
 import lambda2Legend from "@/assets/speedway/lambda2-legend.png";
 import wallYPlusImg from "@/assets/speedway/wall-y-plus.png";
 
+// Gripper images
+import gripper3dView from "@/assets/gripper/3d-view.png";
+import gripperDimensions from "@/assets/gripper/dimensions.png";
+import gripperFeBc from "@/assets/gripper/fe-model-bc.png";
+import gripperDisplacement from "@/assets/gripper/displacement-field.png";
+import gripperSigma1 from "@/assets/gripper/principal-stress-sigma1.png";
+import gripperNonlinear from "@/assets/gripper/nonlinear-results.png";
+import gripperExtremePinch from "@/assets/gripper/displacement-extreme-pinch.png";
+import gripperDestructive from "@/assets/gripper/displacement-destructive.png";
+import gripperManufacturing from "@/assets/gripper/manufacturing.png";
 const ImagePlaceholder = ({ label, aspect = "video" }: {label: string;aspect?: "video" | "square";}) =>
 <div
   className={`w-full rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground p-6 text-center ${
@@ -330,6 +340,96 @@ const speedwayValidationImages: Record<string, {src: string;caption: string;}> =
   }
 };
 
+// Gripper image mappings
+const gripperMethodologyImages: Record<string, {src: string; caption: string;}> = {
+  "Preliminary Gripper Design (SolidWorks 3D View)": {
+    src: gripper3dView,
+    caption: "3D isometric view of the PMMA gripper modelled in SolidWorks, showing the U-shaped lever geometry."
+  },
+  "Gripper Profile with Key Dimensions": {
+    src: gripperDimensions,
+    caption: "2D profile of the gripper with key dimensions: total length 232 mm, inner radius R26, outer radius R32, and arm gap of 26 mm."
+  },
+  "FE Model with Boundary Conditions and Applied Forces": {
+    src: gripperFeBc,
+    caption: "Finite element model showing boundary conditions (fixed node at fulcrum, constrained force application points) and applied forces F at the actuation points. The gripping distance d_R = 170 mm and force distance d_F = 100 mm define the lever mechanics."
+  },
+  "Nonlinear vs Linear Stress Comparison": {
+    src: gripperNonlinear,
+    caption: "Nonlinear analysis result (σ_I = 1.349 MPa) under F = 2 N load. Comparison with linear result (1.348 MPa) confirms 0.083% deviation, validating the linear elasticity assumption."
+  }
+};
+
+const gripperResultsImages: Record<string, {src: string; caption: string;}> = {
+  "Displacement Field — Vacuum Test": {
+    src: gripperDisplacement,
+    caption: "Displacement vector field under vacuum loading (F = 20.77 N). Maximum displacement of 25.99 mm at the tips, nearly closing the 26 mm gap between the arms."
+  },
+  "Principal Stress σ_I Distribution": {
+    src: gripperSigma1,
+    caption: "Maximum principal stress (σ_I) distribution under vacuum loading. Peak tensile stress of 13.99 MPa occurs at the outer curvature, well below the 110 MPa elastic limit (γ_s = 6.67)."
+  },
+  "Displacement Field — Extreme Pinch": {
+    src: gripperExtremePinch,
+    caption: "Displacement vector field under extreme pinch force (F = 60 N). Maximum displacement of 3.25 mm at the tips confirms the arms remain well separated."
+  },
+  "Displacement Field — Destructive Test": {
+    src: gripperDestructive,
+    caption: "Displacement vector field at destructive load (F = 506.31 N). Maximum displacement of 27.42 mm exceeds the 26 mm gap — the arms would make contact before full elastic failure."
+  }
+};
+
+const gripperSupplementaryImages: Record<string, {src: string; caption: string;}> = {
+  "Manufacturing & Testing": {
+    src: gripperManufacturing,
+    caption: "Laser cutting of the optimised PMMA gripper profile from a 10 mm acrylic sheet. The CO₂ laser follows the DXF contour exported from SolidWorks."
+  }
+};
+
+// Design optimisation comparison data for chart
+const gripperOptimisationData = [
+  { parameter: "Volume (mm³)", initial: 82912.69, optimised: 25237.56 },
+  { parameter: "Mass (g)", initial: 98.67, optimised: 30.03 },
+  { parameter: "Efficiency η (%)", initial: 58.824, optimised: 66.67 },
+  { parameter: "Mass efficiency ζ (kg⁻¹)", initial: 5.96, optimised: 22.2 },
+];
+
+const GripperOptimisationChart = ({ figureNumber }: { figureNumber: number }) => (
+  <figure className="my-6">
+    <div className="w-full max-w-2xl mx-auto rounded-lg border border-border bg-card overflow-hidden">
+      <table className="w-full text-sm">
+        <thead>
+          <tr className="border-b border-border bg-muted/50">
+            <th className="px-4 py-3 text-left font-semibold text-foreground">Parameter</th>
+            <th className="px-4 py-3 text-right font-semibold text-foreground">Initial Design</th>
+            <th className="px-4 py-3 text-right font-semibold text-foreground">Optimised Design</th>
+            <th className="px-4 py-3 text-right font-semibold text-foreground">Change</th>
+          </tr>
+        </thead>
+        <tbody>
+          {gripperOptimisationData.map((row, i) => {
+            const change = ((row.optimised - row.initial) / row.initial * 100);
+            const isPositive = change > 0;
+            return (
+              <tr key={i} className="border-b border-border last:border-0">
+                <td className="px-4 py-3 text-muted-foreground font-medium">{row.parameter}</td>
+                <td className="px-4 py-3 text-right text-muted-foreground">{row.initial.toLocaleString(undefined, {maximumFractionDigits: 2})}</td>
+                <td className="px-4 py-3 text-right text-muted-foreground">{row.optimised.toLocaleString(undefined, {maximumFractionDigits: 2})}</td>
+                <td className={`px-4 py-3 text-right font-semibold ${isPositive ? "text-primary" : "text-orange-400"}`}>
+                  {isPositive ? "+" : ""}{change.toFixed(1)}%
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+    <figcaption className="mt-2 text-sm text-muted-foreground text-center">
+      <span style={{ color: "#63ab85", fontWeight: 600 }}>Table {figureNumber}:</span> Comparison of initial and optimised gripper designs. Volume and mass reduced by ~70%, while mechanical and mass efficiency significantly improved.
+    </figcaption>
+  </figure>
+);
+
 // Results section text blocks (from the paper)
 const speedwayResultsText = {
   accumulatedDrag:
@@ -421,6 +521,21 @@ const ProjectPage = () => {
 
   };
 
+  const isGripper = id === "pmma-gripper-fea";
+
+  // Helper to resolve an image placeholder label to a Figure or ImagePlaceholder
+  const resolveImage = (label: string, figCounter: () => number) => {
+    if (isSpeedway) {
+      const img = speedwayMethodologyImages[label] || speedwayValidationImages[label];
+      if (img) return <Figure src={img.src} alt={label} caption={img.caption} figureNumber={figCounter()} />;
+    }
+    if (isGripper) {
+      const img = gripperMethodologyImages[label] || gripperResultsImages[label] || gripperSupplementaryImages[label];
+      if (img) return <Figure src={img.src} alt={label} caption={img.caption} figureNumber={figCounter()} />;
+    }
+    return <ImagePlaceholder label={label} />;
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -473,13 +588,9 @@ const ProjectPage = () => {
                 <p className="text-muted-foreground leading-relaxed">{project.methodology}</p>
 
                 <div className="mt-6 space-y-4">
-                  {methodPlaceholders.map((label, i) => {
-                    const imgData = isSpeedway ? speedwayMethodologyImages[label] : undefined;
-                    if (imgData) {
-                      return <Figure key={i} src={imgData.src} alt={label} caption={imgData.caption} figureNumber={nextFigure()} />;
-                    }
-                    return <ImagePlaceholder key={i} label={label} />;
-                  })}
+                  {methodPlaceholders.map((label, i) => (
+                    <div key={i}>{resolveImage(label, nextFigure)}</div>
+                  ))}
                 </div>
 
                 {/* Methodology subsections */}
@@ -492,7 +603,7 @@ const ProjectPage = () => {
                         {sec.placeholders && sec.placeholders.length > 0 &&
                     <div className="mt-4 space-y-4">
                             {sec.placeholders.map((label, j) =>
-                        <ImagePlaceholder key={j} label={label} />
+                        <div key={j}>{resolveImage(label, nextFigure)}</div>
                         )}
                           </div>
                     }
@@ -501,8 +612,8 @@ const ProjectPage = () => {
                   </div>
                 }
 
-                {/* Convergence Studies / Additional Details */}
-                {project.supplementary && project.supplementary.length > 0 &&
+                {/* Convergence Studies (speedway only) / supplementary rendered in methodology */}
+                {isSpeedway && project.supplementary && project.supplementary.length > 0 &&
                 <div className="mt-10">
                     <h3 className="text-lg font-semibold mb-6">{isSpeedway ? "Convergence Studies" : "Additional Details"}</h3>
                     <div className="space-y-8">
@@ -569,7 +680,7 @@ const ProjectPage = () => {
                         {sec.placeholders && sec.placeholders.length > 0 &&
                     <div className="mt-4 space-y-4">
                             {sec.placeholders.map((label, j) =>
-                        <ImagePlaceholder key={j} label={label} />
+                        <div key={j}>{resolveImage(label, nextFigure)}</div>
                         )}
                           </div>
                     }
@@ -579,11 +690,31 @@ const ProjectPage = () => {
 
                 <div className="mt-6 space-y-4">
                     {resPlaceholders.map((label, i) =>
-                  <ImagePlaceholder key={i} label={label} />
+                  <div key={i}>{resolveImage(label, nextFigure)}</div>
                   )}
                   </div>
                 }
               </section>
+
+              {/* Design Optimisation & Manufacturing (gripper only - after results) */}
+              {isGripper && project.supplementary && project.supplementary.length > 0 &&
+                project.supplementary.map((item, i) => (
+                  <section key={`supp-${i}`}>
+                    <h2 className="text-xl font-semibold mb-4 text-primary">{item.title}</h2>
+                    <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{item.content}</p>
+                    {item.title === "Design Optimisation" && (
+                      <div className="mt-6">
+                        <GripperOptimisationChart figureNumber={nextFigure()} />
+                      </div>
+                    )}
+                    {item.title === "Manufacturing & Testing" && (
+                      <div className="mt-6">
+                        <Figure src={gripperManufacturing} alt="Laser cutting of PMMA gripper" caption="Laser cutting of the optimised PMMA gripper profile from a 10 mm acrylic sheet. The CO₂ laser follows the DXF contour exported from SolidWorks." figureNumber={nextFigure()} />
+                      </div>
+                    )}
+                  </section>
+                ))
+              }
 
               {/* Lessons Learned */}
               <section>
