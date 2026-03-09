@@ -340,6 +340,96 @@ const speedwayValidationImages: Record<string, {src: string;caption: string;}> =
   }
 };
 
+// Gripper image mappings
+const gripperMethodologyImages: Record<string, {src: string; caption: string;}> = {
+  "Preliminary Gripper Design (SolidWorks 3D View)": {
+    src: gripper3dView,
+    caption: "3D isometric view of the PMMA gripper modelled in SolidWorks, showing the U-shaped lever geometry."
+  },
+  "Gripper Profile with Key Dimensions": {
+    src: gripperDimensions,
+    caption: "2D profile of the gripper with key dimensions: total length 232 mm, inner radius R26, outer radius R32, and arm gap of 26 mm."
+  },
+  "FE Model with Boundary Conditions and Applied Forces": {
+    src: gripperFeBc,
+    caption: "Finite element model showing boundary conditions (fixed node at fulcrum, constrained force application points) and applied forces F at the actuation points. The gripping distance d_R = 170 mm and force distance d_F = 100 mm define the lever mechanics."
+  },
+  "Nonlinear vs Linear Stress Comparison": {
+    src: gripperNonlinear,
+    caption: "Nonlinear analysis result (σ_I = 1.349 MPa) under F = 2 N load. Comparison with linear result (1.348 MPa) confirms 0.083% deviation, validating the linear elasticity assumption."
+  }
+};
+
+const gripperResultsImages: Record<string, {src: string; caption: string;}> = {
+  "Displacement Field — Vacuum Test": {
+    src: gripperDisplacement,
+    caption: "Displacement vector field under vacuum loading (F = 20.77 N). Maximum displacement of 25.99 mm at the tips, nearly closing the 26 mm gap between the arms."
+  },
+  "Principal Stress σ_I Distribution": {
+    src: gripperSigma1,
+    caption: "Maximum principal stress (σ_I) distribution under vacuum loading. Peak tensile stress of 13.99 MPa occurs at the outer curvature, well below the 110 MPa elastic limit (γ_s = 6.67)."
+  },
+  "Displacement Field — Extreme Pinch": {
+    src: gripperExtremePinch,
+    caption: "Displacement vector field under extreme pinch force (F = 60 N). Maximum displacement of 3.25 mm at the tips confirms the arms remain well separated."
+  },
+  "Displacement Field — Destructive Test": {
+    src: gripperDestructive,
+    caption: "Displacement vector field at destructive load (F = 506.31 N). Maximum displacement of 27.42 mm exceeds the 26 mm gap — the arms would make contact before full elastic failure."
+  }
+};
+
+const gripperSupplementaryImages: Record<string, {src: string; caption: string;}> = {
+  "Manufacturing & Testing": {
+    src: gripperManufacturing,
+    caption: "Laser cutting of the optimised PMMA gripper profile from a 10 mm acrylic sheet. The CO₂ laser follows the DXF contour exported from SolidWorks."
+  }
+};
+
+// Design optimisation comparison data for chart
+const gripperOptimisationData = [
+  { parameter: "Volume (mm³)", initial: 82912.69, optimised: 25237.56 },
+  { parameter: "Mass (g)", initial: 98.67, optimised: 30.03 },
+  { parameter: "Efficiency η (%)", initial: 58.824, optimised: 66.67 },
+  { parameter: "Mass efficiency ζ (kg⁻¹)", initial: 5.96, optimised: 22.2 },
+];
+
+const GripperOptimisationChart = ({ figureNumber }: { figureNumber: number }) => (
+  <figure className="my-6">
+    <div className="w-full max-w-2xl mx-auto rounded-lg border border-border bg-card overflow-hidden">
+      <table className="w-full text-sm">
+        <thead>
+          <tr className="border-b border-border bg-muted/50">
+            <th className="px-4 py-3 text-left font-semibold text-foreground">Parameter</th>
+            <th className="px-4 py-3 text-right font-semibold text-foreground">Initial Design</th>
+            <th className="px-4 py-3 text-right font-semibold text-foreground">Optimised Design</th>
+            <th className="px-4 py-3 text-right font-semibold text-foreground">Change</th>
+          </tr>
+        </thead>
+        <tbody>
+          {gripperOptimisationData.map((row, i) => {
+            const change = ((row.optimised - row.initial) / row.initial * 100);
+            const isPositive = change > 0;
+            return (
+              <tr key={i} className="border-b border-border last:border-0">
+                <td className="px-4 py-3 text-muted-foreground font-medium">{row.parameter}</td>
+                <td className="px-4 py-3 text-right text-muted-foreground">{row.initial.toLocaleString(undefined, {maximumFractionDigits: 2})}</td>
+                <td className="px-4 py-3 text-right text-muted-foreground">{row.optimised.toLocaleString(undefined, {maximumFractionDigits: 2})}</td>
+                <td className={`px-4 py-3 text-right font-semibold ${isPositive ? "text-primary" : "text-orange-400"}`}>
+                  {isPositive ? "+" : ""}{change.toFixed(1)}%
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+    <figcaption className="mt-2 text-sm text-muted-foreground text-center">
+      <span style={{ color: "#63ab85", fontWeight: 600 }}>Table {figureNumber}:</span> Comparison of initial and optimised gripper designs. Volume and mass reduced by ~70%, while mechanical and mass efficiency significantly improved.
+    </figcaption>
+  </figure>
+);
+
 // Results section text blocks (from the paper)
 const speedwayResultsText = {
   accumulatedDrag:
