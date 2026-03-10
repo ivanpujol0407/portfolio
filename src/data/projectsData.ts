@@ -143,7 +143,7 @@ export const projectsData: Project[] = [
       {
         title: "Extreme Pinch Test (F = 60 N)",
         content: "Under the maximum human pinch force of F = 60 N (NASA anthropometric data for thumb-index finger pinch), the gripper experienced a maximum displacement of u_max = 3.25 mm at the tips. The maximum tensile principal stress was σ_I = 12.11 MPa and the maximum compressive principal stress was σ_III = −13.04 MPa. Applying Rankine: σ_eq = max{12.11, 13.04} = 13.04 MPa, giving a safety factor γ_s = 110 / 13.04 = 8.44. Both stress values remained far below the elastic limit, confirming the gripper can withstand the most extreme manual loading without failure. The displacement of 3.25 mm is also well below the 26 mm gap, so the arms do not make contact.",
-        placeholders: ["Displacement Field — Extreme Pinch"]
+        placeholders: ["Displacement Field — Extreme Pinch", "Principal Stress σ_I and σ_III — Extreme Pinch"]
       },
       {
         title: "Destructive Test (F = 506.31 N)",
