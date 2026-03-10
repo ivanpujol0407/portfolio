@@ -124,7 +124,7 @@ export const projectsData: Project[] = [
       {
         title: "Mesh Convergence Study",
         content: "The mesh was generated with a global element size of 2 mm, producing approximately 1,200 elements. To verify mesh independence, a finer mesh with element size 1 mm (~4,800 elements) was also tested. Under a reference load of F = 2 N, the coarse mesh yielded σ_I,max = 1.348 MPa while the fine mesh gave σ_I,max = 1.344 MPa — a relative error of only 0.30%, confirming mesh independence. A level-1 mesh refinement (h-refinement) was additionally applied to the curved region where stress concentrations are expected. The refined mesh produced σ_I,max = 1.335 MPa compared to the unrefined value of 1.348 MPa — an error of 0.94%. Since both values are within 1%, the standard mesh with element size 2 mm was deemed sufficient for all subsequent analyses.",
-        placeholders: ["Mesh Visualization (Unrefined)", "Mesh with Level-1 Refinement at Curved Region", "Stress Comparison: Refined vs Unrefined Mesh"]
+        placeholders: ["Mesh: Unrefined vs Refined", "Stress: Unrefined vs Refined"]
       },
       {
         title: "Linearity Validation",
@@ -138,17 +138,17 @@ export const projectsData: Project[] = [
       {
         title: "Vacuum Test (F = 20.77 N)",
         content: "The vacuum force (force needed to close the gripper arms until they touch) was determined using the linearity principle. Under a reference load of F_ref = 2 N, the maximum tip displacement was δ_ref = 2.50 mm. Since the gap between the arms is Δ = 26 mm, the vacuum force scales linearly: F_vac = F_ref × (Δ / δ_ref) = 2 × (26 / 2.50) = 20.77 N. Under this load, the maximum tensile principal stress σ_I reached 14.00 MPa at the outer curve, while the maximum compressive principal stress σ_III reached −16.48 MPa at the inner curve. Applying the Rankine criterion: σ_eq = max{14.00, 16.48} = 16.48 MPa. The safety factor is γ_s = 110 / 16.48 = 6.67, well above the required 1.2, confirming a safe design under vacuum loading.",
-        placeholders: ["Displacement Field — Vacuum Test", "Principal Stress σ_I Distribution"]
+        placeholders: ["Displacement Field — Vacuum Test", "Principal Stress σ_I and σ_III — Vacuum", "Vacuum Test Photo"]
       },
       {
         title: "Extreme Pinch Test (F = 60 N)",
         content: "Under the maximum human pinch force of F = 60 N (NASA anthropometric data for thumb-index finger pinch), the gripper experienced a maximum displacement of u_max = 3.25 mm at the tips. The maximum tensile principal stress was σ_I = 12.11 MPa and the maximum compressive principal stress was σ_III = −13.04 MPa. Applying Rankine: σ_eq = max{12.11, 13.04} = 13.04 MPa, giving a safety factor γ_s = 110 / 13.04 = 8.44. Both stress values remained far below the elastic limit, confirming the gripper can withstand the most extreme manual loading without failure. The displacement of 3.25 mm is also well below the 26 mm gap, so the arms do not make contact.",
-        placeholders: ["Displacement Field — Extreme Pinch"]
+        placeholders: ["Displacement Field — Extreme Pinch", "Principal Stress σ_I and σ_III — Extreme Pinch"]
       },
       {
         title: "Destructive Test (F = 506.31 N)",
         content: "The destructive force was calculated by linear scaling from a unit load analysis. Under F = 1 N, the maximum equivalent stress (Rankine) was σ_eq,1 = 0.217 MPa. Since the relationship is linear, the force required to reach the elastic limit is: F_u = σ_yield / σ_eq,1 = 110 / 0.217 = 506.31 N. At this force, the maximum displacement was u_max = 27.42 mm, which exceeds the 26 mm gap — meaning the arms would contact each other before full failure load is reached. The maximum compressive stress reached exactly σ_III = −110 MPa at the inner curve, confirming elastic failure onset. Since PMMA is a brittle material with negligible plastic deformation, the gripper would fracture catastrophically at this point. Note that this force is 8.4× the maximum human pinch force (60 N), providing a very large safety margin.",
-        placeholders: ["Displacement Field — Destructive Test"]
+        placeholders: ["Displacement Field — Destructive Test", "Stress at Elastic Limit σ_III", "Destructive Test Result Photo"]
       }
     ],
     methodologyPlaceholders: [
