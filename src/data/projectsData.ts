@@ -138,7 +138,7 @@ export const projectsData: Project[] = [
       {
         title: "Vacuum Test (F = 20.77 N)",
         content: "The vacuum force (force needed to close the gripper arms until they touch) was determined using the linearity principle. Under a reference load of F_ref = 2 N, the maximum tip displacement was δ_ref = 2.50 mm. Since the gap between the arms is Δ = 26 mm, the vacuum force scales linearly: F_vac = F_ref × (Δ / δ_ref) = 2 × (26 / 2.50) = 20.77 N. Under this load, the maximum tensile principal stress σ_I reached 14.00 MPa at the outer curve, while the maximum compressive principal stress σ_III reached −16.48 MPa at the inner curve. Applying the Rankine criterion: σ_eq = max{14.00, 16.48} = 16.48 MPa. The safety factor is γ_s = 110 / 16.48 = 6.67, well above the required 1.2, confirming a safe design under vacuum loading.",
-        placeholders: ["Displacement Field — Vacuum Test", "Principal Stress σ_I Distribution"]
+        placeholders: ["Displacement Field — Vacuum Test", "Principal Stress σ_I and σ_III — Vacuum", "Vacuum Test Photo"]
       },
       {
         title: "Extreme Pinch Test (F = 60 N)",
