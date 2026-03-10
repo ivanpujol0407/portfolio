@@ -47,10 +47,20 @@ import gripperDimensions from "@/assets/gripper/dimensions.png";
 import gripperFeBc from "@/assets/gripper/fe-model-bc.png";
 import gripperDisplacement from "@/assets/gripper/displacement-field.png";
 import gripperSigma1 from "@/assets/gripper/principal-stress-sigma1.png";
+import gripperSigma3 from "@/assets/gripper/principal-stress-sigma3.png";
 import gripperNonlinear from "@/assets/gripper/nonlinear-results.png";
 import gripperExtremePinch from "@/assets/gripper/displacement-extreme-pinch.png";
 import gripperDestructive from "@/assets/gripper/displacement-destructive.png";
 import gripperManufacturing from "@/assets/gripper/manufacturing.png";
+import gripperUnrefinedMesh from "@/assets/gripper/unrefined-mesh.png";
+import gripperRefinedMesh from "@/assets/gripper/refined-mesh.png";
+import gripperUnrefinedResults from "@/assets/gripper/unrefined-results.png";
+import gripperRefinedResults from "@/assets/gripper/refined-results.png";
+import gripperStress60nSigma1 from "@/assets/gripper/stress-60n-sigma1.png";
+import gripperStress60nSigma3 from "@/assets/gripper/stress-60n-sigma3.png";
+import gripperStressElasticLimit from "@/assets/gripper/stress-elastic-limit-sigma3.png";
+import gripperVacuumTestPhoto from "@/assets/gripper/vacuum-test-photo.png";
+import gripperDestructiveTestResult from "@/assets/gripper/destructive-test-result.png";
 const ImagePlaceholder = ({ label, aspect = "video" }: {label: string;aspect?: "video" | "square";}) =>
 <div
   className={`w-full rounded-lg border border-dashed border-border bg-muted/50 flex items-center justify-center text-sm text-muted-foreground p-6 text-center ${
