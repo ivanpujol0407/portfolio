@@ -148,7 +148,7 @@ export const projectsData: Project[] = [
       {
         title: "Destructive Test (F = 506.31 N)",
         content: "The destructive force was calculated by linear scaling from a unit load analysis. Under F = 1 N, the maximum equivalent stress (Rankine) was σ_eq,1 = 0.217 MPa. Since the relationship is linear, the force required to reach the elastic limit is: F_u = σ_yield / σ_eq,1 = 110 / 0.217 = 506.31 N. At this force, the maximum displacement was u_max = 27.42 mm, which exceeds the 26 mm gap — meaning the arms would contact each other before full failure load is reached. The maximum compressive stress reached exactly σ_III = −110 MPa at the inner curve, confirming elastic failure onset. Since PMMA is a brittle material with negligible plastic deformation, the gripper would fracture catastrophically at this point. Note that this force is 8.4× the maximum human pinch force (60 N), providing a very large safety margin.",
-        placeholders: ["Displacement Field — Destructive Test"]
+        placeholders: ["Displacement Field — Destructive Test", "Stress at Elastic Limit σ_III", "Destructive Test Result Photo"]
       }
     ],
     methodologyPlaceholders: [
