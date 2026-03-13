@@ -140,7 +140,7 @@ export const projectsData: Project[] = [
       {
         title: "Vacuum Test (F = 20.77 N)",
         content: "The vacuum force (force needed to close the gripper arms until they touch) was determined using the linearity principle. Under a reference load of F_ref = 2 N, the maximum tip displacement was δ_ref = 2.50 mm. Since the gap between the arms is Δ = 26 mm, the vacuum force scales linearly: F_vac = F_ref × (Δ / δ_ref) = 2 × (26 / 2.50) = 20.77 N. Under this load, the maximum tensile principal stress σ_I reached 14.00 MPa at the outer curve, while the maximum compressive principal stress σ_III reached −16.48 MPa at the inner curve. Applying the Rankine criterion: σ_eq = max{14.00, 16.48} = 16.48 MPa. The safety factor is γ_s = 110 / 16.48 = 6.67, well above the required 1.2, confirming a safe design under vacuum loading.",
-        placeholders: ["Displacement Field — Vacuum Test", "Principal Stress σ_I and σ_III — Vacuum", "Vacuum Test Photo"]
+        placeholders: ["Displacement Field — Vacuum Test", "Principal Stress σ_I and σ_III — Vacuum"]
       },
       {
         title: "Extreme Pinch Test (F = 60 N)",
@@ -150,7 +150,7 @@ export const projectsData: Project[] = [
       {
         title: "Destructive Test (F = 506.31 N)",
         content: "The destructive force was calculated by linear scaling from a unit load analysis. Under F = 1 N, the maximum equivalent stress (Rankine) was σ_eq,1 = 0.217 MPa. Since the relationship is linear, the force required to reach the elastic limit is: F_u = σ_yield / σ_eq,1 = 110 / 0.217 = 506.31 N. At this force, the maximum displacement was u_max = 27.42 mm, which exceeds the 26 mm gap — meaning the arms would contact each other before full failure load is reached. The maximum compressive stress reached exactly σ_III = −110 MPa at the inner curve, confirming elastic failure onset. Since PMMA is a brittle material with negligible plastic deformation, the gripper would fracture catastrophically at this point. Note that this force is 8.4× the maximum human pinch force (60 N), providing a very large safety margin.",
-        placeholders: ["Displacement Field — Destructive Test", "Stress at Elastic Limit σ_III", "Destructive Test Result Photo"]
+        placeholders: ["Displacement Field — Destructive Test", "Stress at Elastic Limit σ_III"]
       }
     ],
     methodologyPlaceholders: [
