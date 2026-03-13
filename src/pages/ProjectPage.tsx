@@ -760,8 +760,10 @@ const ProjectPage = () => {
                       </div>
                     )}
                     {item.title === "Manufacturing & Testing" && (
-                      <div className="mt-6">
+                      <div className="mt-6 space-y-4">
                         <Figure src={gripperManufacturing} alt="Laser cutting of PMMA gripper" caption="Laser cutting of the optimised PMMA gripper profile from a 10 mm acrylic sheet. The CO₂ laser follows the DXF contour exported from SolidWorks." figureNumber={nextFigure()} />
+                        <Figure src={gripperVacuumTestPhoto} alt="Vacuum test photo" caption="Physical vacuum test setup. The manufactured PMMA gripper is loaded in a universal testing machine to verify the vacuum force prediction of F = 20.77 N." figureNumber={nextFigure()} />
+                        <Figure src={gripperDestructiveTestResult} alt="Destructive test result" caption="Gripper specimens after destructive testing. The fractured gripper (right) shows brittle failure consistent with PMMA behaviour — clean fracture with no plastic deformation, confirming the Rankine failure criterion assumption." figureNumber={nextFigure()} />
                       </div>
                     )}
                   </section>
