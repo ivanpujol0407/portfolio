@@ -1,4 +1,6 @@
 import projectMeanVelocity from "@/assets/speedway/mean-velocity.png";
+import gripperMainImg from "@/assets/gripper/main.png";
+
 // Placeholder images for new projects - replace with actual images later
 
 export interface Project {
@@ -99,7 +101,7 @@ export const projectsData: Project[] = [
     title: "Design & FEA of a Manual PMMA Gripper",
     description:
       "Design, finite element analysis, optimisation, and physical construction of a manual gripper made of polymethyl methacrylate (PMMA). The project combined SolidWorks CAD design with ANSYS structural simulation to validate and optimise the gripper under multiple loading scenarios.",
-    image: "/placeholder.svg",
+    image: gripperMainImg,
     date: "2020",
     role: "Co-author, UPC – ETSEIB, Barcelona",
     overview:
