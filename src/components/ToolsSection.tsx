@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Wind } from "lucide-react";
+import { ExternalLink, Wind, Layers } from "lucide-react";
 
 const tools = [
   {
@@ -13,6 +13,15 @@ const tools = [
       "Compute first cell height and boundary layer mesh parameters for accurate wall-resolved and wall-modelled CFD simulations. Supports both internal and external flow domains with multiple empirical correlations.",
     href: "https://yplus-calculator.vercel.app/",
     features: ["External & Internal Flow", "Wall-resolved & Wall-modelled", "Prism Layer Sizing"],
+  },
+  {
+    icon: Layers,
+    tag: "CFD Post-Processing",
+    title: "GCI Mesh Convergence Calculator",
+    description:
+      "Quantify numerical discretisation error following Celik et al. (2008). Computes Richardson extrapolation, observed order of accuracy, GCI uncertainty bands and asymptotic convergence verification for multiple quantities of interest simultaneously.",
+    href: "https://gci-calculator.vercel.app/",
+    features: ["Richardson Extrapolation", "Mesh Convergence", "Multi-Quantity Support"],
   },
 ];
 
