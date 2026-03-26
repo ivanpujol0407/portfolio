@@ -6,7 +6,7 @@ import { ExternalLink, Wind, Layers } from "lucide-react";
 
 const tools = [
   {
-    icon: Wind,
+    icon: Layers,
     tag: "CFD Pre-Processing",
     title: "y⁺ Wall Calculator",
     description:
@@ -15,7 +15,7 @@ const tools = [
     features: ["External & Internal Flow", "Wall-resolved & Wall-modelled", "Prism Layer Sizing"],
   },
   {
-    icon: Layers,
+    icon: Wind,
     tag: "CFD Post-Processing",
     title: "GCI Mesh Convergence Calculator",
     description:
