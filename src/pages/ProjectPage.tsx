@@ -41,6 +41,26 @@ import lambda2Standard from "@/assets/speedway/lambda2-standard.png";
 import lambda2Legend from "@/assets/speedway/lambda2-legend.png";
 import wallYPlusImg from "@/assets/speedway/wall-y-plus.png";
 
+// Gearbox images
+import gearboxDisseny from "@/assets/gearbox/Disseny.png";
+import gearboxDisseny2 from "@/assets/gearbox/Disseny2.png";
+import gearboxCarcassa from "@/assets/gearbox/Carcassa.png";
+import gearboxTapaCarcassa from "@/assets/gearbox/Tapa_de_la_carcassa.png";
+import gearboxEixEntrada from "@/assets/gearbox/Eix_entrada.png";
+import gearboxEixSortida from "@/assets/gearbox/Eix_sortida.png";
+import gearboxBrida from "@/assets/gearbox/Brida.png";
+import gearboxTapaEixSortida from "@/assets/gearbox/Tapa_eix_sortida.png";
+import gearboxTapaEixEntrada from "@/assets/gearbox/Tapa_eix_entrada.png";
+import gearboxGalga from "@/assets/gearbox/Galga_separadora.png";
+import gearboxPassador from "@/assets/gearbox/Passador_centrador.png";
+import gearboxDiagramaForces from "@/assets/gearbox/Diagrama_forces.png";
+import gearboxDiagramaEixSortida from "@/assets/gearbox/Diagrama_forces_eix_sortida.png";
+import gearboxDiagramaEixEntrada from "@/assets/gearbox/Diagrama_forces_eix_entrada.png";
+import gearboxSkf7208Dim from "@/assets/gearbox/Especificacions_rodaments_rodament_SKF_7208.png";
+import gearboxSkf7208Calc from "@/assets/gearbox/Especificacions_rodaments_rodament_SKF_7208_2.png";
+import gearboxSkf7203Dim from "@/assets/gearbox/Especificacions_rodaments_rodament_SKF_7203.png";
+import gearboxSkf7203Calc from "@/assets/gearbox/Especificacions_rodaments_rodament_SKF_7203_2.png";
+
 // Gripper images
 import gripper3dView from "@/assets/gripper/3d-view.png";
 import gripperDimensions from "@/assets/gripper/dimensions.png";
