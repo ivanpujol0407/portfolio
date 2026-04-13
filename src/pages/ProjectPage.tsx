@@ -97,16 +97,19 @@ interface FigureProps {
   alt: string;
   caption: string;
   figureNumber: number;
+  size?: "sm" | "md" | "lg";
 }
 
-const Figure = ({ src, legendSrc, alt, caption, figureNumber }: FigureProps) =>
+const figSizeClass = { sm: "max-w-xs", md: "max-w-md", lg: "max-w-2xl" };
+
+const Figure = ({ src, legendSrc, alt, caption, figureNumber, size = "lg" }: FigureProps) =>
 <figure className="my-6">
     {legendSrc &&
   <div className="flex justify-center mb-2">
         <img src={legendSrc} alt={`${alt} legend`} className="max-h-12 object-contain" />
       </div>
   }
-    <div className="w-full max-w-2xl mx-auto rounded-lg overflow-hidden border border-border">
+    <div className={`w-full ${figSizeClass[size]} mx-auto rounded-lg overflow-hidden border border-border`}>
       <img src={src} alt={alt} className="w-full h-auto object-contain" />
     </div>
     <figcaption className="mt-2 text-sm text-muted-foreground text-center">
@@ -457,70 +460,96 @@ const gripperMultiFigures: Record<string, { images: {src: string; alt: string}[]
 };
 
 // Gearbox image mappings
-const gearboxImages: Record<string, { src: string; caption: string }> = {
+const gearboxImages: Record<string, { src: string; caption: string; size?: "sm" | "md" | "lg" }> = {
   "Gear Force Diagram": {
     src: gearboxDiagramaForces,
     caption: "Decomposition of the normal contact force on a helical gear tooth into its tangential (F\u209c = 9.72 kN), radial (F\u1d63 = 3.89 kN) and axial (F\u2090 = 4.43 kN) components.",
+    size: "sm",
   },
   "Main Housing": {
     src: gearboxCarcassa,
     caption: "Main housing body in grey cast iron FG 25. The housing integrates bearing seats for the output shaft, mounting feet, oil drain and fill plug bosses, and shaft cover seats. Designed with 2\u00b0 draft angles and ~12 mm constant wall thickness for sand casting.",
+    size: "md",
   },
   "Housing Cover": {
     src: gearboxTapaCarcassa,
     caption: "Housing cover in grey cast iron FG 25, showing the two bearing seat bores for the output shaft bearings, bolt holes for M12 through-bolts, and the oil sight glass port.",
+    size: "md",
   },
   "Input Shaft": {
     src: gearboxEixEntrada,
     caption: "Input shaft in 42CrMo4 quenched and tempered steel. The 18-tooth helical pinion (\u03b2\u2080 = 24.49\u00b0) is machined directly onto the shaft. The shaft is hollow (24 mm bore) for motor coupling and features stepped shoulders for both angular contact bearings.",
+    size: "md",
   },
   "Output Shaft": {
     src: gearboxEixSortida,
     caption: "Output shaft in 42CrMo4 quenched and tempered steel, showing the keyway (DIN 6885 A 14\u00d79\u00d720 mm) for the output gear wheel, retaining ring groove (DIN 471 55\u00d72 mm), and stepped shoulders for the two deep groove ball bearings.",
+    size: "md",
   },
   "Flange": {
     src: gearboxBrida,
     caption: "Motor coupling flange in 42CrMo4 steel. The pilot bore centres the motor on the reducer input and the four bolt holes transmit torque. Dimensions are standardised to the motor frame size.",
+    size: "sm",
   },
   "Output Shaft Cover": {
     src: gearboxTapaEixSortida,
     caption: "Output shaft cover showing the central shaft exit bore, SKF CRW1 oil retainer groove, O-ring groove for sealing against the housing, and extraction holes to facilitate retainer removal during maintenance.",
+    size: "sm",
   },
   "Input Shaft Cover": {
     src: gearboxTapaEixEntrada,
     caption: "Input shaft cover retaining the outer race of the SKF 7208 angular contact bearing. Features an O-ring groove for sealing and bolt holes. The cover\u2019s axial position controls the pre-load of the angular contact bearing pair.",
+    size: "sm",
   },
   "Spacer Shim": {
     src: gearboxGalga,
     caption: "Spacer shim laser-cut from 0.2 mm AISI 304 stainless steel sheet. Multiple shims are stacked to achieve the precise gap required to pre-load the angular contact bearings on the input shaft.",
+    size: "sm",
   },
   "Centering Pin": {
     src: gearboxPassador,
     caption: "Hollow centering pin machined from AISI 304 stainless steel. Two pins locate the housing cover precisely on the main body during assembly, with the M12 through-bolts passing through the hollow bore.",
+    size: "sm",
   },
   "Output Shaft Force Diagram": {
     src: gearboxDiagramaEixSortida,
     caption: "Free body diagram of the output shaft showing bearing positions D and E, the external radial force F = 4.5 kN, gear engagement forces (F\u1d63, F\u209c, F\u2090) and bearing reactions. Distances: 100 mm (D to gear), 51.5 mm (gear to E), 42 mm (E to shaft end).",
+    size: "md",
   },
   "Input Shaft Force Diagram": {
     src: gearboxDiagramaEixEntrada,
     caption: "Free body diagram of the input shaft showing bearing positions A (SKF 7203) and B (SKF 7208), gear engagement forces and bearing reactions. Distances: 36.5 mm (A to gear), 31.5 mm (gear to B).",
+    size: "md",
   },
   "SKF 7208 Dimensions": {
     src: gearboxSkf7208Dim,
     caption: "SKF 7208 BECBP angular contact bearing dimensions: d = 40 mm bore, D = 80 mm OD, B = 18 mm width. Mounted at the gear-side of the input shaft (bearing B) in X-arrangement.",
+    size: "md",
   },
   "SKF 7208 Calculation Data": {
     src: gearboxSkf7208Calc,
     caption: "SKF 7208 BECBP load ratings and calculation factors: C = 36.5 kN dynamic, C\u2080 = 26 kN static, e = 1.14, X = 0.35, Y = 0.57. Reference speed 10,000 rpm.",
+    size: "md",
   },
   "SKF 7203 Dimensions": {
     src: gearboxSkf7203Dim,
     caption: "SKF 7203 BECBP angular contact bearing dimensions: d = 17 mm bore, D = 40 mm OD, B = 12 mm width. Mounted at the motor-side of the input shaft (bearing A) in X-arrangement.",
+    size: "md",
   },
   "SKF 7203 Calculation Data": {
     src: gearboxSkf7203Calc,
     caption: "SKF 7203 BECBP load ratings: C = 11 kN dynamic, C\u2080 = 5.85 kN static, e = 1.14, X = 0.35, Y = 0.57. These values confirm the bearing is significantly undersized for the 10,000-hour design life at the calculated loads.",
+    size: "md",
+  },
+  "Complete Design — Front View": {
+    src: gearboxDisseny,
+    caption: "Final reducer assembly — front view. The compact housing integrates the motor flange (input, top), output shaft with keyway (right), oil sight glass, and cast mounting feet.",
+    size: "md",
+  },
+  "Complete Design — Side View": {
+    src: gearboxDisseny2,
+    caption: "Final reducer assembly — side view, showing the housing cover bolted with six M12×175 through-bolts, the oil fill plug at the top, and the flange at the motor input end.",
+    size: "md",
   },
 };
 
@@ -590,6 +619,72 @@ const speedwayResultsText = {
   newDesignAnalysis:
   "The streamwise pressure coefficient contours clearly illustrate the aerodynamic advantages of the final design. Compared to the initial configuration, the new front eliminates the large high-pressure zone at the front fairing surface, promoting smoother flow attachment. The redesigned hand covers feature a more streamlined geometry, generating lower-pressure regions that contribute to reduced aerodynamic resistance. Lambda-2 vortex visualisations reveal that the original design induces larger vortices around the front fairing and handlebar, whereas the optimised configuration produces smaller structures, thereby reducing pressure drag."
 };
+
+const FormulaRow = ({ label, formula, result }: { label: string; formula: string; result: string }) => (
+  <div className="flex flex-col gap-1 p-3 rounded bg-muted/40 border border-border">
+    <span className="text-xs text-muted-foreground">{label}</span>
+    <span className="font-mono text-sm text-foreground">{formula}</span>
+    <span className="font-mono text-sm font-bold text-primary">{result}</span>
+  </div>
+);
+
+const GearboxFormulas = () => (
+  <div className="my-8 space-y-6">
+    <div>
+      <h3 className="text-base font-semibold mb-3 text-foreground">Gear Geometry</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <FormulaRow label="Transmission ratio" formula="i = z₂ / z₁ = 73 / 18" result="i = 4.06" />
+        <FormulaRow label="Helix angle (d₀₁ + d₀₂ = 200 mm)" formula="cos β₀ = m₀(z₁ + z₂) / 200" result="β₀ = 24.49°" />
+        <FormulaRow label="Pinion primitive diameter" formula="d₀₁ = m₀ · z₁ / cos β₀" result="d₀₁ = 39.56 mm" />
+        <FormulaRow label="Wheel primitive diameter" formula="d₀₂ = m₀ · z₂ / cos β₀" result="d₀₂ = 160.44 mm" />
+      </div>
+    </div>
+    <div>
+      <h3 className="text-base font-semibold mb-3 text-foreground">Shaft Diameters</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <FormulaRow label="Input shaft inner diameter (equal torsional stress, η = 0.95)" formula="d₁ = d₂ · (i · η)^(−1/3)" result="d₁ = 24.23 mm → 24 mm" />
+        <FormulaRow label="Hollow shaft minimum outer diameter" formula="(π/32)(D⁴ − d⁴) / (D/2) = (π/32)d⁴ / (d/2)" result="D_min = 29.30 mm" />
+      </div>
+    </div>
+    <div>
+      <h3 className="text-base font-semibold mb-3 text-foreground">Gear Engagement Forces</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <FormulaRow label="Tangential force" formula="Fₜ = Γ₂ / r₀₂ = 780 / (0.08022)" result="Fₜ = 9.72 kN" />
+        <FormulaRow label="Radial force" formula="Fᵣ = Fₜ · tan(α₀) / cos(β₀)" result="Fᵣ = 3.89 kN" />
+        <FormulaRow label="Axial force" formula="Fₐ = Fₜ · tan(β₀)" result="Fₐ = 4.43 kN" />
+        <FormulaRow label="Total resultant force" formula="F = √(Fₜ² + Fᵣ² + Fₐ²)" result="F = 11.37 kN" />
+      </div>
+    </div>
+    <div>
+      <h3 className="text-base font-semibold mb-3 text-foreground">Output Shaft Bearing Reactions (D = SKF 6210, E = SKF 6209)</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <FormulaRow label="Radial reaction at bearing D (fixed)" formula="F_rtotD = √(F_rD² + F_tD²)" result="F_rtotD = 11.89 kN" />
+        <FormulaRow label="Axial reaction at bearing D" formula="F_aD = Fₐ" result="F_aD = 4.43 kN" />
+        <FormulaRow label="Radial reaction at bearing E (free)" formula="F_rtotE = √(F_rE² + F_tE²)" result="F_rtotE = 5.98 kN" />
+      </div>
+    </div>
+    <div>
+      <h3 className="text-base font-semibold mb-3 text-foreground">Input Shaft Bearing Reactions (A = SKF 7203, B = SKF 7208)</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <FormulaRow label="Radial reaction at bearing A" formula="F_rtotA = √(F_rA² + F_tA²)" result="F_rtotA = 4.85 kN" />
+        <FormulaRow label="Radial reaction at bearing B" formula="F_rtotB = √(F_rB² + F_tB²)" result="F_rtotB = 5.62 kN" />
+        <FormulaRow label="Axial load at bearing A" formula="F_aA = Kₐ + F_rtotB / (2Y)" result="F_aA = 9.36 kN" />
+        <FormulaRow label="Axial load at bearing B" formula="F_aB = F_rtotB / (2Y), Y = 0.57" result="F_aB = 4.93 kN" />
+        <FormulaRow label="Combined load — bearing B (F_aB/F_rB ≤ e = 1.14)" formula="F_combB = F_rtotB" result="F_combB = 5.62 kN" />
+        <FormulaRow label="Combined load — bearing A (F_aA/F_rA > e, X=0.35, Y=0.57)" formula="F_combA = X·F_rtotA + Y·F_aA" result="F_combA = 7.03 kN" />
+      </div>
+    </div>
+    <div>
+      <h3 className="text-base font-semibold mb-3 text-foreground">Bearing Life Verification (n = 1,450 rpm, p = 3)</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <FormulaRow label="Required dynamic load capacity" formula="C = (Lₕ · 60n / 10⁶)^(1/3) · F_comb" result="" />
+        <FormulaRow label="Bearing A life (C = 11 kN vs required)" formula="SKF 7203 BECBP → L_hA =" result="44 h ✕ (target: 10,000 h)" />
+        <FormulaRow label="Bearing B life (C = 36.5 kN vs required)" formula="SKF 7208 BECBP → L_hB =" result="3,147 h ✕ (target: 10,000 h)" />
+      </div>
+      <p className="text-xs text-muted-foreground mt-3 pl-1">Both angular contact bearings are undersized for this application. Significantly larger bearings would be required in production to meet the 10,000-hour design life.</p>
+    </div>
+  </div>
+);
 
 const ProjectPage = () => {
   const { id } = useParams();
@@ -684,7 +779,7 @@ const ProjectPage = () => {
     }
     if (isGearbox) {
       const img = gearboxImages[label];
-      if (img) return <Figure src={img.src} alt={label} caption={img.caption} figureNumber={figCounter()} />;
+      if (img) return <Figure src={img.src} alt={label} caption={img.caption} figureNumber={figCounter()} size={img.size} />;
     }
     return <ImagePlaceholder label={label} />;
   };
@@ -853,6 +948,9 @@ const ProjectPage = () => {
                   </div>
                 }
               </section>
+
+              {/* Gearbox formulas — rendered inside results section */}
+              {isGearbox && <GearboxFormulas />}
 
               {/* Assembly & Lubrication (gearbox only - after results) */}
               {isGearbox && project.supplementary && project.supplementary.length > 0 &&
