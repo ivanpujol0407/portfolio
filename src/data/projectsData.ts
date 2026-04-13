@@ -1,5 +1,6 @@
 import projectMeanVelocity from "@/assets/speedway/mean-velocity.png";
 import gripperMainImg from "@/assets/gripper/main.png";
+import gearboxMainImg from "@/assets/gearbox/Disseny.png";
 
 // Placeholder images for new projects - replace with actual images later
 
@@ -177,71 +178,101 @@ export const projectsData: Project[] = [
     title: "Parallel Shaft Gear Reducer Design",
     description:
       "Complete mechanical design of a parallel shaft gear reducer for Volkswagen assembly line conveyors. Includes gear calculations, shaft design, bearing selection, housing design by sand casting, and full assembly documentation.",
-    image: "/placeholder.svg",
+    image: gearboxMainImg,
     date: "2023",
-    role: "Author, Master's in Industrial Engineering, UPC – ETSEIB, Barcelona",
+    role: "Author, Master\u2019s in Industrial Engineering, UPC \u2013 ETSEIB, Barcelona",
     overview:
-      "This project was part of the Mechanical Design course in the Master's in Industrial Engineering programme at ETSEIB (UPC Barcelona). The assignment was to design and calculate a parallel shaft gear reducer for conveyor belt systems used in Volkswagen automobile assembly lines. The reducer controls the speed of the conveyor belts that move vehicle bodies through different assembly stations, allowing precise and efficient handling during the manufacturing process. The project targeted a production run of 6,000 units over three years, with a required operational life of 10,000 hours at full load. The design uses helical gears cut without profile shift from 16MnCr5 case-hardening steel, with an input shaft speed of 1,450 rpm.",
+      "This project was part of the Mechanical Design course in the Master\u2019s in Industrial Engineering programme at ETSEIB (UPC Barcelona), carried out for ABB. The assignment was to design and calculate a parallel shaft gear reducer for conveyor belt systems used in Volkswagen automobile assembly lines. The reducer controls the speed of the conveyor belts that move vehicle bodies through different assembly stations, allowing precise and efficient handling during the manufacturing process. The project targeted a production run of 6,000 units over three years, with a required operational life of 10,000 hours at full load. The design uses helical gears cut without profile shift from 16MnCr5 case-hardening steel, with an input shaft speed of 1,450 rpm and a transmission ratio of 4.06 (18-tooth pinion, 73-tooth wheel).",
     objectives: [
-      "Design a parallel shaft gear reducer with a transmission ratio of 4.06",
-      "Calculate gear geometry: 18-tooth pinion and 73-tooth wheel with helical teeth (β₀ = 24.49°)",
-      "Design stepped shafts for proper axial positioning of all components",
-      "Select and verify bearings for 10,000 hours of operational life",
-      "Design a cast iron housing (FG 25) suitable for sand casting at 6,000-unit production scale",
-      "Specify all purchased components: bearings, bolts, seals, oil plugs, and retainers",
-      "Define complete assembly, lubrication, installation, and maintenance procedures",
+      "Design a parallel shaft gear reducer with a transmission ratio of 4.06 for Volkswagen assembly line conveyors",
+      "Calculate gear geometry: 18-tooth pinion and 73-tooth wheel with helical teeth (\u03b2\u2080 = 24.49\u00b0) and 100 mm centre distance",
+      "Design stepped shafts for proper axial positioning of all rotating components",
+      "Select and verify bearings for 10,000 hours of operational life at full load",
+      "Design a grey cast iron (FG 25) housing suitable for sand casting at 6,000-unit production scale",
+      "Specify all purchased components: bearings, bolts, seals, oil plugs, retainers and sight glass",
+      "Design all manufactured components: housing, cover, shafts, flange, shaft covers, spacer shims and centering pins",
+      "Define complete assembly, lubrication, installation and maintenance procedures",
     ],
     methodology:
-      "The design process began with the specifications from the commercial department: output torque of 780 Nm, maximum radial force on the output shaft of 4.5 kN, input speed of 1,450 rpm, and horizontal shaft arrangement with the input shaft on top. The input shaft diameter was calculated using the equal torsional stress criterion, yielding 24.23 mm (rounded to 24 mm). Since the input shaft is hollow, the minimum outer diameter was calculated as 29.30 mm to ensure equivalent torsional strength.",
+      "The design process began with the specifications from ABB\u2019s commercial department: output torque of 780 Nm, maximum radial force on the output shaft of 4.5 kN, input speed of 1,450 rpm, and horizontal shaft arrangement with the input shaft on top and motor coupled via flange. The input shaft diameter was calculated using the equal torsional stress criterion, yielding 24.23 mm (rounded to 24 mm). Since the input shaft is hollow to accommodate the motor coupling, the minimum outer diameter was calculated as 29.30 mm to ensure equivalent torsional strength. The production volume of 6,000 units made sand casting the clear choice for the housing, offering low per-unit cost, fast mass production, and the ability to integrate complex features directly into the mould.",
     methodologySections: [
       {
         title: "Gear Design",
-        content: "The helical gear helix angle was calculated from the constraint that the sum of the two primitive diameters must equal 200 mm (i.e., twice the 100 mm centre distance). With 18 teeth on the pinion and 73 on the wheel, and using the module equation d₀ = m₀·z / cos(β₀), the helix angle was determined to be β₀ = 24.49°. This yielded primitive diameters of 39.56 mm (pinion) and 160.44 mm (wheel), with tip diameters of 43.56 mm and 164.44 mm, and root diameters of 34.56 mm and 155.44 mm respectively. Since the pinion diameter is close to the shaft diameter, the gear teeth were machined directly onto the input shaft.",
-        placeholders: ["Gear Geometry and Tooth Profile"]
+        content:
+          "The helical gear helix angle was calculated from the constraint that the sum of the two primitive diameters must equal 200 mm (twice the 100 mm centre distance). With 18 teeth on the pinion and 73 on the wheel, and using d\u2080 = m\u2080z/cos(\u03b2\u2080), the helix angle was determined to be \u03b2\u2080 = 24.49\u00b0. This yielded primitive diameters of 39.56 mm (pinion) and 160.44 mm (wheel), tip diameters of 43.56 mm and 164.44 mm, and root diameters of 34.56 mm and 155.44 mm respectively. Since the pinion diameter is very close to the shaft diameter, the gear teeth were machined directly onto the input shaft. The output torque of 780 Nm and the wheel\u2019s primitive radius give a tangential force F\u209c = 9.72 kN. Resolving the normal contact force into its three components: radial force F\u1d63 = 3.89 kN, axial force F\u2090 = 4.43 kN, and total resultant F = 11.37 kN.",
+        placeholders: ["Gear Force Diagram"],
       },
       {
         title: "Housing Design (Sand Casting)",
-        content: "The large production volume of 6,000 units made sand casting the optimal manufacturing process for the grey cast iron FG 25 housing. Key design considerations included: a 2° draft angle for mould release, approximately 12 mm constant wall thickness for uniform cooling, and post-casting machining of bearing seats, bolt holes, oil plug threads, and sealing surfaces. The housing consists of two parts — a main body and a cover — joined by six M12×175 through-bolts with self-locking nuts. The main body includes mounting feet for floor fixation and two openings for shaft cover plates that retain the outer races of the bearings. Fine surface finishes were applied at bearing contact zones to ensure proper fit.",
-        placeholders: ["Housing Main Body (CAD)", "Housing Cover (CAD)", "Complete Reducer Assembly (Cross-Section)"]
+        content:
+          "The large production volume of 6,000 units made sand casting the optimal manufacturing process for the grey cast iron FG 25 housing. Key design rules applied were: a 2\u00b0 draft angle on all vertical faces for mould release, approximately 12 mm constant wall thickness for uniform cooling and to prevent shrinkage defects, and post-casting machining of all critical surfaces including bearing seats, bolt holes, oil plug threads, shaft cover seats and sealing faces. The housing consists of two parts \u2014 a main body and a cover \u2014 joined by six M12\u00d7175 8.8 through-bolts with self-locking nuts and flat washers. The main body houses the output shaft bearing seats, oil drain and fill plugs, and mounting feet for floor fixation. The cover houses the large input shaft bearing and the oil sight glass. Two shaft cover plates on the main body retain the outer races of the output shaft bearings.",
+        placeholders: ["Main Housing", "Housing Cover"],
       },
       {
         title: "Shaft Design",
-        content: "Both shafts were made from 42CrMo4 steel (ISO 683-2) and underwent quenching and tempering for optimal hardness and toughness. The input shaft has the pinion machined directly onto it due to the similar diameters, plus a motor coupling flange at one end. The output shaft features a keyway (DIN 6885 A 14×9×20) for the output gear wheel, a retaining ring groove (DIN 471 55×2) for axial fixing, and a threaded hole for coupling external equipment. Both shafts were designed with steps (shoulders) for axial positioning of bearings, gears, and seals, with precision surface finishes at bearing contact zones.",
-        placeholders: ["Input Shaft (CAD)", "Output Shaft (CAD)"]
-      }
+        content:
+          "Both shafts were designed in 42CrMo4 steel (ISO 683-2), quenched and tempered for optimal strength and toughness. The input shaft has the 18-tooth pinion machined directly onto it, a hollow bore (24 mm inner diameter, \u226529.3 mm outer diameter) for the motor coupling, and a motor flange at the drive end. The shaft is stepped to provide axial shoulders for both angular contact bearings. The output shaft features a DIN 6885 A keyway (14\u00d79\u00d720 mm) for the output gear wheel, a DIN 471 retaining ring groove (55\u00d72 mm) for axial fixing of the wheel, and a threaded central hole for external coupling. Both shafts have precision ground surfaces at bearing seats and fine surface finishes at sealing surfaces to ensure proper fit and oil retention.",
+        placeholders: ["Input Shaft", "Output Shaft"],
+      },
+      {
+        title: "Manufactured Components",
+        content:
+          "Beyond the housing and shafts, several additional components were designed and manufactured. The flange is made from 42CrMo4 steel, machined and surface-treated to connect the drive motor to the reducer input. Its dimensions are standardised and it features a pilot bore for motor centring and bolt holes for attachment. The output shaft cover retains the outer race of one deep groove ball bearing and incorporates an SKF CRW1 oil retainer groove, an O-ring groove for sealing, and additional holes for retainer extraction. The input shaft cover similarly retains the outer race of the smaller angular contact bearing and features an O-ring groove and bolt holes. The spacer shims are laser-cut from 0.2 mm AISI 304 stainless steel sheet. They are used to pre-load the angular contact bearings on the input shaft: the cover is first fitted without shims, the required gap is measured, and then shims of the correct total thickness are inserted before final assembly. The centering pins are hollow cylindrical pins machined from AISI 304 stainless steel that allow the assembly bolts to pass through while precisely centring the housing cover on the main body.",
+        placeholders: [
+          "Flange",
+          "Output Shaft Cover",
+          "Input Shaft Cover",
+          "Spacer Shim",
+          "Centering Pin",
+        ],
+      },
     ],
+    methodologyPlaceholders: [],
     results:
-      "The gear engagement forces were calculated from the output torque and primitive radius. The tangential force was F_t = 780 / (160.44/2 × 10⁻³) = 9.72 kN. The radial force was F_r = F_t × tan(α₀)/cos(β₀) = 3.89 kN, the axial force F_a = F_t × tan(β₀) = 4.43 kN, and the total resultant force F = 11.37 kN.",
+      "The gear engagement forces were calculated from the output torque and primitive radius. The tangential force F\u209c = 780 / (160.44/2 \u00d7 10\u207b\u00b3) = 9.72 kN. The radial force F\u1d63 = F\u209c\u00b7tan(\u03b1\u2080)/cos(\u03b2\u2080) = 3.89 kN, the axial force F\u2090 = F\u209c\u00b7tan(\u03b2\u2080) = 4.43 kN, and the total resultant F = 11.37 kN. These forces, combined with the 4.5 kN external radial load on the output shaft, drive the bearing verification calculations.",
     resultsSections: [
       {
         title: "Output Shaft Bearing Verification",
-        content: "The output shaft uses two deep groove ball bearings (SKF 6210 and SKF 6209) in a fixed-free arrangement. Using force and moment equilibrium with the 4.5 kN external radial force and the gear engagement forces, the bearing reactions were calculated. The fixed bearing (SKF 6210) carries a radial load of 11.89 kN and an axial load of 4.43 kN, while the free bearing (SKF 6209) carries 5.98 kN radially. Both bearings were verified to meet the 10,000-hour life requirement.",
-        placeholders: ["Output Shaft Force Diagram", "Bearing Arrangement Detail"]
+        content:
+          "The output shaft uses two deep groove ball bearings (SKF 6210 and SKF 6209) in a fixed-free arrangement. The fixed bearing (SKF 6210) carries all axial load and is retained by a KM lock nut on the inner race and a shaft cover on the outer race. Applying force and moment equilibrium with the external 4.5 kN radial force and the gear engagement forces, the reactions at the bearings are: F\u1d63\u1d54\u1d52\u1d57D = 11.89 kN and F\u1d63\u1d54\u1d52\u1d57E = 5.98 kN radially, with the fixed bearing also carrying 4.43 kN axially. Using the SKF dynamic load rating formula C = (L\u210e \u00b7 60n / 10\u2076)\u00b9\u2044\u00b3 \u00b7 F\u1d48\u1d52\u1d50\u1d47 confirms both bearings satisfy the 10,000-hour life requirement at 1,450/4.06 = 357 rpm output speed.",
+        placeholders: ["Output Shaft Force Diagram"],
       },
       {
         title: "Input Shaft Bearing Verification",
-        content: "The input shaft uses two angular contact ball bearings (SKF 7208 BECBP and SKF 7203 BECBP) mounted in an X-arrangement. Without external forces, the bearing loads come solely from gear engagement. The total radial reactions were 4.85 kN (bearing A) and 5.62 kN (bearing B). After applying SKF's load calculation methodology for angular contact bearings with the appropriate X and Y factors, the combined dynamic loads were determined. The analysis revealed that these bearings, particularly the smaller SKF 7203, would not reach the 10,000-hour target, indicating that larger bearings would be needed for production.",
-        placeholders: ["Input Shaft Force Diagram", "Angular Contact Bearing Specification"]
+        content:
+          "The input shaft uses two angular contact ball bearings (SKF 7208 BECBP and SKF 7203 BECBP) mounted in an X-arrangement, pre-loaded via the input shaft cover and spacer shims. Without external forces, bearing loads come solely from gear engagement. Equilibrium gives total radial reactions of F\u1d63\u1d54\u1d52\u1d57A = 4.85 kN (bearing A, SKF 7203) and F\u1d63\u1d54\u1d52\u1d57B = 5.62 kN (bearing B, SKF 7208). The axial load condition yields F\u2090A = 9.36 kN and F\u2090B = 4.93 kN. For bearing B, F\u2090B/F\u1d63B \u2264 e (1.14), so the combined load equals the radial load: 5.62 kN. For bearing A, F\u2090A/F\u1d63A > e, so the combined load is F\u1d48\u1d52\u1d50\u1d47A = X\u00b7F\u1d63A + Y\u00b7F\u2090A = 0.35\u00d74.85 + 0.57\u00d79.36 = 7.03 kN. Applying the SKF life formula, bearing A reaches only 44 hours and bearing B 3,147 hours \u2014 both far below the 10,000-hour target. These bearings are undersized for this application; significantly larger angular contact bearings would be required in production.",
+        placeholders: [
+          "Input Shaft Force Diagram",
+          "SKF 7208 Dimensions",
+          "SKF 7208 Calculation Data",
+          "SKF 7203 Dimensions",
+          "SKF 7203 Calculation Data",
+        ],
       },
       {
-        title: "Purchased & Manufactured Components",
-        content: "The design specified all purchased components in detail: four types of bearings (SKF 7208 BECBP, 7203 BECBP, 6210, 6209), multiple bolted connections (M12, M10, M8, M6 in various standards with washers and self-locking nuts), a DIN 6885 key, a DIN 471 retaining ring, a KM 9 lock nut with MB 9 washer, oil drain and fill plugs (Elesa Ganter TMB and TCD), an oil level sight glass (GN 743), fluorocarbon O-ring seals (RS-PRO), a nitrile rubber cord seal, and SKF CRW1 oil retainers for both shafts. All manufactured components — housing, cover, shafts, output gear wheel, flange, shaft covers, gauge shims, and centering pins — were specified with materials, manufacturing processes, heat treatments, and surface finishes.",
-        placeholders: []
-      }
+        title: "Purchased & Manufactured Components Summary",
+        content:
+          "The full bill of materials includes: four bearings (SKF 7208 BECBP, SKF 7203 BECBP, SKF 6210, SKF 6209); bolted connections in M12, M10, M8 and M6 with flat washers and self-locking nuts; a DIN 6885 key; a DIN 471 retaining ring; a KM 9 lock nut with MB 9 washer; Elesa Ganter TMB and TCD oil plugs; a GN 743 oil sight glass; fluorocarbon O-ring seals (RS-PRO); a nitrile rubber cord seal for the housing split joint; and SKF CRW1 oil retainers for both shaft exits. All manufactured parts \u2014 housing, cover, input shaft, output shaft, output gear wheel, flange, shaft covers, spacer shims and centering pins \u2014 were fully specified with materials, manufacturing processes, heat treatments and surface finish requirements.",
+        placeholders: [],
+      },
     ],
-    methodologyPlaceholders: [],
     resultsPlaceholders: [],
     lessons:
-      "This project provided deep hands-on experience in integrated mechanical system design. Key takeaways included: (1) production volume fundamentally drives manufacturing decisions — the 6,000-unit run made sand casting the clear choice over CNC machining for the housing; (2) designing for casting requires careful attention to draft angles, uniform wall thickness, and post-machining operations; (3) bearing selection is critical and must account for combined radial and axial loads — the input shaft bearing analysis revealed that the initially selected bearings were undersized, highlighting the importance of thorough verification calculations; (4) assembly sequence planning is essential and influences geometric design decisions like shoulder heights, seal groove positions, and bolt access; (5) specifying every component down to the bolt standard, material grade, and catalogue reference is crucial for reproducible manufacturing at scale.",
+      "This project provided deep hands-on experience in integrated mechanical system design. Key takeaways included: (1) production volume fundamentally drives manufacturing decisions \u2014 the 6,000-unit run made sand casting the clear choice over CNC machining for the housing; (2) designing for casting requires careful attention to draft angles, uniform wall thickness and post-machining operations; (3) bearing selection is critical and must account for combined radial and axial loads \u2014 the input shaft bearing analysis revealed both SKF 7203 and 7208 were undersized, reaching only 44 and 3,147 hours respectively against a 10,000-hour target, highlighting the importance of thorough verification calculations; (4) assembly sequence planning influences geometric design decisions such as shoulder heights, seal groove positions and bolt access; (5) specifying every component down to the bolt standard, material grade and catalogue reference is essential for reproducible manufacturing at scale.",
     supplementary: [
       {
         title: "Assembly Procedure",
-        content: "The assembly follows a carefully defined sequence. First, the SKF 6210 bearing is mounted onto the output shaft using an SKF mounting tool, followed by the KM lock nut and MB washer. The shaft is then inserted into the main housing. The output shaft cover (with oil retainer pre-installed) is bolted on with M8 screws. Next, the keyway and output gear wheel are installed, secured by the retaining ring. The remaining bearings are mounted on both shafts. The input shaft is installed into the housing cover with its large bearing seated. The cover is then carefully positioned using centering pins, engaging both shaft bearings and the gear mesh simultaneously. The two housing halves are joined with six M12×175 bolts. Finally, the flange, shaft covers, oil plugs, sight glass, and seals are installed, and the housing is filled with ISO VG 68 lubricating oil."
+        content:
+          "The assembly follows a carefully defined sequence. First, the SKF 6210 bearing is pressed onto the output shaft using an SKF mounting tool until it seats against the shaft shoulder. The KM lock nut and MB safety washer are then fitted to secure the inner race. The shaft is inserted into the main housing through the large lower bore until the bearing seats in its housing recess. The output shaft cover (with SKF CRW1 oil retainer and O-ring pre-installed) is bolted on with M8 screws and flat washers. Next, the output gear wheel is fitted over the keyway and secured with the DIN 471 retaining ring. The remaining bearings are pressed onto both shafts. The input shaft is assembled into the housing cover with its large bearing (SKF 7208) seated in the cover bore. The cover is then carefully positioned onto the main housing using the two centering pins as guides \u2014 both gear meshes must engage simultaneously as the cover is lowered. The housing halves are joined with six M12\u00d7175 8.8 bolts, washers and self-locking nuts. The motor flange is bolted on with M10 cylindrical-head screws. Finally, the input shaft cover is fitted without shims first, the pre-load gap is measured, shims are selected to match the gap, and the cover is refitted with the O-ring and shim stack to achieve the correct angular contact bearing pre-load. The ISO VG 68 oil is filled through the top plug until it reaches the mid-level of the sight glass.",
       },
       {
         title: "Lubrication & Maintenance",
-        content: "The reducer uses ISO VG 68 oil, which provides adequate film formation for the helical gears and bearings. The oil level must reach the lower teeth of the output gear, visible through the lateral sight glass. Oil changes are required every 2,000 operating hours — drained through the magnetic drain plug (which also captures metal particles) and refilled through the top fill plug. Every 2,000 hours, the reducer should also be disassembled for internal component inspection. Sealing is ensured by fluorocarbon O-rings at shaft covers, a nitrile cord seal between housing halves, and SKF CRW1 oil retainers at both shaft exits."
-      }
+        content:
+          "The reducer uses ISO VG 68 oil, which provides adequate film formation for the helical gears and bearings at the operating speed. The oil level must wet the lower teeth of the output gear wheel, visible through the lateral GN 743 sight glass. Oil is filled through the Elesa Ganter TCD top plug and drained through the magnetic TMB bottom plug, which also captures metallic particles during operation. Oil changes are required every 2,000 operating hours. Every 2,000 hours the reducer should also be partially disassembled for internal component inspection. Sealing is ensured by fluorocarbon O-rings at both shaft covers, a nitrile cord seal at the housing split joint, and SKF CRW1 oil retainers at both shaft exits. For installation, the reducer is bolted to a level surface via its cast feet using M12 bolts, the motor is coupled to the input flange, and axial and angular alignment of the output shaft with the driven equipment must be verified before start-up.",
+      },
     ],
+    pdfUrl: undefined,
+    futureWork: undefined,
+    validation: undefined,
   },
 ];
