@@ -232,6 +232,12 @@ export const projectsData: Project[] = [
       "The gear engagement forces were calculated from the output torque and primitive radius. The tangential force F\u209c = 780 / (160.44/2 \u00d7 10\u207b\u00b3) = 9.72 kN. The radial force F\u1d63 = F\u209c\u00b7tan(\u03b1\u2080)/cos(\u03b2\u2080) = 3.89 kN, the axial force F\u2090 = F\u209c\u00b7tan(\u03b2\u2080) = 4.43 kN, and the total resultant F = 11.37 kN. These forces, combined with the 4.5 kN external radial load on the output shaft, drive the bearing verification calculations.",
     resultsSections: [
       {
+        title: "Complete Assembly",
+        content:
+          "The final design integrates all components into a compact cast iron housing. The input shaft enters from the top via the motor flange, the output shaft exits horizontally, and the cast mounting feet fix the reducer to the factory floor. The figures below show the front and side views of the complete assembly.",
+        placeholders: ["Complete Design — Front View", "Complete Design — Side View"],
+      },
+      {
         title: "Output Shaft Bearing Verification",
         content:
           "The output shaft uses two deep groove ball bearings (SKF 6210 and SKF 6209) in a fixed-free arrangement. The fixed bearing (SKF 6210) carries all axial load and is retained by a KM lock nut on the inner race and a shaft cover on the outer race. Applying force and moment equilibrium with the external 4.5 kN radial force and the gear engagement forces, the reactions at the bearings are: F\u1d63\u1d54\u1d52\u1d57D = 11.89 kN and F\u1d63\u1d54\u1d52\u1d57E = 5.98 kN radially, with the fixed bearing also carrying 4.43 kN axially. Using the SKF dynamic load rating formula C = (L\u210e \u00b7 60n / 10\u2076)\u00b9\u2044\u00b3 \u00b7 F\u1d48\u1d52\u1d50\u1d47 confirms both bearings satisfy the 10,000-hour life requirement at 1,450/4.06 = 357 rpm output speed.",
