@@ -36,6 +36,7 @@ const ProjectsSection = () => {
                     src={project.image}
                     alt={project.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
                   />
                   <div className="absolute top-3 left-3">
                     <Badge variant="secondary" className="text-xs">
