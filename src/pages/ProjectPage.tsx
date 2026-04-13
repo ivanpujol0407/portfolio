@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, User, FileText } from "lucide-react";
@@ -166,7 +166,14 @@ const chartTooltipStyle = {
   color: "hsl(var(--foreground))"
 };
 
-const CrosshairCursor = (props: any) => {
+interface CrosshairCursorProps {
+  points?: { cx?: number; x?: number; cy?: number; y?: number }[];
+  width?: number;
+  height?: number;
+  top?: number;
+  left?: number;
+}
+const CrosshairCursor = (props: CrosshairCursorProps) => {
   const { points, width, height, top, left } = props;
   if (!points || !points.length) return null;
 
@@ -214,7 +221,7 @@ const BaseSizeChart = ({ figureNumber }: {figureNumber: number;}) =>
         <span>↕ 0.57%</span>
       </div>
     </div>
-    <figcaption className="mt-2 text-sm text-muted-foreground text-center">Figure 4: Drag area vs Base size. Percentage errors comparing the selected base size with the finest and coarsest mesh cases. 
+    <figcaption className="mt-2 text-sm text-muted-foreground text-center">
     <span style={{ color: "#63ab85", fontWeight: 600 }}>Figure {figureNumber}:</span> Drag area vs Base size. Percentage errors comparing the selected base size with the finest and coarsest mesh cases. Fitted function: f(x) = -0.00009x + 0.506
     </figcaption>
   </figure>;
@@ -517,8 +524,9 @@ const ProjectPage = () => {
   const methodPlaceholders = project.methodologyPlaceholders || ["CFD Mesh Visualization", "Boundary Conditions Setup"];
   const resPlaceholders = project.resultsPlaceholders || ["Pressure Contour Plot", "Velocity Streamlines", "Before / After Comparison"];
 
-  let figureCount = 0;
-  const nextFigure = () => ++figureCount;
+  const figureCountRef = useRef(0);
+  figureCountRef.current = 0;
+  const nextFigure = () => ++figureCountRef.current;
 
   // For speedway, render custom results section
   const renderSpeedwayResults = () => {
@@ -602,7 +610,12 @@ const ProjectPage = () => {
 
             {/* Cover image */}
             <div className="rounded-lg overflow-hidden aspect-video mb-8 border border-border">
-              <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-full object-cover"
+                onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
+              />
             </div>
 
             {/* Header */}
