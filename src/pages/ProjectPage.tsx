@@ -3,7 +3,6 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, User, FileText } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { projectsData } from "@/data/projectsData";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -113,7 +112,7 @@ const Figure = ({ src, legendSrc, alt, caption, figureNumber, size = "lg" }: Fig
       <img src={src} alt={alt} className="w-full h-auto object-contain" />
     </div>
     <figcaption className="mt-2 text-sm text-muted-foreground text-center">
-      <span style={{ color: "#63ab85", fontWeight: 600 }}>Figure {figureNumber}:</span> {caption}
+      <span className="font-mono text-xs font-semibold text-primary">Figure {figureNumber}:</span> {caption}
     </figcaption>
   </figure>;
 
@@ -140,7 +139,7 @@ const MultiFigure = ({ images, legendSrc, caption, figureNumber }: MultiFigurePr
     )}
     </div>
     <figcaption className="mt-2 text-sm text-muted-foreground text-center">
-      <span style={{ color: "#63ab85", fontWeight: 600 }}>Figure {figureNumber}:</span> {caption}
+      <span className="font-mono text-xs font-semibold text-primary">Figure {figureNumber}:</span> {caption}
     </figcaption>
   </figure>;
 
@@ -245,7 +244,7 @@ const BaseSizeChart = ({ figureNumber }: {figureNumber: number;}) =>
       </div>
     </div>
     <figcaption className="mt-2 text-sm text-muted-foreground text-center">
-    <span style={{ color: "#63ab85", fontWeight: 600 }}>Figure {figureNumber}:</span> Drag area vs Base size. Percentage errors comparing the selected base size with the finest and coarsest mesh cases. Fitted function: f(x) = -0.00009x + 0.506
+    <span className="font-mono text-xs font-semibold text-primary">Figure {figureNumber}:</span> Drag area vs Base size. Percentage errors comparing the selected base size with the finest and coarsest mesh cases. Fitted function: f(x) = -0.00009x + 0.506
     </figcaption>
   </figure>;
 
@@ -282,7 +281,7 @@ const PrismLayerChart = ({ figureNumber }: {figureNumber: number;}) =>
       </div>
     </div>
     <figcaption className="mt-2 text-sm text-muted-foreground text-center">
-      <span style={{ color: "#63ab85", fontWeight: 600 }}>Figure {figureNumber}:</span> Average drag area vs Number of prism layers. Percentage error comparing highest and lowest number of prism layers
+      <span className="font-mono text-xs font-semibold text-primary">Figure {figureNumber}:</span> Average drag area vs Number of prism layers. Percentage error comparing highest and lowest number of prism layers
     </figcaption>
   </figure>;
 
@@ -317,7 +316,7 @@ const TimeStepChart = ({ figureNumber }: {figureNumber: number;}) =>
       </ResponsiveContainer>
     </div>
     <figcaption className="mt-2 text-sm text-muted-foreground text-center">
-      <span style={{ color: "#63ab85", fontWeight: 600 }}>Figure {figureNumber}:</span> Drag area vs Non-dimensional time step Δt U/L
+      <span className="font-mono text-xs font-semibold text-primary">Figure {figureNumber}:</span> Drag area vs Non-dimensional time step Δt U/L
     </figcaption>
   </figure>;
 
@@ -352,7 +351,7 @@ const ValidationTable = ({ figureNumber }: {figureNumber: number;}) =>
       </table>
     </div>
     <figcaption className="mt-2 text-sm text-muted-foreground text-center">
-      <span style={{ color: "#63ab85", fontWeight: 600 }}>Table {figureNumber}:</span> Comparison of wind tunnel results vs CFD results. C<sub>D</sub>A values converted to full scale.
+      <span className="font-mono text-xs font-semibold text-primary">Table {figureNumber}:</span> Comparison of wind tunnel results vs CFD results. C<sub>D</sub>A values converted to full scale.
     </figcaption>
   </figure>;
 
@@ -599,7 +598,7 @@ const GripperOptimisationChart = ({ figureNumber }: { figureNumber: number }) =>
       </table>
     </div>
     <figcaption className="mt-2 text-sm text-muted-foreground text-center">
-      <span style={{ color: "#63ab85", fontWeight: 600 }}>Table {figureNumber}:</span> Comparison of initial and optimised gripper designs. Volume and mass reduced by ~70%, while mechanical and mass efficiency significantly improved.
+      <span className="font-mono text-xs font-semibold text-primary">Table {figureNumber}:</span> Comparison of initial and optimised gripper designs. Volume and mass reduced by ~70%, while mechanical and mass efficiency significantly improved.
     </figcaption>
   </figure>
 );
@@ -693,6 +692,11 @@ const ProjectPage = () => {
   const project = projectsData.find((p) => p.id === id);
   const isSpeedway = id === "speedway-aerodynamics";
 
+  // Hook must run unconditionally (before any early return)
+  const figureCountRef = useRef(0);
+  figureCountRef.current = 0;
+  const nextFigure = () => ++figureCountRef.current;
+
   if (!project) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -706,10 +710,6 @@ const ProjectPage = () => {
 
   const methodPlaceholders = project.methodologyPlaceholders || ["CFD Mesh Visualization", "Boundary Conditions Setup"];
   const resPlaceholders = project.resultsPlaceholders || ["Pressure Contour Plot", "Velocity Streamlines", "Before / After Comparison"];
-
-  const figureCountRef = useRef(0);
-  figureCountRef.current = 0;
-  const nextFigure = () => ++figureCountRef.current;
 
   // For speedway, render custom results section
   const renderSpeedwayResults = () => {
@@ -742,7 +742,7 @@ const ProjectPage = () => {
         
 
         {/* New design */}
-        <h3 className="text-lg font-semibold mt-8 mb-3">New Front Design</h3>
+        <h3 className="text-base font-bold tracking-tight mt-8 mb-3"><span className="font-mono text-[0.62rem] tracking-[0.2em] uppercase text-primary block mb-1.5">Design Proposal</span>New Front Design</h3>
         <p className="text-muted-foreground leading-relaxed">{speedwayResultsText.newDesign}</p>
 
         <Figure src={cpNewDesign} legendSrc={cpLegendImg} alt="Pressure coefficient new design" caption="Streamwise pressure coefficient for the new front design." figureNumber={nextFigure()} />
@@ -797,7 +797,7 @@ const ProjectPage = () => {
             </Button>
 
             {/* Cover image */}
-            <div className="rounded-lg overflow-hidden aspect-video mb-8 border border-border">
+            <div className="overflow-hidden aspect-video mb-10 border border-border">
               <img
                 src={project.image}
                 alt={project.title}
@@ -807,9 +807,9 @@ const ProjectPage = () => {
             </div>
 
             {/* Header */}
-            <Badge variant="secondary" className="mb-4">{project.tag}</Badge>
-            <h1 className="text-4xl font-bold mb-4">{project.title}</h1>
-            <div className="flex flex-wrap gap-6 text-sm text-muted-foreground mb-12">
+            <span className="inline-block mb-5 font-mono text-[0.6rem] tracking-[0.12em] uppercase text-primary border border-primary/30 bg-primary/10 px-2.5 py-1">{project.tag}</span>
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.08] mb-5">{project.title}</h1>
+            <div className="flex flex-wrap gap-6 font-mono text-[0.72rem] text-muted-foreground mb-12 border-y border-border py-3">
               <span className="flex items-center gap-2"><Calendar className="h-4 w-4" />{project.date}</span>
               <span className="flex items-center gap-2"><User className="h-4 w-4" />{project.role}</span>
             </div>
@@ -818,13 +818,13 @@ const ProjectPage = () => {
             <div className="space-y-12">
               {/* Overview */}
               <section>
-                <h2 className="text-xl font-semibold mb-4 text-primary">Overview</h2>
+                <h2 className="flex items-center gap-3 mb-5 text-lg font-bold tracking-tight"><span className="inline-block w-1 h-4 bg-primary flex-shrink-0" aria-hidden="true" /><span>Overview</span><span className="flex-1 h-px bg-border ml-2" aria-hidden="true" /></h2>
                 <p className="text-muted-foreground leading-relaxed">{project.overview}</p>
               </section>
 
               {/* Objectives */}
               <section>
-                <h2 className="text-xl font-semibold mb-4 text-primary">Objectives</h2>
+                <h2 className="flex items-center gap-3 mb-5 text-lg font-bold tracking-tight"><span className="inline-block w-1 h-4 bg-primary flex-shrink-0" aria-hidden="true" /><span>Objectives</span><span className="flex-1 h-px bg-border ml-2" aria-hidden="true" /></h2>
                 <ul className="space-y-2">
                   {project.objectives.map((obj, i) =>
                   <li key={i} className="flex items-start gap-3 text-muted-foreground">
@@ -837,7 +837,7 @@ const ProjectPage = () => {
 
               {/* Methodology */}
               <section>
-                <h2 className="text-xl font-semibold mb-4 text-primary">Methodology</h2>
+                <h2 className="flex items-center gap-3 mb-5 text-lg font-bold tracking-tight"><span className="inline-block w-1 h-4 bg-primary flex-shrink-0" aria-hidden="true" /><span>Methodology</span><span className="flex-1 h-px bg-border ml-2" aria-hidden="true" /></h2>
                 <p className="text-muted-foreground leading-relaxed">{project.methodology}</p>
 
                 <div className="mt-6 space-y-4">
@@ -898,7 +898,7 @@ const ProjectPage = () => {
               {/* Validation */}
               {project.validation &&
               <section>
-                  <h2 className="text-xl font-semibold mb-4 text-primary">Validation</h2>
+                  <h2 className="flex items-center gap-3 mb-5 text-lg font-bold tracking-tight"><span className="inline-block w-1 h-4 bg-primary flex-shrink-0" aria-hidden="true" /><span>Validation</span><span className="flex-1 h-px bg-border ml-2" aria-hidden="true" /></h2>
                   <p className="text-muted-foreground leading-relaxed">{project.validation}</p>
                   {isSpeedway &&
                 <div className="mt-6 space-y-4">
@@ -918,7 +918,7 @@ const ProjectPage = () => {
 
               {/* Results & Impact */}
               <section>
-                <h2 className="text-xl font-semibold mb-4 text-primary">Results & Impact</h2>
+                <h2 className="flex items-center gap-3 mb-5 text-lg font-bold tracking-tight"><span className="inline-block w-1 h-4 bg-primary flex-shrink-0" aria-hidden="true" /><span>Results & Impact</span><span className="flex-1 h-px bg-border ml-2" aria-hidden="true" /></h2>
                 <p className="text-muted-foreground leading-relaxed">{project.results}</p>
                 {isSpeedway ?
                 <div className="mt-6 space-y-4">
@@ -956,7 +956,7 @@ const ProjectPage = () => {
               {isGearbox && project.supplementary && project.supplementary.length > 0 &&
                 project.supplementary.map((item, i) => (
                   <section key={`supp-gearbox-${i}`}>
-                    <h2 className="text-xl font-semibold mb-4 text-primary">{item.title}</h2>
+                    <h2 className="flex items-center gap-3 mb-5 text-lg font-bold tracking-tight"><span className="inline-block w-1 h-4 bg-primary flex-shrink-0" aria-hidden="true" /><span>{item.title}</span><span className="flex-1 h-px bg-border ml-2" aria-hidden="true" /></h2>
                     <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{item.content}</p>
                   </section>
                 ))
@@ -966,7 +966,7 @@ const ProjectPage = () => {
               {isGripper && project.supplementary && project.supplementary.length > 0 &&
                 project.supplementary.map((item, i) => (
                   <section key={`supp-${i}`}>
-                    <h2 className="text-xl font-semibold mb-4 text-primary">{item.title}</h2>
+                    <h2 className="flex items-center gap-3 mb-5 text-lg font-bold tracking-tight"><span className="inline-block w-1 h-4 bg-primary flex-shrink-0" aria-hidden="true" /><span>{item.title}</span><span className="flex-1 h-px bg-border ml-2" aria-hidden="true" /></h2>
                     <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{item.content}</p>
                     {item.title === "Design Optimisation" && (
                       <div className="mt-6">
@@ -986,14 +986,14 @@ const ProjectPage = () => {
 
               {/* Lessons Learned */}
               <section>
-                <h2 className="text-xl font-semibold mb-4 text-primary">Lessons Learned</h2>
+                <h2 className="flex items-center gap-3 mb-5 text-lg font-bold tracking-tight"><span className="inline-block w-1 h-4 bg-primary flex-shrink-0" aria-hidden="true" /><span>Lessons Learned</span><span className="flex-1 h-px bg-border ml-2" aria-hidden="true" /></h2>
                 <p className="text-muted-foreground leading-relaxed">{project.lessons}</p>
               </section>
 
               {/* Future Work */}
               {project.futureWork &&
               <section>
-                  <h2 className="text-xl font-semibold mb-4 text-primary">Future Work</h2>
+                  <h2 className="flex items-center gap-3 mb-5 text-lg font-bold tracking-tight"><span className="inline-block w-1 h-4 bg-primary flex-shrink-0" aria-hidden="true" /><span>Future Work</span><span className="flex-1 h-px bg-border ml-2" aria-hidden="true" /></h2>
                   <p className="text-muted-foreground leading-relaxed">{project.futureWork}</p>
                 </section>
               }
