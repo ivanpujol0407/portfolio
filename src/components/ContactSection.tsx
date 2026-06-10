@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { Mail, Phone, MapPin, Linkedin, Send, CheckCircle } from "lucide-react";
+import SectionHeading from "@/components/SectionHeading";
+
+const inputCls =
+  "w-full bg-transparent border-0 border-b border-border rounded-none px-0.5 py-2.5 font-mono text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary transition-colors";
+
+const labelCls =
+  "font-mono text-[0.62rem] tracking-[0.18em] uppercase text-muted-foreground";
 
 const ContactSection = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -63,41 +67,35 @@ const ContactSection = () => {
   return (
     <section id="contact" className="py-24">
       <div className="container mx-auto px-4">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-3xl font-bold mb-12"
-        >
-          Get in Touch
-        </motion.h2>
+        <SectionHeading eyebrow="Contact" title="Get in Touch" />
 
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid md:grid-cols-2 gap-px bg-border border border-border">
           {/* Info */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            className="bg-card p-8"
           >
-            <h3 className="text-xl font-semibold mb-4">
+            <h3 className="text-xl font-bold tracking-tight mb-4">
               Let's build something great together.
             </h3>
-            <p className="text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-muted-foreground mb-8 leading-relaxed text-[0.95rem]">
               Have a question about my portfolio or want to discuss a potential collaboration? I am currently available for roles in R&D and Mechanical Engineering. Drop me a message below or send me an email, and I'll get back to you shortly.
             </p>
 
-            <div className="space-y-4 mb-8">
+            <div className="space-y-4 mb-10">
               <a href="mailto:ivanpujol0407@gmail.com" className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
                 <Mail className="h-4 w-4 text-primary" />
-                <span className="text-sm">ivanpujol0407@gmail.com</span>
+                <span className="font-mono text-[0.78rem]">ivanpujol0407@gmail.com</span>
               </a>
               <a href="tel:+4555264952" className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
                 <Phone className="h-4 w-4 text-primary" />
-                <span className="text-sm">+45 55 26 49 52</span>
+                <span className="font-mono text-[0.78rem]">+45 55 26 49 52</span>
               </a>
               <div className="flex items-center gap-3 text-muted-foreground">
                 <MapPin className="h-4 w-4 text-primary" />
-                <span className="text-sm">Copenhagen, Denmark</span>
+                <span className="font-mono text-[0.78rem]">Copenhagen, Denmark</span>
               </div>
               <a
                 href="https://www.linkedin.com/in/ivanpujolvidal/"
@@ -106,16 +104,18 @@ const ContactSection = () => {
                 className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Linkedin className="h-4 w-4 text-primary" />
-                <span className="text-sm">LinkedIn Profile</span>
+                <span className="font-mono text-[0.78rem]">LinkedIn Profile</span>
               </a>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="relative flex h-3 w-3">
+            <div className="inline-flex items-center gap-2.5 border border-primary/30 bg-primary/10 px-3 py-2">
+              <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
-              <span className="text-sm text-muted-foreground">Open to Opportunities</span>
+              <span className="font-mono text-[0.65rem] tracking-[0.14em] uppercase text-primary">
+                Open to Opportunities
+              </span>
             </div>
           </motion.div>
 
@@ -125,33 +125,36 @@ const ContactSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
+            className="bg-card p-8"
           >
             {submitted ? (
               <div className="flex flex-col items-center justify-center h-full text-center gap-4">
                 <CheckCircle className="h-12 w-12 text-primary" />
-                <h3 className="text-xl font-semibold">Message Sent!</h3>
+                <h3 className="text-xl font-bold tracking-tight">Message Sent!</h3>
                 <p className="text-muted-foreground">Thank you for reaching out. I'll get back to you soon.</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <Label htmlFor="name">Name</Label>
-                  <Input id="name" name="name" placeholder="Your name" required className="mt-1" />
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className={labelCls}>Name</label>
+                    <input id="name" name="name" placeholder="Your name" required className={`${inputCls} mt-1.5`} />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className={labelCls}>Email</label>
+                    <input id="email" name="email" type="email" placeholder="your@email.com" required className={`${inputCls} mt-1.5`} />
+                  </div>
                 </div>
                 <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" name="email" type="email" placeholder="your@email.com" required className="mt-1" />
+                  <label htmlFor="subject" className={labelCls}>Subject</label>
+                  <input id="subject" name="subject" placeholder="Subject" required className={`${inputCls} mt-1.5`} />
                 </div>
                 <div>
-                  <Label htmlFor="subject">Subject</Label>
-                  <Input id="subject" name="subject" placeholder="Subject" required className="mt-1" />
-                </div>
-                <div>
-                  <Label htmlFor="message">Message</Label>
-                  <Textarea id="message" name="message" placeholder="Your message..." rows={5} required className="mt-1" />
+                  <label htmlFor="message" className={labelCls}>Message</label>
+                  <textarea id="message" name="message" placeholder="Your message..." rows={5} required className={`${inputCls} mt-1.5 resize-y`} />
                 </div>
                 {submitError && <p className="text-sm text-destructive">{submitError}</p>}
-                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
                   <Send className="mr-2 h-4 w-4" />
                   {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>

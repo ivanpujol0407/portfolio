@@ -1,42 +1,57 @@
 import { motion } from "framer-motion";
-import { Wind, Cpu, Box, PenTool, Layers, Gauge } from "lucide-react";
+import SectionHeading from "@/components/SectionHeading";
 
-const skills = [
-  { name: "STAR-CCM+", level: "Advanced", icon: Wind },
-  { name: "SolidWorks", level: "Proficient", icon: Box },
-  { name: "ANSYS", level: "Proficient", icon: Gauge },
-  { name: "3D Printing", level: "Proficient", icon: Cpu },
-  { name: "AutoCAD", level: "Proficient", icon: PenTool },
-  { name: "CFD", level: "Proficient", icon: Wind },
-  { name: "OpenFOAM", level: "Beginner", icon: Layers },
-  { name: "FEA", level: "Beginner", icon: Cpu },
+type Level = "Advanced" | "Proficient" | "Beginner";
+
+const levelValue: Record<Level, number> = { Advanced: 3, Proficient: 2, Beginner: 1 };
+
+const skills: { name: string; level: Level; domain: string }[] = [
+  { name: "STAR-CCM+", level: "Advanced", domain: "CFD" },
+  { name: "SolidWorks", level: "Proficient", domain: "CAD" },
+  { name: "ANSYS", level: "Proficient", domain: "Simulation" },
+  { name: "3D Printing", level: "Proficient", domain: "Prototyping" },
+  { name: "AutoCAD", level: "Proficient", domain: "CAD" },
+  { name: "CFD", level: "Proficient", domain: "Simulation" },
+  { name: "OpenFOAM", level: "Beginner", domain: "CFD" },
+  { name: "FEA", level: "Beginner", domain: "Simulation" },
 ];
 
-const SkillsSection = () => (
-  <section id="skills" className="py-24">
-    <div className="container mx-auto px-4">
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-3xl font-bold mb-12"
-      >
-        Technical Arsenal
-      </motion.h2>
+const LevelMeter = ({ level }: { level: Level }) => (
+  <div className="flex items-center gap-1" aria-label={`Level: ${level}`}>
+    {[1, 2, 3].map((n) => (
+      <span
+        key={n}
+        className={`h-[3px] w-5 ${n <= levelValue[level] ? "bg-primary" : "bg-border"}`}
+      />
+    ))}
+  </div>
+);
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+const SkillsSection = () => (
+  <section id="skills" className="py-24 border-b border-border">
+    <div className="container mx-auto px-4">
+      <SectionHeading eyebrow="Capabilities" title="Technical Arsenal" />
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border border border-border">
         {skills.map((skill, i) => (
           <motion.div
             key={skill.name}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.3, delay: i * 0.05 }}
-            className="p-4 rounded-lg border border-border bg-card hover:border-primary/50 transition-colors group"
+            transition={{ duration: 0.3, delay: i * 0.04 }}
+            className="bg-card p-5 hover:bg-[hsl(0_0%_6%)] transition-colors"
           >
-            <skill.icon className="h-6 w-6 text-primary mb-3 group-hover:scale-110 transition-transform" />
-            <h3 className="font-semibold text-sm">{skill.name}</h3>
-            <p className="text-xs text-muted-foreground">{skill.level}</p>
+            <div className="font-mono text-[0.56rem] tracking-[0.16em] uppercase text-muted-foreground/60 mb-2">
+              {skill.domain}
+            </div>
+            <h3 className="font-semibold text-sm mb-3">{skill.name}</h3>
+            <div className="flex items-center justify-between">
+              <LevelMeter level={skill.level} />
+              <span className="font-mono text-[0.6rem] text-muted-foreground/70">
+                {skill.level}
+              </span>
+            </div>
           </motion.div>
         ))}
       </div>

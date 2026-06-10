@@ -6,8 +6,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 const navLinks = [
   { label: "About", href: "#about" },
   { label: "Projects", href: "#projects" },
-  { label: "Skills", href: "#skills" },
   { label: "Tools", href: "#tools" },
+  { label: "Skills", href: "#skills" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -77,7 +77,7 @@ const Navbar = () => {
       ref={menuRef}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-background/80 backdrop-blur-lg border-b border-border"
+          ? "bg-background/90 backdrop-blur-xl border-b border-border"
           : "bg-transparent"
       }`}
     >
@@ -87,13 +87,13 @@ const Navbar = () => {
             if (location.pathname !== "/") navigate("/");
             else window.scrollTo({ top: 0, behavior: "smooth" });
           }}
-          className="text-lg font-bold tracking-tight text-foreground hover:text-primary transition-colors"
+          className="text-base font-bold tracking-tight text-foreground hover:text-primary transition-colors"
         >
-          Ivan Pujol
+          Ivan Pujol<span className="text-primary">.</span>
         </button>
 
         {/* Desktop */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-7">
           {navLinks.map((link) => {
             const sectionId = link.href.replace("#", "");
             const isActive = activeSection === sectionId && location.pathname === "/";
@@ -101,9 +101,9 @@ const Navbar = () => {
               <button
                 key={link.href}
                 onClick={() => handleNavClick(link.href)}
-                className={`text-sm transition-colors ${
+                className={`font-mono text-[0.68rem] tracking-[0.16em] uppercase transition-colors ${
                   isActive
-                    ? "text-primary font-medium"
+                    ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -122,6 +122,7 @@ const Navbar = () => {
         {/* Mobile toggle */}
         <button
           className="md:hidden text-foreground"
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
           onClick={() => setMobileOpen(!mobileOpen)}
         >
           {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -130,7 +131,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-lg border-b border-border px-4 pb-4">
+        <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border px-4 pb-4">
           {navLinks.map((link) => {
             const sectionId = link.href.replace("#", "");
             const isActive = activeSection === sectionId && location.pathname === "/";
@@ -138,9 +139,9 @@ const Navbar = () => {
               <button
                 key={link.href}
                 onClick={() => handleNavClick(link.href)}
-                className={`block w-full text-left py-3 transition-colors ${
+                className={`block w-full text-left py-3 font-mono text-[0.72rem] tracking-[0.16em] uppercase transition-colors ${
                   isActive
-                    ? "text-primary font-medium"
+                    ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >

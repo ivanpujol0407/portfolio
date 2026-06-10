@@ -1,65 +1,62 @@
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { projectsData } from "@/data/projectsData";
+import SectionHeading from "@/components/SectionHeading";
 
 const ProjectsSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="projects" className="py-24">
+    <section id="projects" className="py-24 border-b border-border">
       <div className="container mx-auto px-4">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-3xl font-bold mb-12"
-        >
-          Featured Projects
-        </motion.h2>
+        <SectionHeading
+          eyebrow="Case Studies"
+          title="Featured Projects"
+          intro="Documented engineering work — methodology, validation and quantified results."
+        />
 
         <div className="grid md:grid-cols-3 gap-6">
           {projectsData.map((project, i) => (
-            <motion.div
+            <motion.article
               key={project.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+              onClick={() => navigate(`/project/${project.id}`)}
+              className="group cursor-pointer flex flex-col bg-card border border-border hover:border-primary/40 transition-colors"
             >
-              <Card className="overflow-hidden group cursor-pointer h-full flex flex-col bg-card border-border hover:border-primary/50 transition-colors">
-                <div className="relative overflow-hidden aspect-video">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
-                  />
-                  <div className="absolute top-3 left-3">
-                    <Badge variant="secondary" className="text-xs">
-                      {project.tag}
-                    </Badge>
-                  </div>
+              <div className="relative overflow-hidden aspect-video border-b border-border">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                  onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
+                />
+              </div>
+              <div className="p-6 flex flex-col flex-1">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="font-mono text-[0.58rem] tracking-[0.1em] uppercase text-muted-foreground border border-border bg-muted/40 px-2 py-[3px]">
+                    {project.tag}
+                  </span>
+                  <span className="font-mono text-[0.68rem] text-muted-foreground/70 tabular-nums">
+                    {project.date}
+                  </span>
                 </div>
-                <CardContent className="p-6 flex flex-col flex-1">
-                  <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-4 flex-1">
-                    {project.description}
-                  </p>
-                  <Button
-                    variant="ghost"
-                    className="w-fit p-0 h-auto text-primary hover:text-primary/80"
-                    onClick={() => navigate(`/project/${project.id}`)}
-                  >
-                    Read Case Study
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </CardContent>
-              </Card>
-            </motion.div>
+                <h3 className="text-lg font-bold tracking-tight mb-2 leading-snug">
+                  {project.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-5 flex-1">
+                  {project.description}
+                </p>
+                <span className="inline-flex items-center gap-2 font-mono text-[0.68rem] tracking-[0.12em] uppercase text-primary">
+                  Read Case Study
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                </span>
+              </div>
+            </motion.article>
           ))}
         </div>
       </div>

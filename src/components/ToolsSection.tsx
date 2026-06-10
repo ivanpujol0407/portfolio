@@ -1,12 +1,9 @@
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ExternalLink, Wind, Layers } from "lucide-react";
+import { ExternalLink } from "lucide-react";
+import SectionHeading from "@/components/SectionHeading";
 
 const tools = [
   {
-    icon: Layers,
     tag: "CFD Pre-Processing",
     title: "y⁺ Wall Calculator",
     description:
@@ -15,7 +12,6 @@ const tools = [
     features: ["External & Internal Flow", "Wall-resolved & Wall-modelled", "Prism Layer Sizing"],
   },
   {
-    icon: Wind,
     tag: "CFD Post-Processing",
     title: "GCI Mesh Convergence Calculator",
     description:
@@ -26,75 +22,54 @@ const tools = [
 ];
 
 const ToolsSection = () => (
-  <section id="tools" className="py-24">
+  <section id="tools" className="py-24 border-b border-border">
     <div className="container mx-auto px-4">
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-3xl font-bold mb-4"
-      >
-        Tools
-      </motion.h2>
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.05 }}
-        className="text-muted-foreground mb-12 max-w-xl"
-      >
-        Engineering utilities I built to support CFD and simulation workflows.
-      </motion.p>
+      <SectionHeading
+        eyebrow="Free Engineering Tools"
+        title="Tools"
+        intro="Engineering utilities I built to support CFD and simulation workflows — free, browser-based, no sign-up."
+      />
 
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 gap-6 max-w-5xl">
         {tools.map((tool, i) => (
-          <motion.div
+          <motion.a
             key={tool.title}
-            initial={{ opacity: 0, y: 30 }}
+            href={tool.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: i * 0.1 }}
+            transition={{ duration: 0.4, delay: i * 0.08 }}
+            className="group flex flex-col bg-card border border-border border-t-2 border-t-border hover:border-t-primary hover:border-primary/40 transition-colors p-7"
           >
-            <Card className="h-full flex flex-col bg-card border-border hover:border-primary/50 transition-colors group">
-              <CardContent className="p-6 flex flex-col flex-1">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                    <tool.icon className="h-5 w-5 text-primary" />
-                  </div>
-                  <Badge variant="secondary" className="text-xs">
-                    {tool.tag}
-                  </Badge>
-                </div>
+            <div className="flex items-center justify-between mb-5">
+              <span className="font-mono text-[0.58rem] tracking-[0.1em] uppercase text-primary border border-primary/30 bg-primary/10 px-2 py-[3px]">
+                {tool.tag}
+              </span>
+              <ExternalLink className="h-4 w-4 text-muted-foreground/60 transition-colors group-hover:text-primary" />
+            </div>
 
-                <h3 className="text-xl font-semibold mb-2">{tool.title}</h3>
-                <p className="text-sm text-muted-foreground mb-5 flex-1 leading-relaxed">
-                  {tool.description}
-                </p>
+            <h3 className="text-xl font-bold tracking-tight mb-3">{tool.title}</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-1">
+              {tool.description}
+            </p>
 
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {tool.features.map((f) => (
-                    <span
-                      key={f}
-                      className="text-xs font-mono px-2 py-1 rounded bg-muted text-muted-foreground border border-border"
-                    >
-                      {f}
-                    </span>
-                  ))}
-                </div>
-
-                <Button
-                  variant="ghost"
-                  className="w-fit p-0 h-auto text-primary hover:text-primary/80"
-                  asChild
+            <div className="flex flex-wrap gap-2 mb-6">
+              {tool.features.map((f) => (
+                <span
+                  key={f}
+                  className="font-mono text-[0.62rem] px-2 py-1 bg-muted/50 text-muted-foreground border border-border"
                 >
-                  <a href={tool.href} target="_blank" rel="noopener noreferrer">
-                    Open Tool
-                    <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-              </CardContent>
-            </Card>
-          </motion.div>
+                  {f}
+                </span>
+              ))}
+            </div>
+
+            <span className="inline-flex items-center gap-2 font-mono text-[0.68rem] tracking-[0.12em] uppercase text-primary">
+              Open Tool
+            </span>
+          </motion.a>
         ))}
       </div>
     </div>
