@@ -87,83 +87,193 @@ const PRINTER = {
 };
 
 export const projectsData: Project[] = [
-  // ===== Lamp 01 =====
-  // DRAFT: content comes from the lamp design chats. Replace TODO text before publishing.
+  // ===== Núvol lamp =====
   {
-    id: "lamp-01",
+    id: "nuvol-lamp",
     tag: "Personal project",
-    title: "Lamp 01",
-    subtitle: "3D-printed table lamp",
+    title: "Núvol Lamp",
+    subtitle: "A ribbed double-bubble table lamp with a quarter-turn bayonet",
     category: "Product design",
     badge: { label: "New", tone: "flame" },
-    tools: ["CAD", "FDM 3D printing", "Creality Ender-3 S1 Pro"],
-    description: "TODO: one-sentence description of the lamp.",
+    tools: ["Parametric CAD", "Orca Slicer", "Creality Ender-3 S1 Pro", "PLA"],
+    description:
+      "A Ø180 mm double-bubble lamp with 116 ribs and a 0.9 mm wall. The shade twists onto the base with a quarter-turn bayonet, and the bulb was chosen by calculation so both bubbles glow in the right proportion.",
     image: "",
     cardStyle: "render",
     date: "2026",
     role: "Designer and maker",
     printer: PRINTER,
     specs: [
-      { label: "Height", value: "TODO" },
-      { label: "Diameter", value: "TODO" },
-      { label: "Material", value: "TODO" },
-      { label: "Light source", value: "TODO" },
-      { label: "Printed parts", value: "TODO" },
-      { label: "Total print time", value: "TODO" },
+      { label: "Size (assembled)", value: "Ø180 × 186 mm" },
+      { label: "Shade", value: "2 bubbles, 116 ribs, 0.9 mm wall" },
+      { label: "Base", value: "Ø135 × 70 mm" },
+      { label: "Material", value: "PLA" },
+      { label: "Light source", value: "E27 LED P45, 4.9 W, 470 lm" },
+      { label: "Printed parts", value: "2, plus a bayonet test ring" },
+      { label: "Print time", value: "~16 h shade + ~6 h base" },
+      { label: "Shade to base", value: "Quarter-turn bayonet, 3 lugs" },
     ],
     parts: [
-      { name: "Shade", description: "TODO" },
-      { name: "Base", description: "TODO" },
+      {
+        name: "Shade",
+        description:
+          "Two ribbed bubbles printed as two 0.45 mm perimeters, so light passes through the wall. The collar at the bottom carries the three bayonet lugs, and the wall thickens gradually from 0.9 to 2.6 mm over 8 mm where it meets the collar.",
+        specs: [
+          { label: "Size", value: "Ø180 × 182 mm" },
+          { label: "Layer height", value: "0.16 mm" },
+          { label: "Walls", value: "2 × 0.45 mm, Arachne" },
+          { label: "Print time", value: "~16 h" },
+        ],
+      },
+      {
+        name: "Base",
+        description:
+          "Holds the E27 lampholder in a 60 mm column: the holder slides in from below, its shoulder rests on a 45° cone and the threaded ring locks it from above. Three bayonet channels with 30° ceilings take the shade, and a cable channel with anti-pull posts leads the cord out.",
+        specs: [
+          { label: "Size", value: "Ø135 × 70 mm" },
+          { label: "Layer height", value: "0.2 mm" },
+          { label: "Walls / infill", value: "3 / 15-20%" },
+          { label: "Print time", value: "~6 h" },
+        ],
+      },
+      {
+        name: "Bayonet test pieces",
+        description:
+          "Exact slices of the shade collar (Ø150 × 18 mm) and the base ring (Ø135 × 11.4 mm). Printing them first proved the bayonet fit before committing to the 22-hour full print.",
+        specs: [
+          { label: "Radial clearance", value: "0.35 mm" },
+          { label: "Lug clearance", value: "0.4 mm" },
+          { label: "Vertical play", value: "0.5 mm" },
+        ],
+      },
     ],
     gallery: [
-      { label: "The lamp switched on at night", aspect: "landscape" },
-      { label: "Detail of the printed texture", aspect: "portrait" },
-      { label: "On the desk, daylight", aspect: "portrait" },
+      { label: "Núvol switched on at night", aspect: "landscape" },
+      { label: "The ribs up close", aspect: "portrait" },
+      { label: "Shade and base before the quarter turn", aspect: "portrait" },
+      { label: "The bayonet test ring", aspect: "square" },
+      { label: "In daylight on the shelf", aspect: "square" },
     ],
-    overview: "TODO",
-    objectives: ["TODO"],
-    methodology: "TODO",
-    results: "TODO",
-    lessons: "TODO",
+    overview:
+      "Núvol is a table lamp made of two stacked ribbed bubbles. The shape started from a photo of a ribbed double-bubble lamp. I rebuilt it as a parametric CAD model and engineered everything needed to make it work on my own printer with parts from Danish hardware stores: how the shade attaches, how the lampholder is held, where the cable goes and which bulb to use. A first version was sized for an E14 bulb at Ø150 mm; the final one is Ø180 × 186 mm with an E27 bulb. It was printed in PLA on a Creality Ender-3 S1 Pro and assembled at home.",
+    objectives: [
+      "Keep the shade wall to two perimeters (0.9 mm) so it glows evenly, while staying strong enough to handle",
+      "Make the shade removable for bulb changes without tools: a quarter-turn bayonet with three lugs",
+      "Hold a standard threaded E27 lampholder securely, with the cable hidden and protected against pulling",
+      "Choose the bulb so the lower bubble glows at roughly the same fraction of the upper one as in the reference",
+      "Print everything without supports on a 220 × 220 × 270 mm bed",
+    ],
+    methodology:
+      "The shade is defined by a revolved profile with two bubbles and a waist, with 116 ribs whose depth fades out towards the collar. Every dimension is a parameter, so scaling from the Ø150 E14 version to the Ø180 E27 version meant changing a handful of numbers.\n\nBefore buying parts I estimated how much light each bubble would receive for different bulb positions, integrating the irradiance over the inside of the shade. With an A60 bulb the lower bubble would only reach about 24% of the upper one's brightness. A shorter P45 bulb gives about 42%, close to the roughly 40% measured on the reference photo, so I chose the P45 and dropped a 43 mm pedestal I had considered for centring the light.\n\nI measured the real lampholder with callipers and modelled the base around it. The holder enters from below through a column, its body step sits on a 45° cone and the threaded ring clamps it from the top. Every iteration was checked in CAD for interference between the shade, base, holder and bulb before printing.",
+    methodologySections: [
+      {
+        title: "Iterating with the printer",
+        content:
+          "Each physical print fed back into the model:\n\n• The bayonet test ring fitted first time, so its clearances (0.35 mm radial, 0.4 mm at the lugs, 0.5 mm vertical) became the reference for later designs.\n• The first shade cracked where the solid collar met the thin wall while removing it from the bed. I replaced the step with a gradual 8 mm taper and switched to an inner-only brim.\n• Flat ceilings on the bayonet channels left strings inside the base. Tilting them to 30° removed the strings while keeping enough retention.\n• The holder and cable were too tight on the first base. Version 5 opens the plate hole from Ø39.5 to Ø41, the column bore from Ø46 to Ø48 and the cable channel from 6 × 5 to 7 × 6 mm.",
+      },
+    ],
+    results:
+      "The lamp is printed, wired and assembled. The shade goes on and off with a quarter turn, and the P45 bulb sits where the calculation put it so both bubbles light up. Total print time is about 22 hours, and the bill of materials is around 150 DKK in filament, lampholder with switched cable, bulb and adhesive feet.",
+    lessons:
+      "This lamp turned into a set of rules I now apply to every print. Short holes for bought parts need about 3 mm of diametral clearance, and long bores where a part has to slide need about 6 mm. Cable channels need at least 2 mm extra width and 1 mm extra height over the cable. Never leave a flat ceiling hanging in the air: tilt it 30 to 45°. Never step from a solid section to a thin wall: taper it. And print a cheap slice of any fit before committing to a 16-hour part.",
   },
-  // ===== Lamp 02 =====
-  // DRAFT: content comes from the lamp design chats. Replace TODO text before publishing.
+  // ===== Gerro lamp =====
   {
-    id: "lamp-02",
+    id: "gerro-lamp",
     tag: "Personal project",
-    title: "Lamp 02",
-    subtitle: "3D-printed table lamp",
+    title: "Gerro Lamp",
+    subtitle: "A ribbed arch vase turned into a lamp with a printed glowing globe",
     category: "Product design",
     badge: { label: "New", tone: "flame" },
-    tools: ["CAD", "FDM 3D printing", "Creality Ender-3 S1 Pro"],
-    description: "TODO: one-sentence description of the lamp.",
+    tools: ["Parametric CAD", "Mesh editing", "Orca Slicer", "Creality Ender-3 S1 Pro", "PLA"],
+    description:
+      "A matte green ribbed arch with a fully closed Ø100 mm printed globe that hides an E14 bulb. The globe locks on with a 60° bayonet, and the whole assembly was simulated before the first print.",
     image: "",
     cardStyle: "render",
     date: "2026",
     role: "Designer and maker",
     printer: PRINTER,
     specs: [
-      { label: "Height", value: "TODO" },
-      { label: "Diameter", value: "TODO" },
-      { label: "Material", value: "TODO" },
-      { label: "Light source", value: "TODO" },
-      { label: "Printed parts", value: "TODO" },
-      { label: "Total print time", value: "TODO" },
+      { label: "Height", value: "~240 mm" },
+      { label: "Footprint", value: "120 × 120 mm" },
+      { label: "Globe", value: "Ø100 mm, 0.9 mm wall" },
+      { label: "Material", value: "Matte olive PLA, white PLA" },
+      { label: "Light source", value: "E14 LED, 2.2 W, 470 lm, 2700 K" },
+      { label: "Printed parts", value: "3, plus 2 repair pieces" },
+      { label: "Print time", value: "~19 h + ~5.5 h + ~3.5 h" },
+      { label: "Globe to body", value: "60° bayonet, 3 lugs" },
     ],
     parts: [
-      { name: "Shade", description: "TODO" },
-      { name: "Base", description: "TODO" },
+      {
+        name: "Body",
+        description:
+          "The ribbed arch, adapted from an existing vase model and scaled to 57%. Inside, I added a ledge with three notches for the support, an inclined Ø9 mm cable channel and, underneath, a pocket where the cable makes an S around two anti-pull posts before leaving through a groove at the back.",
+        specs: [
+          { label: "Material", value: "Matte olive PLA, ~190 g" },
+          { label: "Layer / walls / infill", value: "0.2 mm / 2 / 10%" },
+          { label: "Print time", value: "~19 h" },
+        ],
+      },
+      {
+        name: "Support",
+        description:
+          "A hidden insert that drops into the body and locks into the ledge notches. It clamps the E14 lampholder with a hollow M10 threaded tube and nut, with the cable running through the tube. Printed upside down without supports.",
+        specs: [
+          { label: "Infill", value: "40% gyroid" },
+          { label: "Print time", value: "~3.5 h, ~40 g" },
+        ],
+      },
+      {
+        name: "Globe",
+        description:
+          "A fully closed Ø100 mm sphere in plain white PLA, which lets more light through than matte. The wall is 0.9 mm and thickens gradually towards the collar, where three inward lugs lock it to the support with a 60° clockwise turn.",
+        specs: [
+          { label: "Layer height", value: "0.16 mm, 0.08 mm on the top 12 mm" },
+          { label: "Walls", value: "2" },
+          { label: "Print time", value: "~5.5 h, ~42 g" },
+        ],
+      },
+      {
+        name: "Repair pieces",
+        description:
+          "The body print stopped at 94% because of a corrupted SD card. I cut the missing top 10 mm from the original model into an arch cap and a mouth ring, plus a ribbed guide that keeps the ring coaxial while the glue sets, so the globe collar still passes the joint with 0.35 mm clearance.",
+        specs: [{ label: "Print time", value: "~2 h for all three" }],
+      },
     ],
     gallery: [
-      { label: "The lamp switched on at night", aspect: "landscape" },
-      { label: "Detail of the printed texture", aspect: "portrait" },
-      { label: "On the desk, daylight", aspect: "portrait" },
+      { label: "Gerro switched on at night", aspect: "landscape" },
+      { label: "Matte green ribs against the white globe", aspect: "portrait" },
+      { label: "Globe off: the bayonet and the E14 bulb", aspect: "portrait" },
+      { label: "The repaired joint at 132 mm", aspect: "square" },
+      { label: "Next to a book for scale", aspect: "square" },
     ],
-    overview: "TODO",
-    objectives: ["TODO"],
-    methodology: "TODO",
-    results: "TODO",
-    lessons: "TODO",
+    overview:
+      "Gerro (Catalan for vase) turns a ribbed arch vase into a table lamp. The body is adapted from the \"Modern Ribbed Arch Vase\", an existing 3D model, scaled to 57% and modified in CAD. Everything that makes it a lamp is my own: the hidden support for the lampholder, the cable routing through the body, and a printed globe that hides the bulb completely and twists off to change it. The lamp is about 24 cm tall with a 12 × 12 cm footprint.",
+    objectives: [
+      "Hide the bulb completely: the globe should be a closed sphere with no visible opening or flat cap",
+      "Make the globe removable with a twist so the bulb can be changed",
+      "Mount a standard E14 lampholder securely inside a narrow, curved tube",
+      "Route the cable invisibly through the body and protect it against pulling",
+      "Keep the globe cool enough for PLA",
+    ],
+    methodology:
+      "I went through three versions before printing. Version 1 kept the vase at 75% with a G125 glass globe bulb on top. Version 2 scaled it to 57% with a Ø95 globe bulb. Version 3, the one I built, replaces the glass globe with a printed Ø100 mm sphere around a slim E14 candle bulb, which means no special bulb to buy and a softer, more even glow.\n\nThe sphere sets two constraints. The bulb must be at most Ø35 mm so it fits through the globe's collar (Ø37.3 mm at the lugs) when the globe comes off, which rules out round P45 bulbs. And it must draw very little power, because a closed PLA sphere traps heat, so I chose a 2.2 W, 470 lm LED candle.\n\nBefore printing anything I simulated the assembly in software: lowering the support through the bore, turning the bayonet and routing the cable. It caught a part that would have jammed: an early lid design had only 0.7 mm of diametral clearance over 70 mm of travel, and I opened it to 1.8 mm.",
+    methodologySections: [
+      {
+        title: "Printing a closed sphere without supports",
+        content:
+          "The first globe design had a small flat cap on top to make printing easier, but from outside it looked like an opening, so I made it a true sphere. The last 12 mm close almost flat over an empty interior. Printing that part at 0.08 mm layers with full cooling and a slow outer wall lets each layer step in only slightly, so the dome closes without supports. A 30-minute test print of just the top cap checks the result before committing to the 5.5-hour globe.",
+      },
+      {
+        title: "Recovering a failed print",
+        content:
+          "The 19-hour body print stopped at 94% and the printer reported it as finished with the heaters still on. Reading the G-code showed why: from 94.3% onwards the file was binary garbage, a corrupted SD card. The last complete layer was at 132.0 mm. Rather than reprinting 19 hours, I cut the missing geometry from the original model at exactly that height into two small pieces, plus a guide that centres the mouth ring while it is glued.",
+      },
+    ],
+    results:
+      "The lamp is printed and assembled. The globe hides the bulb completely and comes off with a short twist. Total print time is about 28 hours and roughly 290 g of filament.",
+    lessons:
+      "Simulating the assembly before printing paid for itself by catching a part that would have jammed. Variable layer height is the tool for closing domes without supports. And for long prints: check that the file on the SD card matches the one on the computer, because a corrupted file fails silently.",
   },
   {
     id: "speedway-aerodynamics",

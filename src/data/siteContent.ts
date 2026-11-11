@@ -68,7 +68,7 @@ export const disciplines: Discipline[] = [
     name: "Structural analysis",
     line: "Finite element models checked against hand calculations and physical tests.",
     tools: [
-      { name: "ANSYS", level: "Proficient" },
+      { name: "ANSYS", level: "Beginner" },
       { name: "FEA", level: "Beginner" },
     ],
   },

@@ -22,7 +22,7 @@ const HeroSection = () => {
   const scrollToWork = () => document.querySelector("#work")?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <section className="relative isolate flex h-[calc(100svh-2.25rem)] min-h-[560px] items-center justify-center overflow-hidden bg-ink text-cream">
+    <section className="relative isolate flex h-[calc(100svh-2.25rem)] min-h-[560px] items-start justify-center overflow-hidden bg-ink text-cream">
       {/* Background slides */}
       <AnimatePresence initial={false}>
         <motion.img
@@ -41,7 +41,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(25,18,12,0.25),rgba(25,18,12,0.65))]" />
 
       {/* Wordmark */}
-      <div className="container text-center">
+      <div className="container pt-[16svh] text-center md:pt-[14svh]">
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
