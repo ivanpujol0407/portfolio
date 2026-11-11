@@ -2,16 +2,64 @@ import projectMeanVelocity from "@/assets/speedway/mean-velocity.png";
 import gripperMainImg from "@/assets/gripper/main.png";
 import gearboxMainImg from "@/assets/gearbox/Disseny_main.png";
 
-// Placeholder images for new projects - replace with actual images later
+export type ProjectCategory = "Product design" | "CFD & research" | "Mechanical design";
+
+/** One row of a spec sheet, e.g. { label: "Height", value: "320 mm" } */
+export interface Spec {
+  label: string;
+  value: string;
+}
+
+/** A printed or bought part of a product (used by the lamp projects) */
+export interface ProductPart {
+  name: string;
+  description: string;
+  /** Imported image (render or photo). Leave undefined to show a placeholder. */
+  image?: string;
+  specs?: Spec[];
+}
+
+/** An image slot in a gallery. Without src it renders as a labelled placeholder. */
+export interface GalleryItem {
+  label: string;
+  src?: string;
+  aspect?: "square" | "portrait" | "landscape";
+}
+
+export interface Publication {
+  journal: string;
+  title: string;
+  authors: string[];
+  date: string;
+  doi: string;
+  url: string;
+  highlights: Spec[];
+}
 
 export interface Project {
   id: string;
   tag: string;
   title: string;
+  /** Short line under the title on cards and in the page header */
+  subtitle?: string;
+  category: ProjectCategory;
+  /** Small badge on the card, e.g. NEW or PUBLISHED */
+  badge?: { label: string; tone: "flame" | "ink" | "teal" };
+  /** Software, machines and processes used */
+  tools?: string[];
   description: string;
   image: string;
+  /** "render" = image sits on a sand background (good for CAD renders on white) */
+  cardStyle?: "photo" | "render";
   date: string;
   role: string;
+  publication?: Publication;
+  /** Spec sheet shown near the top of product pages */
+  specs?: Spec[];
+  parts?: ProductPart[];
+  /** Real-life photos; items without src show as placeholders */
+  gallery?: GalleryItem[];
+  printer?: { name: string; notes: string };
   overview: string;
   objectives: string[];
   methodology: string;
@@ -31,18 +79,128 @@ export interface Project {
   validationPlaceholders?: string[];
 }
 
+/** Printer used for the lamp projects */
+const PRINTER = {
+  name: "Creality Ender-3 S1 Pro",
+  notes:
+    "FDM printer with a 220 × 220 × 270 mm build volume, an all-metal Sprite direct-drive extruder (up to 300 °C), a PEI spring steel bed and CR Touch auto-levelling. Every part had to fit inside that build volume.",
+};
+
 export const projectsData: Project[] = [
+  // ===== Lamp 01 =====
+  // DRAFT: content comes from the lamp design chats. Replace TODO text before publishing.
+  {
+    id: "lamp-01",
+    tag: "Personal project",
+    title: "Lamp 01",
+    subtitle: "3D-printed table lamp",
+    category: "Product design",
+    badge: { label: "New", tone: "flame" },
+    tools: ["CAD", "FDM 3D printing", "Creality Ender-3 S1 Pro"],
+    description: "TODO: one-sentence description of the lamp.",
+    image: "",
+    cardStyle: "render",
+    date: "2026",
+    role: "Designer and maker",
+    printer: PRINTER,
+    specs: [
+      { label: "Height", value: "TODO" },
+      { label: "Diameter", value: "TODO" },
+      { label: "Material", value: "TODO" },
+      { label: "Light source", value: "TODO" },
+      { label: "Printed parts", value: "TODO" },
+      { label: "Total print time", value: "TODO" },
+    ],
+    parts: [
+      { name: "Shade", description: "TODO" },
+      { name: "Base", description: "TODO" },
+    ],
+    gallery: [
+      { label: "The lamp switched on at night", aspect: "landscape" },
+      { label: "Detail of the printed texture", aspect: "portrait" },
+      { label: "On the desk, daylight", aspect: "portrait" },
+    ],
+    overview: "TODO",
+    objectives: ["TODO"],
+    methodology: "TODO",
+    results: "TODO",
+    lessons: "TODO",
+  },
+  // ===== Lamp 02 =====
+  // DRAFT: content comes from the lamp design chats. Replace TODO text before publishing.
+  {
+    id: "lamp-02",
+    tag: "Personal project",
+    title: "Lamp 02",
+    subtitle: "3D-printed table lamp",
+    category: "Product design",
+    badge: { label: "New", tone: "flame" },
+    tools: ["CAD", "FDM 3D printing", "Creality Ender-3 S1 Pro"],
+    description: "TODO: one-sentence description of the lamp.",
+    image: "",
+    cardStyle: "render",
+    date: "2026",
+    role: "Designer and maker",
+    printer: PRINTER,
+    specs: [
+      { label: "Height", value: "TODO" },
+      { label: "Diameter", value: "TODO" },
+      { label: "Material", value: "TODO" },
+      { label: "Light source", value: "TODO" },
+      { label: "Printed parts", value: "TODO" },
+      { label: "Total print time", value: "TODO" },
+    ],
+    parts: [
+      { name: "Shade", description: "TODO" },
+      { name: "Base", description: "TODO" },
+    ],
+    gallery: [
+      { label: "The lamp switched on at night", aspect: "landscape" },
+      { label: "Detail of the printed texture", aspect: "portrait" },
+      { label: "On the desk, daylight", aspect: "portrait" },
+    ],
+    overview: "TODO",
+    objectives: ["TODO"],
+    methodology: "TODO",
+    results: "TODO",
+    lessons: "TODO",
+  },
   {
     id: "speedway-aerodynamics",
-    tag: "Research Paper",
-    title: "CFD Simulations of Speedway Motorcycles",
+    tag: "Master's thesis, DTU",
+    title: "Speedway Motorcycle Aerodynamics",
+    subtitle: "CFD and wind tunnel study, published in Scientific Reports",
+    category: "CFD & research",
+    badge: { label: "Published", tone: "teal" },
+    tools: ["Simcenter STAR-CCM+", "URANS / IDDES", "HPC cluster", "Wind tunnel", "3D scanning", "3D printing"],
     description:
-      "First combined CFD and wind tunnel aerodynamic investigation of a speedway motorcycle. Validated simulations with less than 2% deviation, identified rider as dominant drag contributor, and achieved 9% drag reduction with a new front design.",
+      "First combined CFD and wind tunnel study of a speedway motorcycle, published in Scientific Reports. Validated within 1.87%, found the rider causes over half the drag, and cut total drag by 9.1% with a new front end.",
     image: projectMeanVelocity,
-    date: "2025",
-    role: "Lead Researcher, Technical University of Denmark (DTU)",
+    date: "Thesis 2024, published 2026",
+    role: "First author, Technical University of Denmark (DTU)",
+    publication: {
+      journal: "Scientific Reports",
+      title: "Numerical simulations of the aerodynamics of a speedway motorcycle",
+      authors: [
+        "Ivan Pujol",
+        "Sebastian Obwoya Gudmand-Høyer",
+        "Yvet Maathuis",
+        "Andreas Top Adler",
+        "Robert Flemming Mikkelsen",
+        "Jens Honoré Walther",
+      ],
+      date: "9 October 2026",
+      doi: "10.1038/s41598-026-71701-0",
+      url: "https://www.nature.com/articles/s41598-026-71701-0",
+      highlights: [
+        { label: "Total drag reduction", value: "9.1%" },
+        { label: "CFD vs wind tunnel at 30 m/s", value: "1.87%" },
+        { label: "Rider share of total drag", value: ">50%" },
+        { label: "Drag added by rotating wheels", value: "1.61%" },
+      ],
+    },
     overview:
-      "This study presents a computational and experimental aerodynamic analysis of a speedway motorcycle, focusing on drag reduction strategies to enhance performance. Using CFD simulations in Simcenter STAR-CCM+ and wind tunnel experiments, the aerodynamic characteristics of the motorcycle and rider are investigated. Wind tunnel experiments validated the CFD methodology, showing deviations of 2.0% and 0.2% in drag area at 30 m/s and 40 m/s respectively, confirming the reliability of the numerical model. The rider is identified as the primary drag contributor, accounting for over 50% of the total aerodynamic resistance. A new front fairing and hand cover design is proposed, achieving a 9.0% reduction in total drag. This is the first combined CFD and wind tunnel aerodynamic investigation of a speedway motorcycle, addressing a gap in current literature.",
+      "This study presents a computational and experimental aerodynamic analysis of a speedway motorcycle, focusing on drag reduction strategies to enhance performance. Using CFD simulations in Simcenter STAR-CCM+ and wind tunnel experiments, the aerodynamic characteristics of the motorcycle and rider are investigated. Wind tunnel experiments validated the CFD methodology, with drag area deviations of 1.87% at 30 m/s and −0.25% at 40 m/s. The rider is identified as the primary drag contributor, accounting for over 50% of the total aerodynamic resistance, and rotating wheels add 1.61% drag compared with stationary ones. A redesigned front end with a new hand cover reduces total drag by 9.1%. This is the first combined CFD and wind tunnel aerodynamic investigation of a speedway motorcycle, and it was published in Scientific Reports in October 2026.",
     objectives: [
       "Conduct the first CFD aerodynamic study of a speedway motorcycle using a 3D-scanned full-scale model",
       "Validate CFD simulations against wind tunnel experiments on a 1:6 scale 3D-printed model",
@@ -58,13 +216,13 @@ export const projectsData: Project[] = [
       "Polyhedral Mesh Detail and Prism Layers",
     ],
     validation:
-      "Wind tunnel experiments were conducted at the DTU Climate Centre using a 1:6 scale 3D-printed PLA model of the motorcycle. The wind tunnel test section has a cross-section of 2.6 m x 2.0 m, and the scale model resulted in a blockage ratio of 5.21%. Drag force was measured at freestream velocities of 30 m/s and 40 m/s using a calibrated force balance. Reynolds number independence was verified by comparing results across multiple velocities. To replicate wind tunnel conditions in CFD, a separate simulation was set up matching the tunnel geometry, boundary conditions, and the 1:6 scale model. The CFD wind tunnel simulation used the same mesh settings and turbulence model (SST k-omega) as the full-scale case. Comparison of experimental and numerical drag area values showed a deviation of only 2.0% at 30 m/s and 0.2% at 40 m/s, confirming the reliability of the CFD methodology and the mesh configuration used for all subsequent full-scale analyses.",
+      "Wind tunnel experiments were conducted at the DTU Climate Centre using a 1:6 scale 3D-printed PLA model of the motorcycle. The wind tunnel test section has a cross-section of 2.6 m x 2.0 m, and the scale model resulted in a blockage ratio of 5.21%. Drag force was measured at freestream velocities of 30 m/s and 40 m/s using a calibrated force balance. Reynolds number independence was verified by comparing results across multiple velocities. To replicate wind tunnel conditions in CFD, a separate simulation was set up matching the tunnel geometry, boundary conditions, and the 1:6 scale model. The CFD wind tunnel simulation used the same mesh settings and turbulence model (SST k-omega) as the full-scale case. In the published article, the numerical drag area deviates from the experiment by 1.87% at 30 m/s and −0.25% at 40 m/s, confirming the reliability of the CFD methodology and the mesh configuration used for all subsequent full-scale analyses.",
     validationPlaceholders: [
       "Wind Tunnel Test Setup",
       "CFD vs Wind Tunnel Drag Area Comparison Chart",
     ],
     results:
-      "The total drag force for the full motorcycle-rider configuration is 261.53 N (C_D = 0.69). The rider contributes approximately 52.4% of total drag, with the front fairing, handlebars, and rider's hands accounting for 28% of total drag in the region between 0.20 and 0.30 x/L. Wheel rotation increases total drag area by 1.17%, primarily through intensified low-pressure regions around the front wheel. The proposed new front design, which removes the original fairing, streamlines the front forks and handlebar, and adds aerodynamic hand covers, achieved a 9.0% reduction in total drag area (from C_DA = 0.491 to 0.447) by minimising high-pressure stagnation zones, promoting smoother flow attachment, and reducing wake turbulence.",
+      "The total drag force for the full motorcycle-rider configuration is 261.53 N (C_D = 0.69). The rider contributes approximately 52.4% of total drag, with the front fairing, handlebars, and rider's hands accounting for 28% of total drag in the region between 0.20 and 0.30 x/L. Wheel rotation increases total drag by 1.61% compared with stationary wheels, mainly through the turbulent flow the wheels generate. The proposed new front design, which removes the original fairing, streamlines the front forks and handlebar, and adds aerodynamic hand covers, reduces total drag by 9.1% by minimising high-pressure stagnation zones, promoting smoother flow attachment, and reducing wake turbulence.",
     resultsPlaceholders: [
       "Pressure Coefficient Contour (Mid-plane)",
       "Mean Velocity Field",
@@ -76,7 +234,7 @@ export const projectsData: Project[] = [
     lessons:
       "The mesh quality around the rider geometry proved critical for accurate results. The convergence study confirmed that a base size of 110 mm with 8 prism layers is required to keep all wall-adjacent cells within the viscous sublayer (y+ < 5). The rider's upright posture is the dominant source of drag, creating extensive flow separation and wake formation that cannot be addressed by motorcycle geometry changes alone. Geometric asymmetry in the rider's posture (right leg touching the ground, left leg on foot peg) produces measurable differences in drag under yaw conditions. The front fairing, originally designed for sponsor graphics, contributes significantly to drag. Its removal alone reduced drag by 5.6%. Proper wind tunnel validation with carefully controlled blockage ratios and Reynolds number independence studies is essential for CFD credibility.",
     futureWork:
-      "Future research should explore rider posture optimisation as the rider accounts for over 50% of total drag. Advanced turbulence modelling approaches such as Large Eddy Simulation (LES) or hybrid RANS-LES methods could provide higher-fidelity results for the complex separated flows around the rider. The yaw angle study revealed significant asymmetric drag behaviour that warrants further investigation under realistic cornering conditions. Additionally, the interaction between rotating wheels and the rest of the geometry suggests that integrated wheel-fairing designs could yield further drag reductions. Full-scale wind tunnel or on-track validation of the proposed front design modifications would confirm the predicted 9% drag improvement under real racing conditions.",
+      "Future research should explore rider posture optimisation as the rider accounts for over 50% of total drag. Advanced turbulence modelling approaches such as Large Eddy Simulation (LES) or hybrid RANS-LES methods could provide higher-fidelity results for the complex separated flows around the rider. The yaw angle study revealed significant asymmetric drag behaviour that warrants further investigation under realistic cornering conditions. Additionally, the interaction between rotating wheels and the rest of the geometry suggests that integrated wheel-fairing designs could yield further drag reductions. Full-scale wind tunnel or on-track validation of the proposed front design modifications would confirm the predicted 9.1% drag improvement under real racing conditions.",
     pdfUrl: "/CFD_simulations_Speedway_motorcycles.pdf",
     supplementary: [
       {
@@ -98,11 +256,15 @@ export const projectsData: Project[] = [
   },
   {
     id: "pmma-gripper-fea",
-    tag: "University Project",
-    title: "Design & FEA of a Manual PMMA Gripper",
+    tag: "University project",
+    title: "Manual PMMA Gripper",
+    subtitle: "Design, FEA and a laser-cut prototype",
+    category: "Mechanical design",
+    tools: ["SolidWorks", "ANSYS", "Laser cutting"],
     description:
       "Design, finite element analysis, optimisation, and physical construction of a manual gripper made of polymethyl methacrylate (PMMA). The project combined SolidWorks CAD design with ANSYS structural simulation to validate and optimise the gripper under multiple loading scenarios.",
     image: gripperMainImg,
+    cardStyle: "render",
     date: "2020",
     role: "Co-author, UPC – ETSEIB, Barcelona",
     overview:
@@ -121,17 +283,17 @@ export const projectsData: Project[] = [
     methodologySections: [
       {
         title: "Finite Element Model Setup",
-        content: "The problem was modelled as a 2D plane stress case, valid because the gripper thickness (t = 30 mm) is much smaller than the in-plane dimensions (L = 232 mm). Under plane stress, σ_z = τ_xz = τ_yz = 0, reducing the 3D elasticity problem to 2D. The constitutive relation becomes {σ_x, σ_y, τ_xy} = [E/(1−ν²)] × [C] × {ε_x, ε_y, γ_xy}, where [C] is the plane stress stiffness matrix. The material was treated as linear elastic and isotropic with E = 3000 MPa and ν = 0.4. Solid Quad 8-node 183 elements (PLANE183 in ANSYS) were selected — these use quadratic shape functions (serendipity formulation) providing superior accuracy over linear 4-node elements, particularly important for capturing stress gradients in curved regions. Each node has two degrees of freedom (u_x, u_y). Boundary conditions: Node 1 at the fulcrum was fixed in Y (u_y = 0) to prevent rigid body translation; nodes at the force application points (2 and 3) were fixed in X (u_x = 0) to prevent lateral motion. At the gripping contact points, nodes were constrained in the direction normal to the cylinder surface to simulate the rigid steel cylinder contact.",
+        content: "The problem was modelled as a 2D plane stress case, valid because the gripper thickness (t = 30 mm) is much smaller than the in-plane dimensions (L = 232 mm). Under plane stress, σ_z = τ_xz = τ_yz = 0, reducing the 3D elasticity problem to 2D. The constitutive relation becomes {σ_x, σ_y, τ_xy} = [E/(1−ν²)] × [C] × {ε_x, ε_y, γ_xy}, where [C] is the plane stress stiffness matrix. The material was treated as linear elastic and isotropic with E = 3000 MPa and ν = 0.4. Solid Quad 8-node 183 elements (PLANE183 in ANSYS) were selected. These use quadratic shape functions (serendipity formulation) providing superior accuracy over linear 4-node elements, particularly important for capturing stress gradients in curved regions. Each node has two degrees of freedom (u_x, u_y). Boundary conditions: Node 1 at the fulcrum was fixed in Y (u_y = 0) to prevent rigid body translation; nodes at the force application points (2 and 3) were fixed in X (u_x = 0) to prevent lateral motion. At the gripping contact points, nodes were constrained in the direction normal to the cylinder surface to simulate the rigid steel cylinder contact.",
         placeholders: ["FE Model with Boundary Conditions and Applied Forces"]
       },
       {
         title: "Mesh Convergence Study",
-        content: "The mesh was generated with a global element size of 2 mm, producing approximately 1,200 elements. To verify mesh independence, a finer mesh with element size 1 mm (~4,800 elements) was also tested. Under a reference load of F = 2 N, the coarse mesh yielded σ_I,max = 1.348 MPa while the fine mesh gave σ_I,max = 1.344 MPa — a relative error of only 0.30%, confirming mesh independence. A level-1 mesh refinement (h-refinement) was additionally applied to the curved region where stress concentrations are expected. The refined mesh produced σ_I,max = 1.335 MPa compared to the unrefined value of 1.348 MPa — an error of 0.94%. Since both values are within 1%, the standard mesh with element size 2 mm was deemed sufficient for all subsequent analyses.",
+        content: "The mesh was generated with a global element size of 2 mm, producing approximately 1,200 elements. To verify mesh independence, a finer mesh with element size 1 mm (~4,800 elements) was also tested. Under a reference load of F = 2 N, the coarse mesh yielded σ_I,max = 1.348 MPa while the fine mesh gave σ_I,max = 1.344 MPa, a relative error of only 0.30%, confirming mesh independence. A level-1 mesh refinement (h-refinement) was additionally applied to the curved region where stress concentrations are expected. The refined mesh produced σ_I,max = 1.335 MPa compared to the unrefined value of 1.348 MPa, an error of 0.94%. Since both values are within 1%, the standard mesh with element size 2 mm was deemed sufficient for all subsequent analyses.",
         placeholders: ["Mesh: Unrefined vs Refined", "Stress: Unrefined vs Refined"]
       },
       {
         title: "Linearity Validation",
-        content: "To validate the linear elasticity assumption (small displacements, linear strain-displacement relationship), both linear and geometrically nonlinear analyses were performed under F = 2 N. The linear solver assumes ε = ∂u/∂x (infinitesimal strain), while the nonlinear solver uses the full Green-Lagrange strain tensor accounting for large rotations and displacements. The linear analysis produced σ_I,max = 1.34772 MPa, while the nonlinear analysis (10 load substeps with Newton-Raphson iteration) yielded σ_I,max = 1.34884 MPa — an error of only 0.083%. This negligible difference confirmed that displacements under service loads are small enough (u_max/L < 0.01) for the linear hypothesis to hold, justifying computationally cheaper linear analysis for all subsequent load cases.",
+        content: "To validate the linear elasticity assumption (small displacements, linear strain-displacement relationship), both linear and geometrically nonlinear analyses were performed under F = 2 N. The linear solver assumes ε = ∂u/∂x (infinitesimal strain), while the nonlinear solver uses the full Green-Lagrange strain tensor accounting for large rotations and displacements. The linear analysis produced σ_I,max = 1.34772 MPa, while the nonlinear analysis (10 load substeps with Newton-Raphson iteration) yielded σ_I,max = 1.34884 MPa, an error of only 0.083%. This negligible difference confirmed that displacements under service loads are small enough (u_max/L < 0.01) for the linear hypothesis to hold, justifying computationally cheaper linear analysis for all subsequent load cases.",
         placeholders: ["Nonlinear vs Linear Stress Comparison"]
       }
     ],
@@ -141,17 +303,17 @@ export const projectsData: Project[] = [
       {
         title: "Vacuum Test (F = 20.77 N)",
         content: "The vacuum force (force needed to close the gripper arms until they touch) was determined using the linearity principle. Under a reference load of F_ref = 2 N, the maximum tip displacement was δ_ref = 2.50 mm. Since the gap between the arms is Δ = 26 mm, the vacuum force scales linearly: F_vac = F_ref × (Δ / δ_ref) = 2 × (26 / 2.50) = 20.77 N. Under this load, the maximum tensile principal stress σ_I reached 14.00 MPa at the outer curve, while the maximum compressive principal stress σ_III reached −16.48 MPa at the inner curve. Applying the Rankine criterion: σ_eq = max{14.00, 16.48} = 16.48 MPa. The safety factor is γ_s = 110 / 16.48 = 6.67, well above the required 1.2, confirming a safe design under vacuum loading.",
-        placeholders: ["Displacement Field — Vacuum Test", "Principal Stress σ_I and σ_III — Vacuum"]
+        placeholders: ["Displacement Field: Vacuum Test", "Principal Stress σ_I and σ_III: Vacuum"]
       },
       {
         title: "Extreme Pinch Test (F = 60 N)",
         content: "Under the maximum human pinch force of F = 60 N (NASA anthropometric data for thumb-index finger pinch), the gripper experienced a maximum displacement of u_max = 3.25 mm at the tips. The maximum tensile principal stress was σ_I = 12.11 MPa and the maximum compressive principal stress was σ_III = −13.04 MPa. Applying Rankine: σ_eq = max{12.11, 13.04} = 13.04 MPa, giving a safety factor γ_s = 110 / 13.04 = 8.44. Both stress values remained far below the elastic limit, confirming the gripper can withstand the most extreme manual loading without failure. The displacement of 3.25 mm is also well below the 26 mm gap, so the arms do not make contact.",
-        placeholders: ["Displacement Field — Extreme Pinch", "Principal Stress σ_I and σ_III — Extreme Pinch"]
+        placeholders: ["Displacement Field: Extreme Pinch", "Principal Stress σ_I and σ_III: Extreme Pinch"]
       },
       {
         title: "Destructive Test (F = 506.31 N)",
-        content: "The destructive force was calculated by linear scaling from a unit load analysis. Under F = 1 N, the maximum equivalent stress (Rankine) was σ_eq,1 = 0.217 MPa. Since the relationship is linear, the force required to reach the elastic limit is: F_u = σ_yield / σ_eq,1 = 110 / 0.217 = 506.31 N. At this force, the maximum displacement was u_max = 27.42 mm, which exceeds the 26 mm gap — meaning the arms would contact each other before full failure load is reached. The maximum compressive stress reached exactly σ_III = −110 MPa at the inner curve, confirming elastic failure onset. Since PMMA is a brittle material with negligible plastic deformation, the gripper would fracture catastrophically at this point. Note that this force is 8.4× the maximum human pinch force (60 N), providing a very large safety margin.",
-        placeholders: ["Displacement Field — Destructive Test", "Stress at Elastic Limit σ_III"]
+        content: "The destructive force was calculated by linear scaling from a unit load analysis. Under F = 1 N, the maximum equivalent stress (Rankine) was σ_eq,1 = 0.217 MPa. Since the relationship is linear, the force required to reach the elastic limit is: F_u = σ_yield / σ_eq,1 = 110 / 0.217 = 506.31 N. At this force, the maximum displacement was u_max = 27.42 mm, which exceeds the 26 mm gap, meaning the arms would contact each other before full failure load is reached. The maximum compressive stress reached exactly σ_III = −110 MPa at the inner curve, confirming elastic failure onset. Since PMMA is a brittle material with negligible plastic deformation, the gripper would fracture catastrophically at this point. Note that this force is 8.4× the maximum human pinch force (60 N), providing a very large safety margin.",
+        placeholders: ["Displacement Field: Destructive Test", "Stress at Elastic Limit σ_III"]
       }
     ],
     methodologyPlaceholders: [
@@ -160,7 +322,7 @@ export const projectsData: Project[] = [
     ],
     resultsPlaceholders: [],
     lessons:
-      "This project demonstrated the full engineering design cycle from concept to physical prototype. The most important lessons included: (1) the critical importance of mesh convergence studies — even though the refinement showed <1% difference, the exercise built confidence in the results; (2) validating the linearity hypothesis with only 0.083% error justified using computationally cheaper linear analysis; (3) understanding that for brittle materials like PMMA, the Rankine criterion (maximum principal stress) is the appropriate failure criterion, unlike the Von Mises criterion used for ductile materials; (4) the design optimisation process demonstrated how geometric changes can dramatically improve both mechanical and mass efficiency without compromising structural integrity.",
+      "This project demonstrated the full engineering design cycle from concept to physical prototype. The most important lessons included: (1) the critical importance of mesh convergence studies: even though the refinement showed <1% difference, the exercise built confidence in the results; (2) validating the linearity hypothesis with only 0.083% error justified using computationally cheaper linear analysis; (3) understanding that for brittle materials like PMMA, the Rankine criterion (maximum principal stress) is the appropriate failure criterion, unlike the Von Mises criterion used for ductile materials; (4) the design optimisation process demonstrated how geometric changes can dramatically improve both mechanical and mass efficiency without compromising structural integrity.",
     supplementary: [
       {
         title: "Design Optimisation",
@@ -168,17 +330,21 @@ export const projectsData: Project[] = [
       },
       {
         title: "Manufacturing & Testing",
-        content: "The optimised gripper was manufactured via laser cutting from a 10 mm thick PMMA sheet at a fabrication facility in Barcelona. The SolidWorks 3D model was exported as a 2D DXF profile for direct input to the CNC laser cutting machine, which uses a CO₂ laser to vaporise the acrylic along the cutting path. The laser cutting process offered several advantages for PMMA: clean edge finish without post-processing, tight dimensional tolerances (±0.1 mm), no mechanical stress introduction (unlike milling), and the ability to cut complex curved geometries in a single pass.\n\nPhysical testing was conducted in three stages: (1) Visual inspection confirmed dimensional accuracy against the SolidWorks drawing — all critical dimensions (total length 212 mm, arm width, curve radii R26/R32) matched within the laser cutter's tolerance. (2) Functional gripping test: the gripper was used to pick up the 150 g steel cylinder, confirming secure grip under nominal loading. The cylinder did not slip, validating the friction assumptions. (3) Manual extreme loading: the gripper was squeezed with maximum hand force (estimated ~50–60 N based on the operator), and no visible deformation, cracking, or whitening (crazing) of the PMMA was observed, consistent with the FEA prediction of γ_s = 2.22 under extreme load. No destructive test was performed to preserve the prototype, but the FEA prediction of F_u = 168.77 N provides confidence in the design's structural margin."
+        content: "The optimised gripper was manufactured via laser cutting from a 10 mm thick PMMA sheet at a fabrication facility in Barcelona. The SolidWorks 3D model was exported as a 2D DXF profile for direct input to the CNC laser cutting machine, which uses a CO₂ laser to vaporise the acrylic along the cutting path. The laser cutting process offered several advantages for PMMA: clean edge finish without post-processing, tight dimensional tolerances (±0.1 mm), no mechanical stress introduction (unlike milling), and the ability to cut complex curved geometries in a single pass.\n\nPhysical testing was conducted in three stages: (1) Visual inspection confirmed dimensional accuracy against the SolidWorks drawing: all critical dimensions (total length 212 mm, arm width, curve radii R26/R32) matched within the laser cutter's tolerance. (2) Functional gripping test: the gripper was used to pick up the 150 g steel cylinder, confirming secure grip under nominal loading. The cylinder did not slip, validating the friction assumptions. (3) Manual extreme loading: the gripper was squeezed with maximum hand force (estimated ~50–60 N based on the operator), and no visible deformation, cracking, or whitening (crazing) of the PMMA was observed, consistent with the FEA prediction of γ_s = 2.22 under extreme load. No destructive test was performed to preserve the prototype, but the FEA prediction of F_u = 168.77 N provides confidence in the design's structural margin."
       }
     ],
   },
   {
     id: "parallel-shaft-gearbox",
-    tag: "University Project",
-    title: "Parallel Shaft Gear Reducer Design",
+    tag: "University project",
+    title: "Parallel Shaft Gear Reducer",
+    subtitle: "Helical gear reducer for assembly line conveyors",
+    category: "Mechanical design",
+    tools: ["SolidWorks", "Gear and bearing sizing", "Sand casting design"],
     description:
       "Complete mechanical design of a parallel shaft gear reducer for Volkswagen assembly line conveyors. Includes gear calculations, shaft design, bearing selection, housing design by sand casting, and full assembly documentation.",
     image: gearboxMainImg,
+    cardStyle: "photo",
     date: "2023",
     role: "Author, Master\u2019s in Industrial Engineering, UPC \u2013 ETSEIB, Barcelona",
     overview:
@@ -205,7 +371,7 @@ export const projectsData: Project[] = [
       {
         title: "Housing Design (Sand Casting)",
         content:
-          "The large production volume of 6,000 units made sand casting the optimal manufacturing process for the grey cast iron FG 25 housing. Key design rules applied were: a 2\u00b0 draft angle on all vertical faces for mould release, approximately 12 mm constant wall thickness for uniform cooling and to prevent shrinkage defects, and post-casting machining of all critical surfaces including bearing seats, bolt holes, oil plug threads, shaft cover seats and sealing faces. The housing consists of two parts \u2014 a main body and a cover \u2014 joined by six M12\u00d7175 8.8 through-bolts with self-locking nuts and flat washers. The main body houses the output shaft bearing seats, oil drain and fill plugs, and mounting feet for floor fixation. The cover houses the large input shaft bearing and the oil sight glass. Two shaft cover plates on the main body retain the outer races of the output shaft bearings.",
+          "The large production volume of 6,000 units made sand casting the optimal manufacturing process for the grey cast iron FG 25 housing. Key design rules applied were: a 2\u00b0 draft angle on all vertical faces for mould release, approximately 12 mm constant wall thickness for uniform cooling and to prevent shrinkage defects, and post-casting machining of all critical surfaces including bearing seats, bolt holes, oil plug threads, shaft cover seats and sealing faces. The housing consists of two parts (a main body and a cover) joined by six M12\u00d7175 8.8 through-bolts with self-locking nuts and flat washers. The main body houses the output shaft bearing seats, oil drain and fill plugs, and mounting feet for floor fixation. The cover houses the large input shaft bearing and the oil sight glass. Two shaft cover plates on the main body retain the outer races of the output shaft bearings.",
         placeholders: ["Main Housing", "Housing Cover"],
       },
       {
@@ -235,7 +401,7 @@ export const projectsData: Project[] = [
         title: "Complete Assembly",
         content:
           "The final design integrates all components into a compact cast iron housing. The input shaft enters from the top via the motor flange, the output shaft exits horizontally, and the cast mounting feet fix the reducer to the factory floor. The figures below show the front and side views of the complete assembly.",
-        placeholders: ["Complete Design — Front View", "Complete Design — Side View"],
+        placeholders: ["Complete Design: Front View", "Complete Design: Side View"],
       },
       {
         title: "Output Shaft Bearing Verification",
@@ -246,7 +412,7 @@ export const projectsData: Project[] = [
       {
         title: "Input Shaft Bearing Verification",
         content:
-          "The input shaft uses two angular contact ball bearings (SKF 7208 BECBP and SKF 7203 BECBP) mounted in an X-arrangement, pre-loaded via the input shaft cover and spacer shims. Without external forces, bearing loads come solely from gear engagement. Equilibrium gives total radial reactions of F\u1d63\u1d54\u1d52\u1d57A = 4.85 kN (bearing A, SKF 7203) and F\u1d63\u1d54\u1d52\u1d57B = 5.62 kN (bearing B, SKF 7208). The axial load condition yields F\u2090A = 9.36 kN and F\u2090B = 4.93 kN. For bearing B, F\u2090B/F\u1d63B \u2264 e (1.14), so the combined load equals the radial load: 5.62 kN. For bearing A, F\u2090A/F\u1d63A > e, so the combined load is F\u1d48\u1d52\u1d50\u1d47A = X\u00b7F\u1d63A + Y\u00b7F\u2090A = 0.35\u00d74.85 + 0.57\u00d79.36 = 7.03 kN. Applying the SKF life formula, bearing A reaches only 44 hours and bearing B 3,147 hours \u2014 both far below the 10,000-hour target. These bearings are undersized for this application; significantly larger angular contact bearings would be required in production.",
+          "The input shaft uses two angular contact ball bearings (SKF 7208 BECBP and SKF 7203 BECBP) mounted in an X-arrangement, pre-loaded via the input shaft cover and spacer shims. Without external forces, bearing loads come solely from gear engagement. Equilibrium gives total radial reactions of F\u1d63\u1d54\u1d52\u1d57A = 4.85 kN (bearing A, SKF 7203) and F\u1d63\u1d54\u1d52\u1d57B = 5.62 kN (bearing B, SKF 7208). The axial load condition yields F\u2090A = 9.36 kN and F\u2090B = 4.93 kN. For bearing B, F\u2090B/F\u1d63B \u2264 e (1.14), so the combined load equals the radial load: 5.62 kN. For bearing A, F\u2090A/F\u1d63A > e, so the combined load is F\u1d48\u1d52\u1d50\u1d47A = X\u00b7F\u1d63A + Y\u00b7F\u2090A = 0.35\u00d74.85 + 0.57\u00d79.36 = 7.03 kN. Applying the SKF life formula, bearing A reaches only 44 hours and bearing B 3,147 hours, both far below the 10,000-hour target. These bearings are undersized for this application; significantly larger angular contact bearings would be required in production.",
         placeholders: [
           "Input Shaft Force Diagram",
           "SKF 7208 Dimensions",
@@ -258,18 +424,18 @@ export const projectsData: Project[] = [
       {
         title: "Purchased & Manufactured Components Summary",
         content:
-          "The full bill of materials includes: four bearings (SKF 7208 BECBP, SKF 7203 BECBP, SKF 6210, SKF 6209); bolted connections in M12, M10, M8 and M6 with flat washers and self-locking nuts; a DIN 6885 key; a DIN 471 retaining ring; a KM 9 lock nut with MB 9 washer; Elesa Ganter TMB and TCD oil plugs; a GN 743 oil sight glass; fluorocarbon O-ring seals (RS-PRO); a nitrile rubber cord seal for the housing split joint; and SKF CRW1 oil retainers for both shaft exits. All manufactured parts \u2014 housing, cover, input shaft, output shaft, output gear wheel, flange, shaft covers, spacer shims and centering pins \u2014 were fully specified with materials, manufacturing processes, heat treatments and surface finish requirements.",
+          "The full bill of materials includes: four bearings (SKF 7208 BECBP, SKF 7203 BECBP, SKF 6210, SKF 6209); bolted connections in M12, M10, M8 and M6 with flat washers and self-locking nuts; a DIN 6885 key; a DIN 471 retaining ring; a KM 9 lock nut with MB 9 washer; Elesa Ganter TMB and TCD oil plugs; a GN 743 oil sight glass; fluorocarbon O-ring seals (RS-PRO); a nitrile rubber cord seal for the housing split joint; and SKF CRW1 oil retainers for both shaft exits. All manufactured parts (housing, cover, input shaft, output shaft, output gear wheel, flange, shaft covers, spacer shims and centering pins) were fully specified with materials, manufacturing processes, heat treatments and surface finish requirements.",
         placeholders: [],
       },
     ],
     resultsPlaceholders: [],
     lessons:
-      "This project provided deep hands-on experience in integrated mechanical system design. Key takeaways included: (1) production volume fundamentally drives manufacturing decisions \u2014 the 6,000-unit run made sand casting the clear choice over CNC machining for the housing; (2) designing for casting requires careful attention to draft angles, uniform wall thickness and post-machining operations; (3) bearing selection is critical and must account for combined radial and axial loads \u2014 the input shaft bearing analysis revealed both SKF 7203 and 7208 were undersized, reaching only 44 and 3,147 hours respectively against a 10,000-hour target, highlighting the importance of thorough verification calculations; (4) assembly sequence planning influences geometric design decisions such as shoulder heights, seal groove positions and bolt access; (5) specifying every component down to the bolt standard, material grade and catalogue reference is essential for reproducible manufacturing at scale.",
+      "This project provided deep hands-on experience in integrated mechanical system design. Key takeaways included: (1) production volume fundamentally drives manufacturing decisions: the 6,000-unit run made sand casting the clear choice over CNC machining for the housing; (2) designing for casting requires careful attention to draft angles, uniform wall thickness and post-machining operations; (3) bearing selection is critical and must account for combined radial and axial loads; the input shaft bearing analysis revealed both SKF 7203 and 7208 were undersized, reaching only 44 and 3,147 hours respectively against a 10,000-hour target, highlighting the importance of thorough verification calculations; (4) assembly sequence planning influences geometric design decisions such as shoulder heights, seal groove positions and bolt access; (5) specifying every component down to the bolt standard, material grade and catalogue reference is essential for reproducible manufacturing at scale.",
     supplementary: [
       {
         title: "Assembly Procedure",
         content:
-          "The assembly follows a carefully defined sequence. First, the SKF 6210 bearing is pressed onto the output shaft using an SKF mounting tool until it seats against the shaft shoulder. The KM lock nut and MB safety washer are then fitted to secure the inner race. The shaft is inserted into the main housing through the large lower bore until the bearing seats in its housing recess. The output shaft cover (with SKF CRW1 oil retainer and O-ring pre-installed) is bolted on with M8 screws and flat washers. Next, the output gear wheel is fitted over the keyway and secured with the DIN 471 retaining ring. The remaining bearings are pressed onto both shafts. The input shaft is assembled into the housing cover with its large bearing (SKF 7208) seated in the cover bore. The cover is then carefully positioned onto the main housing using the two centering pins as guides \u2014 both gear meshes must engage simultaneously as the cover is lowered. The housing halves are joined with six M12\u00d7175 8.8 bolts, washers and self-locking nuts. The motor flange is bolted on with M10 cylindrical-head screws. Finally, the input shaft cover is fitted without shims first, the pre-load gap is measured, shims are selected to match the gap, and the cover is refitted with the O-ring and shim stack to achieve the correct angular contact bearing pre-load. The ISO VG 68 oil is filled through the top plug until it reaches the mid-level of the sight glass.",
+          "The assembly follows a carefully defined sequence. First, the SKF 6210 bearing is pressed onto the output shaft using an SKF mounting tool until it seats against the shaft shoulder. The KM lock nut and MB safety washer are then fitted to secure the inner race. The shaft is inserted into the main housing through the large lower bore until the bearing seats in its housing recess. The output shaft cover (with SKF CRW1 oil retainer and O-ring pre-installed) is bolted on with M8 screws and flat washers. Next, the output gear wheel is fitted over the keyway and secured with the DIN 471 retaining ring. The remaining bearings are pressed onto both shafts. The input shaft is assembled into the housing cover with its large bearing (SKF 7208) seated in the cover bore. The cover is then carefully positioned onto the main housing using the two centering pins as guides, and both gear meshes must engage simultaneously as the cover is lowered. The housing halves are joined with six M12\u00d7175 8.8 bolts, washers and self-locking nuts. The motor flange is bolted on with M10 cylindrical-head screws. Finally, the input shaft cover is fitted without shims first, the pre-load gap is measured, shims are selected to match the gap, and the cover is refitted with the O-ring and shim stack to achieve the correct angular contact bearing pre-load. The ISO VG 68 oil is filled through the top plug until it reaches the mid-level of the sight glass.",
       },
       {
         title: "Lubrication & Maintenance",

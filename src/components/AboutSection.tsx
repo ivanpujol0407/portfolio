@@ -1,65 +1,79 @@
 import { motion } from "framer-motion";
-import { Briefcase, GraduationCap, Globe } from "lucide-react";
+import portraitImg from "@/assets/hero/portrait.jpg";
+import { timeline } from "@/data/siteContent";
 
-const fadeUp = {
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.5 },
-};
-
-const timelineItems = [
-  { date: "Sep 2024", title: "Mechanical Engineer", place: "Alfa Laval — Copenhagen", icon: Briefcase },
-  { date: "Sep 2024", title: "Master's Thesis", place: "DTU — Copenhagen", icon: GraduationCap },
-  { date: "Apr 2023", title: "Mechanical Design Engineer", place: "Vadecity — Barcelona", icon: Briefcase },
-  { date: "Sep 2022", title: "MSc Industrial Engineering", place: "UPC — Barcelona", icon: GraduationCap },
-  { date: "Sep 2022", title: "Quality Engineer Intern", place: "SEAT — Martorell, Spain", icon: Briefcase },
-  { date: "Feb 2022", title: "International Exchange", place: "Università di Padova — Italy", icon: Globe },
-  { date: "Sep 2018", title: "BSc Industrial Engineering", place: "UPC — Barcelona", icon: GraduationCap },
-];
+const languages = ["Catalan", "Spanish", "English (C1)", "Italian (intermediate)"];
 
 const AboutSection = () => (
-  <section id="about" className="py-24">
-    <div className="container mx-auto px-4">
-      <motion.h2 {...fadeUp} className="text-3xl font-bold mb-12">
-        About Me
-      </motion.h2>
+  <section id="about" className="scroll-mt-16 bg-cream py-24 md:py-32">
+    <div className="container grid gap-12 lg:grid-cols-[0.85fr_1fr] lg:gap-20">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.7 }}
+        className="lg:sticky lg:top-28 lg:self-start"
+      >
+        <img
+          src={portraitImg}
+          alt="Portrait of Ivan Pujol"
+          loading="lazy"
+          className="aspect-[4/5] w-full rounded-lg object-cover object-[50%_35%]"
+        />
+        <p className="mt-3 text-[12px] text-ink-soft">Copenhagen, Denmark</p>
+      </motion.div>
 
-      <div className="grid md:grid-cols-2 gap-12 mb-16">
-        <motion.div {...fadeUp}>
-          <h3 className="text-sm font-mono text-primary uppercase tracking-wider mb-4">Background</h3>
-          <p className="text-muted-foreground leading-relaxed">
-            Based in Copenhagen, I am a Mechanical Engineer at Alfa Laval, where I design mechanical components and systems for Fresh Water Generators. I hold a Master's Degree in Industrial Engineering with a specialization in Mechanical Engineering from UPC. Additionally, I completed my master's thesis on CFD simulations of speedway motorcycles at DTU.
-          </p>
-        </motion.div>
-        <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.1 }}>
-          <h3 className="text-sm font-mono text-primary uppercase tracking-wider mb-4">Philosophy</h3>
-          <p className="text-muted-foreground leading-relaxed">
-            I view engineering not merely as a design process, but as a discipline of rigorous validation and predictability. I believe that the gap between theoretical concepts and physical reality must be bridged by hard data, not intuition. I prioritize using advanced simulation tools to test designs virtually before they ever reach the manufacturing floor. My focus is delivering robust, data-driven solutions that eliminate uncertainty and maximize efficiency.
-          </p>
-        </motion.div>
-      </div>
+      <div>
+        <p className="eyebrow text-ink-soft">About</p>
+        <h2 className="mt-4 font-serif text-[56px] leading-[0.95] tracking-[-0.01em] md:text-[88px]">
+          Hola, I&apos;m <em className="italic text-teal">Ivan</em>.
+        </h2>
 
-      {/* Timeline */}
-      <motion.h3 {...fadeUp} className="text-sm font-mono text-primary uppercase tracking-wider mb-8">
-        Experience & Education
-      </motion.h3>
-      <div className="relative border-l-2 border-border ml-4">
-        {timelineItems.map((item, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: i * 0.05 }}
-            className="relative pl-8 pb-8 last:pb-0"
-          >
-            <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-primary border-2 border-background" />
-            <span className="text-xs font-mono text-muted-foreground">{item.date}</span>
-            <h4 className="font-semibold text-foreground">{item.title}</h4>
-            <p className="text-sm text-muted-foreground">{item.place}</p>
-          </motion.div>
-        ))}
+        <div className="mt-10 space-y-5 text-[17px] leading-[1.7] text-ink/80">
+          <p>
+            I&apos;m a mechanical engineer at Alfa Laval in Copenhagen, where I design mechanical components and
+            systems for fresh water generators on offshore platforms.
+          </p>
+          <p>
+            I came to Denmark for my master&apos;s thesis at DTU: a CFD and wind tunnel study of speedway motorcycle
+            aerodynamics, now published in Scientific Reports. I liked the city enough to stay. Before that I studied
+            industrial engineering at UPC in Barcelona, with an exchange in Padova, and worked on micromobility
+            products at Vadecity and on quality at SEAT.
+          </p>
+          <p>
+            Lately most of my free time goes into product design: lamps I model in CAD and print on a Creality
+            Ender-3 S1 Pro, one iteration at a time.
+          </p>
+        </div>
+
+        <h3 className="eyebrow mt-16 text-ink-soft">Experience &amp; education</h3>
+        <ol className="mt-4 border-b border-ink/15">
+          {timeline.map((item, i) => (
+            <motion.li
+              key={`${item.title}-${item.date}`}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.04 }}
+              className="grid grid-cols-[84px_1fr] items-baseline gap-4 border-t border-ink/15 py-4 sm:grid-cols-[110px_1fr_auto]"
+            >
+              <span className="font-mono text-[12px] text-ink-soft">{item.date}</span>
+              <span className="text-[16px] font-semibold">{item.title}</span>
+              <span className="col-start-2 text-[14px] text-ink-soft sm:col-start-auto sm:text-right">
+                {item.place}
+              </span>
+            </motion.li>
+          ))}
+        </ol>
+
+        <h3 className="eyebrow mt-12 text-ink-soft">Languages</h3>
+        <ul className="mt-4 flex flex-wrap gap-2">
+          {languages.map((l) => (
+            <li key={l} className="rounded-full border border-ink/20 px-4 py-1.5 text-[13px]">
+              {l}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   </section>

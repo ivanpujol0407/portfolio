@@ -1,151 +1,56 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lora&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/*
+  Design system (2026 redesign)
+  Warm editorial palette inspired by product studios:
+  cream paper, charcoal ink, deep teal for actions, flame orange for small labels.
+  All colours are HSL so shadcn/ui components pick them up.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
+    /* Raw palette */
+    --cream: 41 100% 97%; /* #FFFAEF  page background */
+    --paper: 30 33% 94%; /* #F5F0EB  alternate surface */
+    --sand: 38 33% 88%; /* #EAE2D4  placeholders, hover */
+    --ink: 0 0% 15%; /* #272727  text */
+    --ink-soft: 30 4% 38%; /* #66625D  secondary text */
+    --teal: 184 100% 10%; /* #003335  primary actions, dark sections */
+    --mint: 113 35% 88%; /* #D8ECD5  text on teal */
+    --flame: 13 100% 55%; /* #FF4819  badges, figure numbers */
 
-    --card: 0 0% 4%;
-    --card-foreground: 0 0% 100%;
+    /* shadcn tokens */
+    --background: var(--cream);
+    --foreground: var(--ink);
 
-    --popover: 0 0% 7%;
-    --popover-foreground: 0 0% 100%;
+    --card: var(--paper);
+    --card-foreground: var(--ink);
 
-    --primary: 148 30% 53%;
-    --primary-foreground: 0 0% 0%;
+    --popover: var(--cream);
+    --popover-foreground: var(--ink);
 
-    --secondary: 0 0% 7%;
-    --secondary-foreground: 0 0% 100%;
+    --primary: var(--teal);
+    --primary-foreground: var(--mint);
 
-    --muted: 0 0% 9%;
-    --muted-foreground: 0 0% 70%;
+    --secondary: var(--paper);
+    --secondary-foreground: var(--ink);
 
-    --accent: 0 0% 10%;
-    --accent-foreground: 148 30% 53%;
+    --muted: var(--paper);
+    --muted-foreground: var(--ink-soft);
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --accent: var(--flame);
+    --accent-foreground: var(--cream);
 
-    --border: 0 0% 20%;
-    --input: 0 0% 7%;
-    --ring: 148 30% 53%;
+    --destructive: 0 72% 46%;
+    --destructive-foreground: var(--cream);
 
-    --radius: 0.25rem;
+    --border: 36 14% 82%;
+    --input: 36 14% 78%;
+    --ring: var(--teal);
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 265 4% 12.9%;
-
-    --sidebar-primary: 266 4% 20.8%;
-
-    --sidebar-primary-foreground: 248 0.3% 98.4%;
-
-    --sidebar-accent: 248 0.7% 96.8%;
-
-    --sidebar-accent-foreground: 266 4% 20.8%;
-
-    --sidebar-border: 256 1.3% 92.9%;
-
-    --sidebar-ring: 257 4% 70.4%;
-
-    --chart-1: 148 30% 53%;
-
-    --chart-2: 149 32% 36%;
-
-    --chart-3: 147 42% 69%;
-
-    --chart-4: 0 0% 64%;
-
-    --chart-5: 148 38% 85%;
-
-    --sidebar: 248 0.3% 98.4%;
-
-    --font-sans: Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-
-    --font-serif: Lora, ui-serif, Georgia, Cambria, Times New Roman, Times, serif;
-
-    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-
-    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-
-    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-
-    --shadow-sm: 0px 4px 5px 0px hsl(0, 0%, 0%);
-
-    --shadow: 0px 4px 10px 0px hsl(0, 0%, 0%);
-
-    --shadow-md: 0px 4px 15px 0px hsl(0, 0%, 0%);
-
-    --shadow-lg: 0px 4px 25px 0px hsl(0, 0%, 0%);
-
-    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
-
-    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
-
-    --tracking-normal: 0em;
-
-    --spacing: 0.25rem;
-  }
-
-  .dark {
-    --background: 0 0% 98%;
-    --foreground: 240 10% 4%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 4%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 4%;
-
-    --primary: 148 30% 53%;
-    --primary-foreground: 0 0% 0%;
-
-    --secondary: 240 5% 96%;
-    --secondary-foreground: 240 10% 4%;
-
-    --muted: 240 5% 96%;
-    --muted-foreground: 240 4% 46%;
-
-    --accent: 147 31% 93%;
-    --accent-foreground: 149 32% 36%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 240 6% 90%;
-    --input: 0 0% 100% / 15%;
-    --ring: 148 30% 53%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 248 0.3% 98.4%;
-    --sidebar-primary: 264 24.3% 48.8%;
-    --sidebar-primary-foreground: 248 0.3% 98.4%;
-    --sidebar-accent: 260 4.1% 27.9%;
-    --sidebar-accent-foreground: 248 0.3% 98.4%;
-    --sidebar-border: 0 0% 100% / 10%;
-    --sidebar-ring: 264 2.7% 55.1%;
-    --chart-1: 148 30% 53%;
-    --chart-2: 149 32% 36%;
-    --chart-3: 147 42% 69%;
-    --chart-4: 240 5% 84%;
-    --chart-5: 240 10% 4%;
-    --sidebar: 266 4% 20.8%;
-    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-    --shadow-sm: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.05);
-    --shadow: 0px 4px 10px 0px hsla(0, 0%, 0%, 0.05);
-    --shadow-md: 0px 4px 15px 0px hsla(0, 0%, 0%, 0.05);
-    --shadow-lg: 0px 4px 25px 0px hsla(0, 0%, 0%, 0.05);
-    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
-    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+    --radius: 0.5rem;
   }
 }
 
@@ -154,7 +59,87 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    overflow-x: clip;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  ::selection {
+    background: hsl(var(--teal));
+    color: hsl(var(--mint));
+  }
+}
+
+@layer components {
+  /* Huge uppercase grotesk headings (BESTSELLERS style) */
+  .display-xl {
+    @apply font-display font-black uppercase leading-[0.86] tracking-[-0.035em];
+  }
+
+  /* Heavy italic wordmark (hero) */
+  .display-italic {
+    @apply font-display font-black italic lowercase leading-[0.82] tracking-[-0.045em];
+  }
+
+  /* Small uppercase labels and buttons */
+  .eyebrow {
+    @apply font-sans text-[11px] font-semibold uppercase tracking-[0.18em];
+  }
+
+  /* Pill buttons */
+  .pill {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.14em] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+  .pill-solid {
+    @apply pill bg-teal text-mint hover:bg-ink hover:text-cream;
+  }
+  .pill-outline {
+    @apply pill border border-ink/80 text-ink hover:bg-ink hover:text-cream;
+  }
+  .pill-ghost-light {
+    @apply pill border border-cream/90 text-cream hover:bg-cream hover:text-ink;
+  }
+
+  /* Small rounded badges on cards */
+  .tag {
+    @apply inline-flex items-center rounded-md px-2 py-1 text-[10px] font-semibold uppercase leading-none tracking-[0.12em];
+  }
+
+  /* Long-form text on project pages */
+  .prose-body {
+    @apply text-[17px] leading-[1.7] text-ink/80;
+  }
+}
+
+@layer utilities {
+  .marquee {
+    animation: marquee var(--marquee-duration, 40s) linear infinite;
+  }
+  .marquee:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee {
+      animation: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
   }
 }

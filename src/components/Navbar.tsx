@@ -1,162 +1,176 @@
-import { useState, useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { Menu, X, Download } from "lucide-react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, ArrowDownToLine } from "lucide-react";
 
 const navLinks = [
+  { label: "Work", href: "#work" },
+  { label: "Paper", href: "#paper" },
   { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Skills", href: "#skills" },
   { label: "Tools", href: "#tools" },
   { label: "Contact", href: "#contact" },
 ];
 
-const Navbar = () => {
+interface NavbarProps {
+  /** Transparent with light text until the user scrolls (used over the homepage hero) */
+  overlay?: boolean;
+}
+
+const Navbar = ({ overlay = false }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>("");
-  const menuRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  const onHome = location.pathname === "/";
 
-  // Scroll shadow
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close mobile menu on outside click
+  // Lock page scroll while the mobile menu is open
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setMobileOpen(false);
-      }
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [open]);
 
-  // Active section tracking via IntersectionObserver
+  // Highlight the section currently in view
   useEffect(() => {
-    if (location.pathname !== "/") return;
-
-    const sectionIds = navLinks.map((l) => l.href.replace("#", ""));
+    if (!onHome) return;
     const observers: IntersectionObserver[] = [];
-
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
+    navLinks.forEach(({ href }) => {
+      const el = document.getElementById(href.slice(1));
       if (!el) return;
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActiveSection(id);
-        },
-        { rootMargin: "-40% 0px -55% 0px" }
+      const io = new IntersectionObserver(
+        ([entry]) => entry.isIntersecting && setActive(href.slice(1)),
+        { rootMargin: "-45% 0px -50% 0px" },
       );
-      observer.observe(el);
-      observers.push(observer);
+      io.observe(el);
+      observers.push(io);
     });
-
     return () => observers.forEach((o) => o.disconnect());
-  }, [location.pathname]);
+  }, [onHome]);
 
-  const handleNavClick = (href: string) => {
-    setMobileOpen(false);
-    if (location.pathname !== "/") {
-      navigate("/");
-      setTimeout(() => {
-        document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-      }, 100);
-    } else {
-      document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  const go = (href: string) => {
+    setOpen(false);
+    if (!onHome) {
+      navigate("/" + href);
+      return;
     }
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const goHome = () => {
+    setOpen(false);
+    if (onHome) window.scrollTo({ top: 0, behavior: "smooth" });
+    else navigate("/");
+  };
+
+  const light = overlay && !scrolled && !open;
+
   return (
-    <nav
-      ref={menuRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-background/80 backdrop-blur-lg border-b border-border"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="container mx-auto flex items-center justify-between h-16 px-4">
-        <button
-          onClick={() => {
-            if (location.pathname !== "/") navigate("/");
-            else window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-          className="text-lg font-bold tracking-tight text-foreground hover:text-primary transition-colors"
-        >
-          Ivan Pujol
-        </button>
+    <>
+      <header
+        className={`sticky top-0 z-50 -mb-16 h-16 transition-colors duration-300 md:-mb-20 md:h-20 ${
+          light ? "bg-transparent text-cream" : "border-b border-ink/10 bg-cream/90 text-ink backdrop-blur-md"
+        }`}
+      >
+        <div className="container grid h-full grid-cols-[1fr_auto_1fr] items-center">
+          {/* Left: links on desktop, menu button on mobile */}
+          <nav className="flex items-center gap-7">
+            <button
+              className="-ml-1 p-1 md:hidden"
+              onClick={() => setOpen(!open)}
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+            >
+              {open ? <X className="h-6 w-6" strokeWidth={1.5} /> : <Menu className="h-6 w-6" strokeWidth={1.5} />}
+            </button>
+            {navLinks.map((l) => {
+              const isActive = onHome && active === l.href.slice(1);
+              return (
+                <button
+                  key={l.href}
+                  onClick={() => go(l.href)}
+                  className={`relative hidden text-[12px] font-semibold uppercase tracking-[0.14em] transition-opacity md:block ${
+                    isActive ? "opacity-100" : "opacity-70 hover:opacity-100"
+                  }`}
+                >
+                  {l.label}
+                  <span
+                    className={`absolute -bottom-1.5 left-0 h-[2px] bg-current transition-all duration-300 ${
+                      isActive ? "w-full" : "w-0"
+                    }`}
+                  />
+                </button>
+              );
+            })}
+          </nav>
 
-        {/* Desktop */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => {
-            const sectionId = link.href.replace("#", "");
-            const isActive = activeSection === sectionId && location.pathname === "/";
-            return (
-              <button
-                key={link.href}
-                onClick={() => handleNavClick(link.href)}
-                className={`text-sm transition-colors ${
-                  isActive
-                    ? "text-primary font-medium"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {link.label}
-              </button>
-            );
-          })}
-          <Button size="sm" asChild>
-            <a href="/CV_Ivan_Pujol.pdf" target="_blank" rel="noopener noreferrer">
-              <Download className="mr-2 h-4 w-4" />
-              Download CV
+          {/* Centre: wordmark */}
+          <button
+            onClick={goHome}
+            className="font-display text-[22px] font-black uppercase leading-none tracking-[-0.03em] md:text-[26px]"
+            aria-label="Ivan Pujol, home"
+          >
+            Ivan Pujol
+          </button>
+
+          {/* Right: CV */}
+          <div className="flex justify-end">
+            <a
+              href="/CV_Ivan_Pujol.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`hidden items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors md:inline-flex ${
+                light
+                  ? "border-cream/80 hover:bg-cream hover:text-ink"
+                  : "border-ink/80 hover:bg-ink hover:text-cream"
+              }`}
+            >
+              <ArrowDownToLine className="h-3.5 w-3.5" />
+              CV
             </a>
-          </Button>
+            <a
+              href="/CV_Ivan_Pujol.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-1 md:hidden"
+              aria-label="Download CV"
+            >
+              <ArrowDownToLine className="h-5 w-5" strokeWidth={1.5} />
+            </a>
+          </div>
         </div>
-
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden text-foreground"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
-      </div>
+      </header>
 
       {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-lg border-b border-border px-4 pb-4">
-          {navLinks.map((link) => {
-            const sectionId = link.href.replace("#", "");
-            const isActive = activeSection === sectionId && location.pathname === "/";
-            return (
-              <button
-                key={link.href}
-                onClick={() => handleNavClick(link.href)}
-                className={`block w-full text-left py-3 transition-colors ${
-                  isActive
-                    ? "text-primary font-medium"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {link.label}
-              </button>
-            );
-          })}
-          <Button size="sm" className="w-full mt-2" asChild>
-            <a href="/CV_Ivan_Pujol.pdf" target="_blank" rel="noopener noreferrer">
-              <Download className="mr-2 h-4 w-4" />
-              Download CV
-            </a>
-          </Button>
-        </div>
-      )}
-    </nav>
+      <div
+        className={`fixed inset-0 z-40 bg-cream pt-28 transition-opacity duration-300 md:hidden ${
+          open ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      >
+        <nav className="container flex flex-col gap-2">
+          {navLinks.map((l) => (
+            <button
+              key={l.href}
+              onClick={() => go(l.href)}
+              className="display-xl text-left text-[15vw] text-ink"
+            >
+              {l.label}
+            </button>
+          ))}
+          <a href="/CV_Ivan_Pujol.pdf" target="_blank" rel="noopener noreferrer" className="pill-solid mt-8 w-fit">
+            <ArrowDownToLine className="h-4 w-4" />
+            Download CV
+          </a>
+        </nav>
+      </div>
+    </>
   );
 };
 

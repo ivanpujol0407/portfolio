@@ -1,64 +1,53 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { projectsData } from "@/data/projectsData";
+import { projectsData, type ProjectCategory } from "@/data/projectsData";
+import ProjectCard from "@/components/ProjectCard";
+
+const filters: ("All" | ProjectCategory)[] = ["All", "Product design", "CFD & research", "Mechanical design"];
 
 const ProjectsSection = () => {
-  const navigate = useNavigate();
+  const [filter, setFilter] = useState<(typeof filters)[number]>("All");
+  const shown = filter === "All" ? projectsData : projectsData.filter((p) => p.category === filter);
 
   return (
-    <section id="projects" className="py-24">
-      <div className="container mx-auto px-4">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-3xl font-bold mb-12"
-        >
-          Featured Projects
-        </motion.h2>
+    <section id="work" className="scroll-mt-16 bg-cream pb-24 md:pb-32">
+      <div className="container">
+        <div className="flex flex-col gap-6 border-t border-ink/15 pt-10 md:flex-row md:items-end md:justify-between md:pt-14">
+          <div>
+            <h2 className="display-xl text-[16vw] sm:text-[12vw] lg:text-[128px]">Selected work</h2>
+            <p className="mt-4 max-w-md text-[15px] text-ink-soft">
+              Products, simulations and machines, from first sketch to finished part.
+            </p>
+          </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {projectsData.map((project, i) => (
+          <div className="flex flex-wrap gap-2 lg:shrink-0" role="tablist" aria-label="Filter projects">
+            {filters.map((f) => (
+              <button
+                key={f}
+                role="tab"
+                aria-selected={filter === f}
+                onClick={() => setFilter(f)}
+                className={`rounded-full border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors ${
+                  filter === f ? "border-ink bg-ink text-cream" : "border-ink/25 text-ink hover:border-ink"
+                }`}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-12 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+          {shown.map((project, i) => (
             <motion.div
               key={project.id}
+              layout
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
             >
-              <Card className="overflow-hidden group cursor-pointer h-full flex flex-col bg-card border-border hover:border-primary/50 transition-colors">
-                <div className="relative overflow-hidden aspect-video">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
-                  />
-                  <div className="absolute top-3 left-3">
-                    <Badge variant="secondary" className="text-xs">
-                      {project.tag}
-                    </Badge>
-                  </div>
-                </div>
-                <CardContent className="p-6 flex flex-col flex-1">
-                  <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-4 flex-1">
-                    {project.description}
-                  </p>
-                  <Button
-                    variant="ghost"
-                    className="w-fit p-0 h-auto text-primary hover:text-primary/80"
-                    onClick={() => navigate(`/project/${project.id}`)}
-                  >
-                    Read Case Study
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </CardContent>
-              </Card>
+              <ProjectCard project={project} />
             </motion.div>
           ))}
         </div>

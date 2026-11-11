@@ -1,43 +1,42 @@
 import { motion } from "framer-motion";
-import { Wind, Cpu, Box, PenTool, Layers, Gauge } from "lucide-react";
-
-const skills = [
-  { name: "STAR-CCM+", level: "Advanced", icon: Wind },
-  { name: "SolidWorks", level: "Proficient", icon: Box },
-  { name: "ANSYS", level: "Proficient", icon: Gauge },
-  { name: "3D Printing", level: "Proficient", icon: Cpu },
-  { name: "AutoCAD", level: "Proficient", icon: PenTool },
-  { name: "CFD", level: "Proficient", icon: Wind },
-  { name: "OpenFOAM", level: "Beginner", icon: Layers },
-  { name: "FEA", level: "Beginner", icon: Cpu },
-];
+import { disciplines } from "@/data/siteContent";
 
 const SkillsSection = () => (
-  <section id="skills" className="py-24">
-    <div className="container mx-auto px-4">
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-3xl font-bold mb-12"
-      >
-        Technical Arsenal
-      </motion.h2>
+  <section id="skills" className="bg-cream py-24 md:py-32">
+    <div className="container">
+      <p className="eyebrow text-ink-soft">What I do</p>
+      <h2 className="mt-4 max-w-4xl font-serif text-[44px] leading-[1] tracking-[-0.01em] md:text-[72px]">
+        From first sketch <em className="italic text-teal">to finished part</em>
+      </h2>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {skills.map((skill, i) => (
-          <motion.div
-            key={skill.name}
-            initial={{ opacity: 0, y: 20 }}
+      <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {disciplines.map((d, i) => (
+          <motion.article
+            key={d.name}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.3, delay: i * 0.05 }}
-            className="p-4 rounded-lg border border-border bg-card hover:border-primary/50 transition-colors group"
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.5, delay: i * 0.08 }}
+            className="group flex flex-col rounded-lg bg-paper p-6 transition-colors duration-300 hover:bg-teal hover:text-mint md:p-7"
           >
-            <skill.icon className="h-6 w-6 text-primary mb-3 group-hover:scale-110 transition-transform" />
-            <h3 className="font-semibold text-sm">{skill.name}</h3>
-            <p className="text-xs text-muted-foreground">{skill.level}</p>
-          </motion.div>
+            <span className="font-mono text-[12px] text-flame group-hover:text-mint/70">0{i + 1}</span>
+            <h3 className="mt-10 font-display text-[28px] font-black uppercase leading-[0.95] tracking-[-0.02em] group-hover:text-cream">
+              {d.name}
+            </h3>
+            <p className="mt-3 text-[14px] leading-relaxed text-ink-soft group-hover:text-mint/80">{d.line}</p>
+
+            <ul className="mt-auto pt-8">
+              {d.tools.map((t) => (
+                <li
+                  key={t.name}
+                  className="flex items-baseline justify-between gap-3 border-t border-ink/10 py-2.5 text-[13px] group-hover:border-mint/20"
+                >
+                  <span className="font-medium">{t.name}</span>
+                  <span className="font-mono text-[11px] text-ink-soft group-hover:text-mint/70">{t.level}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.article>
         ))}
       </div>
     </div>
