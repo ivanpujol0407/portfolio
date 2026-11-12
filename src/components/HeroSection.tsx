@@ -1,64 +1,122 @@
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { ArrowDown, Mail } from "lucide-react";
-import profileImg from "@/assets/profile.png";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import { heroSlides } from "@/data/siteContent";
+
+const SLIDE_MS = 6500;
 
 const HeroSection = () => {
-  const scrollTo = (id: string) =>
-    document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
+  const [index, setIndex] = useState(0);
+  const count = heroSlides.length;
+  const slide = heroSlides[index];
+
+  useEffect(() => {
+    if (count < 2) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    const t = setTimeout(() => setIndex((i) => (i + 1) % count), SLIDE_MS);
+    return () => clearTimeout(t);
+  }, [index, count]);
+
+  const scrollToWork = () => document.querySelector("#work")?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <section className="min-h-screen flex items-center pt-16">
-      <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <p className="text-primary font-mono text-sm mb-4 tracking-wider uppercase">
-            Mechanical Engineer & CFD Specialist
-          </p>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-            Optimizing Performance Through{" "}
-            <span className="text-primary">Fluid Dynamics</span>
-          </h1>
-          <p className="text-muted-foreground text-lg mb-8 max-w-lg">
-            Bridging the gap between advanced Fluid Dynamics and practical
-            Mechanical Design to deliver robust, high-efficiency solutions.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <Button size="lg" onClick={() => scrollTo("#projects")}>
-              <ArrowDown className="mr-2 h-4 w-4" />
-              View Work
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => scrollTo("#contact")}
-            >
-              <Mail className="mr-2 h-4 w-4" />
-              Contact Me
-            </Button>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
+    <section className="relative isolate flex h-[calc(100svh-2.25rem)] min-h-[560px] items-start justify-center overflow-hidden bg-ink text-cream">
+      {/* Background slides */}
+      <AnimatePresence initial={false}>
+        <motion.img
+          key={slide.image}
+          src={slide.image}
+          alt={slide.alt}
+          className="absolute inset-0 -z-20 h-full w-full object-cover"
+          style={{ objectPosition: slide.position ?? "center" }}
+          initial={{ opacity: 0, scale: 1.06 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex justify-center"
+          exit={{ opacity: 0 }}
+          transition={{ opacity: { duration: 1.2 }, scale: { duration: SLIDE_MS / 1000 + 1.2, ease: "linear" } }}
+        />
+      </AnimatePresence>
+      {/* Warm shade for legibility */}
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(25,18,12,0.12),rgba(25,18,12,0.6))]" />
+
+      {/* Wordmark */}
+      <div className="container pt-[13svh] text-center md:pt-[9svh]">
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.2, 0.7, 0.2, 1] }}
+          className="display-italic text-[22vw] sm:text-[19vw] lg:text-[15.5vw] 2xl:text-[230px]"
         >
-          <div className="relative w-80 h-80 md:w-[28rem] md:h-[28rem] lg:w-[32rem] lg:h-[32rem] rounded-lg overflow-hidden border border-border">
-            <motion.img
-              src={profileImg}
-              alt="Ivan Pujol - Mechanical Engineer"
-              className="w-full h-full object-cover"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.4 }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent pointer-events-none" />
-          </div>
+          ivan pujol
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.15 }}
+          className="mt-5 font-serif text-[7vw] md:mt-7 leading-none sm:text-[5vw] lg:text-[3.4vw] 2xl:text-[52px]"
+        >
+          mechanical engineer &amp; product designer
+        </motion.p>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.35 }}
+          className="mt-10"
+        >
+          <button onClick={scrollToWork} className="pill-ghost-light px-8 py-3 font-serif text-[22px] font-normal normal-case leading-none tracking-normal">
+            See the work
+          </button>
         </motion.div>
+      </div>
+
+      {/* Caption for the current photo */}
+      <div className="absolute inset-x-0 bottom-0">
+        <div className="container flex items-end justify-between gap-6 pb-6 md:pb-8">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={slide.caption}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.4 }}
+              className="max-w-xs"
+            >
+              {slide.projectId ? (
+                <Link
+                  to={`/project/${slide.projectId}`}
+                  className="group inline-flex items-start gap-2 text-[12px] leading-snug text-cream/80 hover:text-cream"
+                >
+                  <span>{slide.caption}</span>
+                  <ArrowUpRight className="mt-0.5 h-3.5 w-3.5 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </Link>
+              ) : (
+                <span className="text-[12px] leading-snug text-cream/80">{slide.caption}</span>
+              )}
+            </motion.div>
+          </AnimatePresence>
+
+          {count > 1 && (
+            <div className="flex items-center gap-3" role="tablist" aria-label="Hero images">
+              {heroSlides.map((s, i) => (
+                <button
+                  key={s.image}
+                  role="tab"
+                  aria-selected={i === index}
+                  aria-label={`Show image ${i + 1}`}
+                  onClick={() => setIndex(i)}
+                  className={`h-2.5 w-2.5 rounded-full border border-cream transition-colors ${
+                    i === index ? "bg-cream" : "bg-transparent hover:bg-cream/40"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
+
+          <span className="hidden text-right text-[12px] leading-snug text-cream/80 md:block">
+            Copenhagen, DK
+          </span>
+        </div>
       </div>
     </section>
   );

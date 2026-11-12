@@ -1,24 +1,19 @@
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
-const NotFound = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
-
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-muted">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">404</h1>
-        <p className="mb-4 text-xl text-muted-foreground">Oops! Page not found</p>
-        <a href="/" className="text-primary underline hover:text-primary/90">
-          Return to Home
-        </a>
-      </div>
+const NotFound = () => (
+  <div className="flex min-h-screen flex-col justify-center bg-cream">
+    <div className="container">
+      <p className="eyebrow text-ink-soft">Error 404</p>
+      <h1 className="display-xl mt-4 text-[24vw] lg:text-[260px]">Lost?</h1>
+      <p className="mt-6 max-w-md font-serif text-[32px] leading-tight">
+        This page doesn&apos;t exist, <em className="italic text-teal">but the work does</em>.
+      </p>
+      <Link to="/" className="pill-solid mt-10">
+        <ArrowLeft className="h-4 w-4" /> Back home
+      </Link>
     </div>
-  );
-};
+  </div>
+);
 
 export default NotFound;
