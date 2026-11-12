@@ -2,6 +2,19 @@ import projectMeanVelocity from "@/assets/speedway/mean-velocity.png";
 import gripperMainImg from "@/assets/gripper/main.png";
 import gearboxMainImg from "@/assets/gearbox/Disseny_main.png";
 
+// Lamp renders (Blender Cycles from the printed STL files). Replace covers with real photos later.
+import nuvolOnImg from "@/assets/lamps/nuvol/nuvol-on.jpg";
+import nuvolExplodedImg from "@/assets/lamps/nuvol/exploded.webp";
+import nuvolShadeImg from "@/assets/lamps/nuvol/shade.webp";
+import nuvolBaseImg from "@/assets/lamps/nuvol/base.webp";
+import nuvolTestImg from "@/assets/lamps/nuvol/test-pieces.webp";
+import gerroOnImg from "@/assets/lamps/gerro/gerro-on.jpg";
+import gerroExplodedImg from "@/assets/lamps/gerro/exploded.webp";
+import gerroBodyImg from "@/assets/lamps/gerro/body.webp";
+import gerroSupportImg from "@/assets/lamps/gerro/support.webp";
+import gerroGlobeImg from "@/assets/lamps/gerro/globe.webp";
+import gerroRepairImg from "@/assets/lamps/gerro/repair.webp";
+
 export type ProjectCategory = "Product design" | "CFD & research" | "Mechanical design";
 
 /** One row of a spec sheet, e.g. { label: "Height", value: "320 mm" } */
@@ -51,6 +64,10 @@ export interface Project {
   image: string;
   /** "render" = image sits on a sand background (good for CAD renders on white) */
   cardStyle?: "photo" | "render";
+  /** CSS object-position for the cover image, e.g. "center 70%" */
+  coverPosition?: string;
+  /** Exploded-view render shown above the parts grid */
+  exploded?: string;
   date: string;
   role: string;
   publication?: Publication;
@@ -98,8 +115,10 @@ export const projectsData: Project[] = [
     tools: ["Parametric CAD", "Orca Slicer", "Creality Ender-3 S1 Pro", "PLA"],
     description:
       "A Ø180 mm double-bubble lamp with 116 ribs and a 0.9 mm wall. The shade twists onto the base with a quarter-turn bayonet, and the bulb was chosen by calculation so both bubbles glow in the right proportion.",
-    image: "",
-    cardStyle: "render",
+    image: nuvolOnImg,
+    cardStyle: "photo",
+    coverPosition: "center 62%",
+    exploded: nuvolExplodedImg,
     date: "2026",
     role: "Designer and maker",
     printer: PRINTER,
@@ -107,8 +126,8 @@ export const projectsData: Project[] = [
       { label: "Size (assembled)", value: "Ø180 × 186 mm" },
       { label: "Shade", value: "2 bubbles, 116 ribs, 0.9 mm wall" },
       { label: "Base", value: "Ø135 × 70 mm" },
-      { label: "Material", value: "PLA" },
-      { label: "Light source", value: "E27 LED P45, 4.9 W, 470 lm" },
+      { label: "Material", value: "Orange PLA" },
+      { label: "Light source", value: "E27 LED P45, 4.9 W, 470 lm, 3000 K" },
       { label: "Printed parts", value: "2, plus a bayonet test ring" },
       { label: "Print time", value: "~16 h shade + ~6 h base" },
       { label: "Shade to base", value: "Quarter-turn bayonet, 3 lugs" },
@@ -116,6 +135,7 @@ export const projectsData: Project[] = [
     parts: [
       {
         name: "Shade",
+        image: nuvolShadeImg,
         description:
           "Two ribbed bubbles printed as two 0.45 mm perimeters, so light passes through the wall. The collar at the bottom carries the three bayonet lugs, and the wall thickens gradually from 0.9 to 2.6 mm over 8 mm where it meets the collar.",
         specs: [
@@ -127,6 +147,7 @@ export const projectsData: Project[] = [
       },
       {
         name: "Base",
+        image: nuvolBaseImg,
         description:
           "Holds the E27 lampholder in a 60 mm column: the holder slides in from below, its shoulder rests on a 45° cone and the threaded ring locks it from above. Three bayonet channels with 30° ceilings take the shade, and a cable channel with anti-pull posts leads the cord out.",
         specs: [
@@ -138,6 +159,7 @@ export const projectsData: Project[] = [
       },
       {
         name: "Bayonet test pieces",
+        image: nuvolTestImg,
         description:
           "Exact slices of the shade collar (Ø150 × 18 mm) and the base ring (Ø135 × 11.4 mm). Printing them first proved the bayonet fit before committing to the 22-hour full print.",
         specs: [
@@ -155,7 +177,7 @@ export const projectsData: Project[] = [
       { label: "In daylight on the shelf", aspect: "square" },
     ],
     overview:
-      "Núvol is a table lamp made of two stacked ribbed bubbles. The shape started from a photo of a ribbed double-bubble lamp. I rebuilt it as a parametric CAD model and engineered everything needed to make it work on my own printer with parts from Danish hardware stores: how the shade attaches, how the lampholder is held, where the cable goes and which bulb to use. A first version was sized for an E14 bulb at Ø150 mm; the final one is Ø180 × 186 mm with an E27 bulb. It was printed in PLA on a Creality Ender-3 S1 Pro and assembled at home.",
+      "Núvol is a table lamp made of two stacked ribbed bubbles. The shape started from a photo of a ribbed double-bubble lamp. I rebuilt it as a parametric CAD model and engineered everything needed to make it work on my own printer with parts from Danish hardware stores: how the shade attaches, how the lampholder is held, where the cable goes and which bulb to use. A first version was sized for an E14 bulb at Ø150 mm; the final one is Ø180 × 186 mm with an E27 bulb. It was printed in orange PLA on a Creality Ender-3 S1 Pro and assembled at home.",
     objectives: [
       "Keep the shade wall to two perimeters (0.9 mm) so it glows evenly, while staying strong enough to handle",
       "Make the shade removable for bulb changes without tools: a quarter-turn bayonet with three lugs",
@@ -188,8 +210,10 @@ export const projectsData: Project[] = [
     tools: ["Parametric CAD", "Mesh editing", "Orca Slicer", "Creality Ender-3 S1 Pro", "PLA"],
     description:
       "A matte green ribbed arch with a fully closed Ø100 mm printed globe that hides an E14 bulb. The globe locks on with a 60° bayonet, and the whole assembly was simulated before the first print.",
-    image: "",
-    cardStyle: "render",
+    image: gerroOnImg,
+    cardStyle: "photo",
+    coverPosition: "center 62%",
+    exploded: gerroExplodedImg,
     date: "2026",
     role: "Designer and maker",
     printer: PRINTER,
@@ -206,6 +230,7 @@ export const projectsData: Project[] = [
     parts: [
       {
         name: "Body",
+        image: gerroBodyImg,
         description:
           "The ribbed arch, adapted from an existing vase model and scaled to 57%. Inside, I added a ledge with three notches for the support, an inclined Ø9 mm cable channel and, underneath, a pocket where the cable makes an S around two anti-pull posts before leaving through a groove at the back.",
         specs: [
@@ -216,6 +241,7 @@ export const projectsData: Project[] = [
       },
       {
         name: "Support",
+        image: gerroSupportImg,
         description:
           "A hidden insert that drops into the body and locks into the ledge notches. It clamps the E14 lampholder with a hollow M10 threaded tube and nut, with the cable running through the tube. Printed upside down without supports.",
         specs: [
@@ -225,6 +251,7 @@ export const projectsData: Project[] = [
       },
       {
         name: "Globe",
+        image: gerroGlobeImg,
         description:
           "A fully closed Ø100 mm sphere in plain white PLA, which lets more light through than matte. The wall is 0.9 mm and thickens gradually towards the collar, where three inward lugs lock it to the support with a 60° clockwise turn.",
         specs: [
@@ -235,6 +262,7 @@ export const projectsData: Project[] = [
       },
       {
         name: "Repair pieces",
+        image: gerroRepairImg,
         description:
           "The body print stopped at 94% because of a corrupted SD card. I cut the missing top 10 mm from the original model into an arch cap and a mouth ring, plus a ribbed guide that keeps the ring coaxial while the glue sets, so the globe collar still passes the joint with 0.35 mm clearance.",
         specs: [{ label: "Print time", value: "~2 h for all three" }],

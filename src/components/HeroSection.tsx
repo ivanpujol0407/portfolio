@@ -38,10 +38,10 @@ const HeroSection = () => {
         />
       </AnimatePresence>
       {/* Warm shade for legibility */}
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(25,18,12,0.25),rgba(25,18,12,0.65))]" />
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(25,18,12,0.12),rgba(25,18,12,0.6))]" />
 
       {/* Wordmark */}
-      <div className="container pt-[16svh] text-center md:pt-[14svh]">
+      <div className="container pt-[13svh] text-center md:pt-[9svh]">
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}

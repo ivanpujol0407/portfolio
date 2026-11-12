@@ -1,6 +1,8 @@
 // Text and lists used on the homepage. Edit here instead of inside the components.
 
 import windTunnelImg from "@/assets/hero/wind-tunnel.jpg";
+import nuvolHeroImg from "@/assets/lamps/nuvol/nuvol-hero.jpg";
+import gerroHeroImg from "@/assets/lamps/gerro/gerro-hero.jpg";
 
 export interface HeroSlide {
   image: string;
@@ -12,8 +14,22 @@ export interface HeroSlide {
   position?: string;
 }
 
-// Add the real lamp photos here once they exist (put the most striking one first).
+// Lamp slides are renders for now: swap in real photos once they exist.
 export const heroSlides: HeroSlide[] = [
+  {
+    image: nuvolHeroImg,
+    alt: "Núvol lamp switched on, an orange ribbed double-bubble shade on a table",
+    caption: "Núvol, a 3D-printed double-bubble lamp in orange PLA (render)",
+    projectId: "nuvol-lamp",
+    position: "center 60%",
+  },
+  {
+    image: gerroHeroImg,
+    alt: "Gerro lamp switched on, a green ribbed arch with a glowing white globe",
+    caption: "Gerro, a ribbed arch lamp with a printed globe (render)",
+    projectId: "gerro-lamp",
+    position: "center 60%",
+  },
   {
     image: windTunnelImg,
     alt: "1:6 scale 3D-printed speedway motorcycle model in the DTU wind tunnel",

@@ -718,7 +718,7 @@ const PartCard = ({ part, index }: { part: ProductPart; index: number }) => (
   <article className="flex flex-col">
     <div className="relative aspect-square overflow-hidden rounded-lg bg-sand">
       {part.image ? (
-        <img src={part.image} alt={part.name} loading="lazy" className="h-full w-full object-contain p-6 mix-blend-multiply" />
+        <img src={part.image} alt={`${part.name}, render`} loading="lazy" className="h-full w-full object-contain p-4" />
       ) : (
         <div className="flex h-full items-center justify-center font-serif text-xl text-ink/40">Render coming soon</div>
       )}
@@ -969,11 +969,29 @@ const ProjectPage = () => {
       id: "parts",
       title: "Parts",
       content: (
-        <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2">
-          {project.parts.map((part, i) => (
-            <PartCard key={part.name} part={part} index={i} />
-          ))}
-        </div>
+        <>
+          {project.exploded && (
+            <figure className="mb-14">
+              <div className="flex justify-center overflow-hidden rounded-lg bg-sand">
+                <img
+                  src={project.exploded}
+                  alt={`${project.title}, exploded view`}
+                  loading="lazy"
+                  className="max-h-[720px] w-auto object-contain"
+                />
+              </div>
+              <figcaption className="mt-3 text-[13px] leading-relaxed text-ink-soft">
+                <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.08em] text-flame">Exploded view</span>
+                Rendered from the STL files that were printed.
+              </figcaption>
+            </figure>
+          )}
+          <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2">
+            {project.parts.map((part, i) => (
+              <PartCard key={part.name} part={part} index={i} />
+            ))}
+          </div>
+        </>
       ),
     });
   }
@@ -1148,6 +1166,7 @@ const ProjectPage = () => {
                   src={project.image}
                   alt={project.title}
                   className={`h-full w-full ${project.cardStyle === "render" ? "object-contain p-10 mix-blend-multiply" : "object-cover"}`}
+                  style={project.coverPosition ? { objectPosition: project.coverPosition } : undefined}
                 />
               ) : (
                 <ImagePlaceholder label="Hero photo" />
