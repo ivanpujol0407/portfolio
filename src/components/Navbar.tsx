@@ -23,7 +23,11 @@ const Navbar = ({ overlay = false }: NavbarProps) => {
   const onHome = location.pathname === "/";
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40);
+      // No section is "active" while the hero is on screen
+      if (window.scrollY < window.innerHeight * 0.6) setActive("");
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);

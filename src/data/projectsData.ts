@@ -1,19 +1,19 @@
 import projectMeanVelocity from "@/assets/speedway/mean-velocity.png";
 import gripperMainImg from "@/assets/gripper/main.png";
 import gearboxMainImg from "@/assets/gearbox/Disseny_main.png";
+import gearboxCardImg from "@/assets/gearbox/card.jpg";
+import windTunnelImg from "@/assets/hero/wind-tunnel.jpg";
 
 // Lamp renders (Blender Cycles from the printed STL files). Replace covers with real photos later.
 import nuvolOnImg from "@/assets/lamps/nuvol/nuvol-on.jpg";
 import nuvolExplodedImg from "@/assets/lamps/nuvol/exploded.webp";
 import nuvolShadeImg from "@/assets/lamps/nuvol/shade.webp";
 import nuvolBaseImg from "@/assets/lamps/nuvol/base.webp";
-import nuvolTestImg from "@/assets/lamps/nuvol/test-pieces.webp";
 import gerroOnImg from "@/assets/lamps/gerro/gerro-on.jpg";
 import gerroExplodedImg from "@/assets/lamps/gerro/exploded.webp";
 import gerroBodyImg from "@/assets/lamps/gerro/body.webp";
 import gerroSupportImg from "@/assets/lamps/gerro/support.webp";
 import gerroGlobeImg from "@/assets/lamps/gerro/globe.webp";
-import gerroRepairImg from "@/assets/lamps/gerro/repair.webp";
 
 export type ProjectCategory = "Product design" | "CFD & research" | "Mechanical design";
 
@@ -68,6 +68,14 @@ export interface Project {
   coverPosition?: string;
   /** Exploded-view render shown above the parts grid */
   exploded?: string;
+  /** Image for the homepage card, if different from the page cover */
+  cardImage?: string;
+  /** Bought electrical parts and how they are installed (lamp projects) */
+  electrical?: {
+    intro: string;
+    items: { name: string; spec: string; role: string }[];
+    notes?: string[];
+  };
   date: string;
   role: string;
   publication?: Publication;
@@ -128,7 +136,7 @@ export const projectsData: Project[] = [
       { label: "Base", value: "Ø135 × 70 mm" },
       { label: "Material", value: "Orange PLA" },
       { label: "Light source", value: "E27 LED P45, 4.9 W, 470 lm, 3000 K" },
-      { label: "Printed parts", value: "2, plus a bayonet test ring" },
+      { label: "Printed parts", value: "2" },
       { label: "Print time", value: "~16 h shade + ~6 h base" },
       { label: "Shade to base", value: "Quarter-turn bayonet, 3 lugs" },
     ],
@@ -157,25 +165,40 @@ export const projectsData: Project[] = [
           { label: "Print time", value: "~6 h" },
         ],
       },
-      {
-        name: "Bayonet test pieces",
-        image: nuvolTestImg,
-        description:
-          "Exact slices of the shade collar (Ø150 × 18 mm) and the base ring (Ø135 × 11.4 mm). Printing them first proved the bayonet fit before committing to the 22-hour full print.",
-        specs: [
-          { label: "Radial clearance", value: "0.35 mm" },
-          { label: "Lug clearance", value: "0.4 mm" },
-          { label: "Vertical play", value: "0.5 mm" },
-        ],
-      },
     ],
     gallery: [
       { label: "Núvol switched on at night", aspect: "landscape" },
       { label: "The ribs up close", aspect: "portrait" },
       { label: "Shade and base before the quarter turn", aspect: "portrait" },
-      { label: "The bayonet test ring", aspect: "square" },
-      { label: "In daylight on the shelf", aspect: "square" },
+      { label: "In daylight on the shelf", aspect: "portrait" },
     ],
+    electrical: {
+      intro:
+        "The circuit is made only of bought parts: lampholder, cable and bulb. The printed base positions and protects them, and holds the lampholder without any screws or glue.",
+      items: [
+        {
+          name: "E27 lampholder",
+          spec: "Ø38 × 20 mm thread, Ø55 × 12 mm ring, 80 mm long",
+          role: "Slides up through the base column from below. Its shoulder sits on a 45° cone and the threaded ring clamps the base plate from above, so it can't move or turn.",
+        },
+        {
+          name: "Cable with switch and plug",
+          spec: "4 m, flat 5 × 3 mm, stripped ends",
+          role: "The two wires screw into the holder's terminals. Under the base the cord runs through a 7 × 6 mm channel and zig-zags around anti-pull posts, so a tug never reaches the terminals.",
+        },
+        {
+          name: "LED bulb, P45",
+          spec: "E27, 4.9 W, 470 lm, 3000 K, matte, Ø45 × 80 mm",
+          role: "Its short length puts the light centre at 124 mm, which sets the balance between the bubbles. It sits at least 45.8 mm from the shade wall.",
+        },
+        {
+          name: "Adhesive feet",
+          spec: "Ø10 × 2 mm",
+          role: "Under the base, to keep it off the table.",
+        },
+      ],
+      notes: ["LED bulbs only, 5 W at most, so the PLA shade stays cool."],
+    },
     overview:
       "Núvol is a table lamp made of two stacked ribbed bubbles. The shape started from a photo of a ribbed double-bubble lamp. I rebuilt it as a parametric CAD model and engineered everything needed to make it work on my own printer with parts from Danish hardware stores: how the shade attaches, how the lampholder is held, where the cable goes and which bulb to use. A first version was sized for an E14 bulb at Ø150 mm; the final one is Ø180 × 186 mm with an E27 bulb. It was printed in orange PLA on a Creality Ender-3 S1 Pro and assembled at home.",
     objectives: [
@@ -223,7 +246,7 @@ export const projectsData: Project[] = [
       { label: "Globe", value: "Ø100 mm, 0.9 mm wall" },
       { label: "Material", value: "Matte olive PLA, white PLA" },
       { label: "Light source", value: "E14 LED, 2.2 W, 470 lm, 2700 K" },
-      { label: "Printed parts", value: "3, plus 2 repair pieces" },
+      { label: "Printed parts", value: "3" },
       { label: "Print time", value: "~19 h + ~5.5 h + ~3.5 h" },
       { label: "Globe to body", value: "60° bayonet, 3 lugs" },
     ],
@@ -243,7 +266,7 @@ export const projectsData: Project[] = [
         name: "Support",
         image: gerroSupportImg,
         description:
-          "A hidden insert that drops into the body and locks into the ledge notches. It clamps the E14 lampholder with a hollow M10 threaded tube and nut, with the cable running through the tube. Printed upside down without supports.",
+          "A hidden insert that drops into the body and locks into the ledge notches. The E14 lampholder presses into a printed cup at the top, and the globe's bayonet channels are cut into its rim. Printed upside down without supports.",
         specs: [
           { label: "Infill", value: "40% gyroid" },
           { label: "Print time", value: "~3.5 h, ~40 g" },
@@ -260,21 +283,43 @@ export const projectsData: Project[] = [
           { label: "Print time", value: "~5.5 h, ~42 g" },
         ],
       },
-      {
-        name: "Repair pieces",
-        image: gerroRepairImg,
-        description:
-          "The body print stopped at 94% because of a corrupted SD card. I cut the missing top 10 mm from the original model into an arch cap and a mouth ring, plus a ribbed guide that keeps the ring coaxial while the glue sets, so the globe collar still passes the joint with 0.35 mm clearance.",
-        specs: [{ label: "Print time", value: "~2 h for all three" }],
-      },
     ],
     gallery: [
       { label: "Gerro switched on at night", aspect: "landscape" },
       { label: "Matte green ribs against the white globe", aspect: "portrait" },
       { label: "Globe off: the bayonet and the E14 bulb", aspect: "portrait" },
-      { label: "The repaired joint at 132 mm", aspect: "square" },
-      { label: "Next to a book for scale", aspect: "square" },
+      { label: "Next to a book for scale", aspect: "portrait" },
     ],
+    electrical: {
+      intro:
+        "The lampholder sits hidden inside the tube and the cable runs through the body itself, so the only electrical part you see is the cord leaving the back of the base. There are no screws or metal fixings: printed features hold the lampholder and the cable.",
+      items: [
+        {
+          name: "E14 lampholder",
+          spec: "E14, with its own cable clamp",
+          role: "Pushed into the printed cup in the support. Three crush ribs grip it so it doesn't turn when the bulb is screwed in, and the holder's clamp grips the cable.",
+        },
+        {
+          name: "Cable with switch and plug",
+          spec: "2 m, flat",
+          role: "Runs from the holder down the tube, through an inclined Ø9 mm channel to a pocket under the base, makes an S around two anti-pull posts and leaves through a groove at the back.",
+        },
+        {
+          name: "LED candle bulb",
+          spec: "Osram, E14, 2.2 W, 470 lm, 2700 K, matte, Ø35 × 100 mm",
+          role: "Slim enough to pass through the globe collar (Ø37.3 mm at the lugs) when the globe comes off, and at 2.2 W it barely warms the closed globe.",
+        },
+        {
+          name: "Adhesive feet",
+          spec: "Ø10 mm, 5 pieces",
+          role: "Under the base, to keep it off the table and clear the cable groove.",
+        },
+      ],
+      notes: [
+        "No ventilation hole: at 2.2 W the globe barely warms up, and air can still move through the tube and the cable channel.",
+        "LED bulbs of 3 W or less only.",
+      ],
+    },
     overview:
       "Gerro (Catalan for vase) turns a ribbed arch vase into a table lamp. The body is adapted from the \"Modern Ribbed Arch Vase\", an existing 3D model, scaled to 57% and modified in CAD. Everything that makes it a lamp is my own: the hidden support for the lampholder, the cable routing through the body, and a printed globe that hides the bulb completely and twists off to change it. The lamp is about 24 cm tall with a 12 × 12 cm footprint.",
     objectives: [
@@ -314,6 +359,7 @@ export const projectsData: Project[] = [
     description:
       "First combined CFD and wind tunnel study of a speedway motorcycle, published in Scientific Reports. Validated within 1.87%, found the rider causes over half the drag, and cut total drag by 9.1% with a new front end.",
     image: projectMeanVelocity,
+    cardImage: windTunnelImg,
     date: "Thesis 2024, published 2026",
     role: "First author, Technical University of Denmark (DTU)",
     publication: {
@@ -460,7 +506,7 @@ export const projectsData: Project[] = [
     ],
     resultsPlaceholders: [],
     lessons:
-      "This project demonstrated the full engineering design cycle from concept to physical prototype. The most important lessons included: (1) the critical importance of mesh convergence studies: even though the refinement showed <1% difference, the exercise built confidence in the results; (2) validating the linearity hypothesis with only 0.083% error justified using computationally cheaper linear analysis; (3) understanding that for brittle materials like PMMA, the Rankine criterion (maximum principal stress) is the appropriate failure criterion, unlike the Von Mises criterion used for ductile materials; (4) the design optimisation process demonstrated how geometric changes can dramatically improve both mechanical and mass efficiency without compromising structural integrity.",
+      "A mesh refinement that changed the results by less than 1% was still worth running: it is what made the numbers trustworthy. Checking the linearity assumption (0.083% error) justified the cheaper linear analysis. For a brittle material like PMMA, the right failure criterion is the maximum principal stress (Rankine), not von Mises. And the optimisation showed how much small geometric changes can improve both stiffness and mass without weakening the part.",
     supplementary: [
       {
         title: "Design Optimisation",
@@ -482,6 +528,7 @@ export const projectsData: Project[] = [
     description:
       "Complete mechanical design of a parallel shaft gear reducer for Volkswagen assembly line conveyors. Includes gear calculations, shaft design, bearing selection, housing design by sand casting, and full assembly documentation.",
     image: gearboxMainImg,
+    cardImage: gearboxCardImg,
     cardStyle: "photo",
     date: "2023",
     role: "Author, Master\u2019s in Industrial Engineering, UPC \u2013 ETSEIB, Barcelona",
@@ -568,7 +615,7 @@ export const projectsData: Project[] = [
     ],
     resultsPlaceholders: [],
     lessons:
-      "This project provided deep hands-on experience in integrated mechanical system design. Key takeaways included: (1) production volume fundamentally drives manufacturing decisions: the 6,000-unit run made sand casting the clear choice over CNC machining for the housing; (2) designing for casting requires careful attention to draft angles, uniform wall thickness and post-machining operations; (3) bearing selection is critical and must account for combined radial and axial loads; the input shaft bearing analysis revealed both SKF 7203 and 7208 were undersized, reaching only 44 and 3,147 hours respectively against a 10,000-hour target, highlighting the importance of thorough verification calculations; (4) assembly sequence planning influences geometric design decisions such as shoulder heights, seal groove positions and bolt access; (5) specifying every component down to the bolt standard, material grade and catalogue reference is essential for reproducible manufacturing at scale.",
+      "Production volume decides the process: at 6,000 units, sand casting beat CNC machining for the housing. Designing for casting means draft angles, even wall thickness and planning which faces get machined afterwards. Bearings have to be checked against combined radial and axial loads; on the input shaft, both the SKF 7203 and 7208 fell short, at 44 and 3,147 hours against a 10,000-hour target. The assembly sequence shapes the geometry, from shoulder heights to seal grooves and bolt access. And a design is only reproducible when every part is specified down to bolt standard, material grade and catalogue number.",
     supplementary: [
       {
         title: "Assembly Procedure",

@@ -39,12 +39,6 @@ export const heroSlides: HeroSlide[] = [
   },
 ];
 
-export const introStats = [
-  { value: "01", label: "Paper published in Scientific Reports" },
-  { value: "02", label: "Lamps designed and printed at home" },
-  { value: "02", label: "Free CFD tools online" },
-];
-
 export interface Discipline {
   name: string;
   /** One line, Bohr-style category description */
@@ -55,38 +49,32 @@ export interface Discipline {
 export const disciplines: Discipline[] = [
   {
     name: "Product design",
-    line: "Objects modelled in CAD, printed at home and refined until they feel right.",
+    line: "Lamps modelled in CAD, printed on my own printer and adjusted after every test print.",
     tools: [
       { name: "SolidWorks", level: "Proficient" },
       { name: "FDM 3D printing", level: "Proficient" },
-      { name: "Design for printing", level: "Proficient" },
     ],
   },
   {
     name: "CFD & aerodynamics",
-    line: "External aerodynamics, from mesh studies to wind tunnel validation.",
+    line: "External aerodynamics in STAR-CCM+, checked against wind tunnel measurements.",
     tools: [
       { name: "Simcenter STAR-CCM+", level: "Advanced" },
-      { name: "RANS / URANS / DES", level: "Proficient" },
       { name: "OpenFOAM", level: "Self-taught" },
     ],
   },
   {
     name: "Mechanical design",
-    line: "Machines and components sized by hand calculation and detailed for manufacture.",
+    line: "Gearboxes and machine parts sized by hand calculation and detailed for manufacture.",
     tools: [
       { name: "SolidWorks", level: "Proficient" },
       { name: "AutoCAD", level: "Proficient" },
-      { name: "Gears, shafts, bearings", level: "Proficient" },
     ],
   },
   {
     name: "Structural analysis",
-    line: "Finite element models checked against hand calculations and physical tests.",
-    tools: [
-      { name: "ANSYS", level: "Beginner" },
-      { name: "FEA", level: "Beginner" },
-    ],
+    line: "Basic finite element checks, compared with hand calculations and physical tests.",
+    tools: [{ name: "ANSYS", level: "Beginner" }],
   },
 ];
 

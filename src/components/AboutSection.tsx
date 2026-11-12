@@ -41,8 +41,7 @@ const AboutSection = () => (
             products at Vadecity and on quality at SEAT.
           </p>
           <p>
-            Lately most of my free time goes into product design: lamps I model in CAD and print on a Creality
-            Ender-3 S1 Pro, one iteration at a time.
+            In my free time I design lamps and print them at home on a Creality Ender-3 S1 Pro.
           </p>
         </div>
 

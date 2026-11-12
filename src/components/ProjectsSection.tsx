@@ -16,7 +16,7 @@ const ProjectsSection = () => {
           <div>
             <h2 className="display-xl text-[16vw] sm:text-[12vw] lg:text-[128px]">Selected work</h2>
             <p className="mt-4 max-w-md text-[15px] text-ink-soft">
-              Products, simulations and machines, from first sketch to finished part.
+              Lamps I designed and printed, my published CFD research, and university projects.
             </p>
           </div>
 

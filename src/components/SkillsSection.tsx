@@ -4,10 +4,7 @@ import { disciplines } from "@/data/siteContent";
 const SkillsSection = () => (
   <section id="skills" className="bg-cream py-24 md:py-32">
     <div className="container">
-      <p className="eyebrow text-ink-soft">What I do</p>
-      <h2 className="mt-4 max-w-4xl font-serif text-[44px] leading-[1] tracking-[-0.01em] md:text-[72px]">
-        From first sketch <em className="italic text-teal">to finished part</em>
-      </h2>
+      <h2 className="display-xl border-t border-ink/15 pt-10 text-[16vw] sm:text-[12vw] md:pt-14 lg:text-[128px]">What I do</h2>
 
       <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {disciplines.map((d, i) => (

@@ -5,7 +5,7 @@ const messages = [
   "Paper published in Scientific Reports",
   "New: two 3D-printed lamps",
   "Mechanical engineer in Copenhagen",
-  "Free CFD tools: y⁺ and GCI calculators",
+  "Free CFD calculators online",
   "Open to new roles",
 ];
 
@@ -14,7 +14,7 @@ const Row = () => (
     {messages.map((m) => (
       <span key={m} className="flex items-center">
         <span className="px-6 whitespace-nowrap">{m}</span>
-        <span className="text-mint/50">✦</span>
+        <span className="h-1 w-1 rounded-full bg-mint/50" />
       </span>
     ))}
   </div>

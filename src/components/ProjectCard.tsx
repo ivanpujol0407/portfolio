@@ -10,6 +10,7 @@ const badgeTone = {
 /** Product-style card: big image, small badge, name, one line, meta row. */
 const ProjectCard = ({ project }: { project: Project }) => {
   const isRender = project.cardStyle === "render";
+  const src = project.cardImage ?? project.image;
 
   return (
     <Link to={`/project/${project.id}`} className="group block focus-visible:outline-none">
@@ -18,13 +19,13 @@ const ProjectCard = ({ project }: { project: Project }) => {
           isRender ? "bg-sand" : "bg-ink"
         } ring-offset-4 ring-offset-cream transition group-focus-visible:ring-2 group-focus-visible:ring-teal`}
       >
-        {project.image ? (
+        {src ? (
           <img
-            src={project.image}
+            src={src}
             alt={project.title}
             loading="lazy"
             className={`h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.04] ${
-              isRender ? "object-contain p-8 mix-blend-multiply" : "object-cover"
+              isRender ? "object-contain p-4 mix-blend-multiply" : "object-cover"
             }`}
             onError={(e) => {
               e.currentTarget.style.display = "none";

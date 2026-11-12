@@ -996,6 +996,40 @@ const ProjectPage = () => {
     });
   }
 
+  if (project.electrical) {
+    const el = project.electrical;
+    sections.push({
+      id: "electrical",
+      title: "Bought parts",
+      content: (
+        <>
+          <Prose>{el.intro}</Prose>
+          <ul className="mt-8 border-t border-ink/15">
+            {el.items.map((item) => (
+              <li key={item.name} className="grid gap-2 border-b border-ink/15 py-5 md:grid-cols-[220px_1fr] md:gap-8">
+                <div>
+                  <p className="text-[15px] font-semibold">{item.name}</p>
+                  <p className="mt-1 font-mono text-[12px] leading-relaxed text-ink-soft">{item.spec}</p>
+                </div>
+                <p className="text-[15px] leading-relaxed text-ink/80">{item.role}</p>
+              </li>
+            ))}
+          </ul>
+          {el.notes && el.notes.length > 0 && (
+            <div className="mt-8 rounded-lg bg-paper p-6">
+              <p className="eyebrow text-ink-soft">Safety</p>
+              <ul className="mt-3 space-y-2 text-[14px] leading-relaxed text-ink/80">
+                {el.notes.map((n) => (
+                  <li key={n}>{n}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </>
+      ),
+    });
+  }
+
   sections.push({
     id: "method",
     title: isProduct ? "Design process" : "Methodology",
