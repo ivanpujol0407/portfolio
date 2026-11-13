@@ -10,8 +10,8 @@ const IntroSection = () => (
         transition={{ duration: 0.7 }}
         className="max-w-[26ch] font-serif [text-wrap:balance] text-[40px] leading-[1.02] tracking-[-0.01em] text-ink sm:text-[56px] md:text-[76px] lg:text-[88px]"
       >
-        I design machines, simulate airflow and <span className="whitespace-nowrap">3D print</span> objects, though{" "}
-        <em className="italic text-teal">rarely</em> all for the same project.
+        I design mechanical components, simulate <em className="italic text-teal">airflow</em> and{" "}
+        <span className="whitespace-nowrap">3D print</span> objects.
       </motion.p>
     </div>
   </section>
