@@ -56,7 +56,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.15 }}
           className="mt-5 font-serif text-[7vw] md:mt-7 leading-none sm:text-[5vw] lg:text-[3.4vw] 2xl:text-[52px]"
         >
-          mechanical engineer &amp; product designer
+          mechanical engineer
         </motion.p>
         <motion.div
           initial={{ opacity: 0 }}

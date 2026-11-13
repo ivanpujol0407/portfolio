@@ -10,9 +10,8 @@ const IntroSection = () => (
         transition={{ duration: 0.7 }}
         className="max-w-[24ch] font-serif text-[40px] leading-[1.02] tracking-[-0.01em] text-ink sm:text-[56px] md:text-[76px] lg:text-[88px]"
       >
-        My master&apos;s thesis put a <span className="whitespace-nowrap">3D-printed</span> speedway bike in a wind
-        tunnel. Now the printer on my desk makes{" "}
-        <em className="italic text-teal">lamps</em>.
+        I&apos;m a mechanical engineer in Copenhagen, designing equipment for{" "}
+        <em className="italic text-teal">offshore platforms</em> at Alfa Laval.
       </motion.p>
     </div>
   </section>

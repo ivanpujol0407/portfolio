@@ -119,7 +119,6 @@ export const projectsData: Project[] = [
     title: "Núvol Lamp",
     subtitle: "A ribbed double-bubble table lamp with a quarter-turn bayonet",
     category: "Product design",
-    badge: { label: "New", tone: "flame" },
     tools: ["Parametric CAD", "Orca Slicer", "Creality Ender-3 S1 Pro", "PLA"],
     description:
       "A Ø180 mm double-bubble lamp with 116 ribs and a 0.9 mm wall. The shade twists onto the base with a quarter-turn bayonet, and the bulb was chosen by calculation so both bubbles glow in the right proportion.",
@@ -229,7 +228,6 @@ export const projectsData: Project[] = [
     title: "Gerro Lamp",
     subtitle: "A ribbed arch vase turned into a lamp with a printed glowing globe",
     category: "Product design",
-    badge: { label: "New", tone: "flame" },
     tools: ["Parametric CAD", "Mesh editing", "Orca Slicer", "Creality Ender-3 S1 Pro", "PLA"],
     description:
       "A matte green ribbed arch with a fully closed Ø100 mm printed globe that hides an E14 bulb. The globe locks on with a 60° bayonet, and the whole assembly was simulated before the first print.",

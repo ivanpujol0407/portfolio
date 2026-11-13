@@ -3,7 +3,7 @@
 
 const messages = [
   "Paper published in Scientific Reports",
-  "New: two 3D-printed lamps",
+  "3D-printed lamps",
   "Mechanical engineer in Copenhagen",
   "Free CFD calculators online",
   "Open to new roles",
