@@ -8,10 +8,10 @@ const IntroSection = () => (
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.7 }}
-        className="max-w-[24ch] font-serif text-[40px] leading-[1.02] tracking-[-0.01em] text-ink sm:text-[56px] md:text-[76px] lg:text-[88px]"
+        className="max-w-[26ch] font-serif [text-wrap:balance] text-[40px] leading-[1.02] tracking-[-0.01em] text-ink sm:text-[56px] md:text-[76px] lg:text-[88px]"
       >
-        I&apos;m a mechanical engineer in Copenhagen, designing equipment for{" "}
-        <em className="italic text-teal">offshore platforms</em> at Alfa Laval.
+        I design machines, simulate airflow and <span className="whitespace-nowrap">3D print</span> objects, though{" "}
+        <em className="italic text-teal">rarely</em> all for the same project.
       </motion.p>
     </div>
   </section>
