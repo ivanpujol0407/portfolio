@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import Ticker from "@/components/Ticker";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import IntroSection from "@/components/IntroSection";
@@ -23,7 +22,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Ticker />
       <Navbar overlay />
       <main>
         <HeroSection />

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import portraitImg from "@/assets/hero/portrait.jpg";
 import { timeline } from "@/data/siteContent";
 
-const languages = ["Catalan", "Spanish", "English (C1)", "Italian (intermediate)"];
+const languages = ["Catalan", "Spanish", "English", "Italian (beginner)", "Danish (beginner)"];
 
 const AboutSection = () => (
   <section id="about" className="scroll-mt-16 bg-cream py-24 md:py-32">
@@ -31,18 +31,14 @@ const AboutSection = () => (
 
         <div className="mt-10 space-y-5 text-[17px] leading-[1.7] text-ink/80">
           <p>
-            I&apos;m a mechanical engineer at Alfa Laval in Copenhagen, where I design mechanical components and
-            systems for fresh water generators on offshore platforms.
+            I&apos;m a mechanical engineer at Alfa Laval in Copenhagen, designing components for fresh water
+            generators that run on offshore platforms.
           </p>
           <p>
-            I came to Denmark for my master&apos;s thesis at DTU: a CFD and wind tunnel study of speedway motorcycle
-            aerodynamics, now published in Scientific Reports. I liked the city enough to stay. Before that I studied
-            industrial engineering at UPC in Barcelona, with an exchange in Padova, and worked on micromobility
-            products at Vadecity and on quality at SEAT.
+            I moved here for my master&apos;s at DTU. My thesis on speedway motorcycle aerodynamics became a paper in
+            Scientific Reports, and I stayed.
           </p>
-          <p>
-            In my free time I design lamps and print them at home on a Creality Ender-3 S1 Pro.
-          </p>
+          <p>At home I design lamps and print them myself. Two of them are up in the projects.</p>
         </div>
 
         <h3 className="eyebrow mt-16 text-ink-soft">Experience &amp; education</h3>

@@ -109,8 +109,8 @@ const Figure = ({ src, legendSrc, alt, caption, figureNumber, size = "lg" }: Fig
         <img src={legendSrc} alt={`${alt} legend`} className="max-h-12 object-contain" />
       </div>
   }
-    <div className={`w-full ${figSizeClass[size]} mx-auto rounded-lg overflow-hidden border border-border`}>
-      <img src={src} alt={alt} className="w-full h-auto object-contain" />
+    <div className={`w-full ${figSizeClass[size]} mx-auto overflow-hidden rounded-lg border border-ink/10 bg-white`}>
+      <img src={src} alt={alt} loading="lazy" className="block h-auto w-full object-contain" />
     </div>
     <figcaption className="mx-auto mt-3 max-w-2xl text-[13px] leading-relaxed text-ink-soft">
       <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.08em] text-flame">Fig. {figureNumber}</span> {caption}
@@ -132,10 +132,10 @@ const MultiFigure = ({ images, legendSrc, caption, figureNumber }: MultiFigurePr
         <img src={legendSrc} alt="legend" className="max-h-12 object-contain" />
       </div>
   }
-    <div className={`grid gap-2 ${images.length === 4 ? "grid-cols-2 md:grid-cols-4" : images.length === 2 ? "grid-cols-2" : "grid-cols-1"}`}>
+    <div className={`mx-auto grid max-w-2xl items-center gap-2 ${images.length === 4 ? "grid-cols-2 md:grid-cols-4" : images.length === 2 ? "grid-cols-2" : "grid-cols-1"}`}>
       {images.map((img, i) =>
     <div key={i} className="overflow-hidden rounded-lg border border-ink/10 bg-white">
-          <img src={img.src} alt={img.alt} loading="lazy" className="h-auto w-full object-contain" />
+          <img src={img.src} alt={img.alt} loading="lazy" className="block h-auto w-full object-contain" />
         </div>
     )}
     </div>
@@ -245,7 +245,7 @@ const BaseSizeChart = ({ figureNumber }: {figureNumber: number;}) =>
       </div>
     </div>
     <figcaption className="mx-auto mt-3 max-w-2xl text-[13px] leading-relaxed text-ink-soft">
-    <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.08em] text-flame">Fig. {figureNumber}</span> Drag area vs Base size. Percentage errors comparing the selected base size with the finest and coarsest mesh cases. Fitted function: f(x) = -0.00009x + 0.506
+    <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.08em] text-flame">Fig. {figureNumber}</span> Drag area vs base size. The percentages compare the selected 110 mm mesh with the finest and coarsest meshes. Fitted line: f(x) = −0.00009x + 0.506.
     </figcaption>
   </figure>;
 
@@ -277,12 +277,12 @@ const PrismLayerChart = ({ figureNumber }: {figureNumber: number;}) =>
           <Scatter dataKey="cdA" fill="hsl(var(--primary))" stroke="hsl(var(--primary))" r={5} name="CᴅA" />
         </ComposedChart>
       </ResponsiveContainer>
-      <div className="flex justify-center text-xs text-muted-foreground -mt-2">
-        <span>↕ 1.79%</span>
+      <div className="-mt-2 flex justify-end px-12 text-xs text-muted-foreground">
+        <span>↕ 1.79% (4 vs 8 layers)</span>
       </div>
     </div>
     <figcaption className="mx-auto mt-3 max-w-2xl text-[13px] leading-relaxed text-ink-soft">
-      <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.08em] text-flame">Fig. {figureNumber}</span> Average drag area vs Number of prism layers. Percentage error comparing highest and lowest number of prism layers
+      <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.08em] text-flame">Fig. {figureNumber}</span> Average drag area vs number of prism layers. The percentage compares the highest and lowest number of layers.
     </figcaption>
   </figure>;
 
@@ -296,9 +296,9 @@ const TimeStepChart = ({ figureNumber }: {figureNumber: number;}) =>
           <XAxis
           dataKey="dt"
           type="number"
-          domain={[0.0005, 0.006]}
-          tickCount={6}
-          tickFormatter={(v: number) => v.toFixed(4)}
+          domain={[0, 0.0065]}
+          ticks={[0, 0.001, 0.002, 0.003, 0.004, 0.005, 0.006]}
+          tickFormatter={(v: number) => (v === 0 ? "0" : v.toFixed(3))}
           label={{ value: "Δt U/L", position: "insideBottom", offset: -10, style: chartLabelStyle }}
           tick={chartAxisStyle}
           stroke="hsl(var(--muted-foreground))" />
@@ -317,51 +317,116 @@ const TimeStepChart = ({ figureNumber }: {figureNumber: number;}) =>
       </ResponsiveContainer>
     </div>
     <figcaption className="mx-auto mt-3 max-w-2xl text-[13px] leading-relaxed text-ink-soft">
-      <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.08em] text-flame">Fig. {figureNumber}</span> Drag area vs Non-dimensional time step Δt U/L
+      <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.08em] text-flame">Fig. {figureNumber}</span> Drag area vs non-dimensional time step Δt U/L.
     </figcaption>
   </figure>;
 
 
-// CFD vs WT table
-const ValidationTable = ({ figureNumber }: {figureNumber: number;}) =>
-<figure className="my-10">
-    <div className="w-full max-w-2xl mx-auto overflow-hidden rounded-lg border border-ink/10 bg-paper">
+// Simple data table with a numbered caption (tables are numbered separately from figures)
+interface DataTableProps {
+  headers: ReactNode[];
+  rows: ReactNode[][];
+  caption: string;
+  tableNumber: number;
+  boldLast?: boolean;
+}
+
+const DataTable = ({ headers, rows, caption, tableNumber, boldLast }: DataTableProps) => (
+  <figure className="my-10">
+    <div className="mx-auto w-full max-w-2xl overflow-x-auto rounded-lg border border-ink/10 bg-paper">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-border bg-muted/50">
-            <th className="px-4 py-3 text-left font-semibold text-foreground">U (m/s)</th>
-            <th className="px-4 py-3 text-left font-semibold text-foreground">C<sub>D</sub>A<sub>WT</sub></th>
-            <th className="px-4 py-3 text-left font-semibold text-foreground">C<sub>D</sub>A<sub>CFD</sub></th>
-            <th className="px-4 py-3 text-left font-semibold text-foreground">Variation (%)</th>
+          <tr className="border-b border-ink/10 bg-sand/50">
+            {headers.map((h, i) => (
+              <th key={i} className={`whitespace-nowrap px-4 py-3 font-semibold text-ink ${i === 0 ? "text-left" : "text-right"}`}>
+                {h}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          <tr className="border-b border-border">
-            <td className="px-4 py-3 text-muted-foreground">30</td>
-            <td className="px-4 py-3 text-muted-foreground">0.5177</td>
-            <td className="px-4 py-3 text-muted-foreground">0.5281</td>
-            <td className="px-4 py-3 text-muted-foreground">1.98</td>
-          </tr>
-          <tr>
-            <td className="px-4 py-3 text-muted-foreground">40</td>
-            <td className="px-4 py-3 text-muted-foreground">0.5159</td>
-            <td className="px-4 py-3 text-muted-foreground">0.5148</td>
-            <td className="px-4 py-3 text-muted-foreground">-0.17</td>
-          </tr>
+          {rows.map((row, r) => (
+            <tr
+              key={r}
+              className={`border-b border-ink/10 last:border-0 ${boldLast && r === rows.length - 1 ? "font-semibold text-ink" : "text-ink-soft"}`}
+            >
+              {row.map((cell, c) => (
+                <td key={c} className={`px-4 py-3 tabular-nums ${c === 0 ? "text-left" : "text-right"}`}>
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
     <figcaption className="mx-auto mt-3 max-w-2xl text-[13px] leading-relaxed text-ink-soft">
-      <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.08em] text-flame">Table {figureNumber}</span> Wind tunnel vs CFD drag area from the master&apos;s thesis, converted to full scale. After peer review, the published article reports deviations of 1.87% at 30 m/s and −0.25% at 40 m/s.
+      <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.08em] text-flame">Table {tableNumber}</span> {caption}
     </figcaption>
-  </figure>;
+  </figure>
+);
 
+const CDA_WT = <>C<sub>D</sub>A wind tunnel</>;
+const CDA_CFD = <>C<sub>D</sub>A CFD</>;
+
+const speedwayTables = {
+  reynolds: {
+    headers: ["U (m/s)", CDA_WT, CDA_CFD, "Deviation (%)"],
+    rows: [
+      ["30", "0.5177", "0.5273", "1.87"],
+      ["40", "0.5159", "0.5144", "−0.25"],
+    ],
+    caption: "Wind tunnel vs CFD drag area at the two highest test velocities, converted to full scale.",
+  },
+  yaw: {
+    headers: ["Yaw angle", CDA_WT, CDA_CFD, "Deviation (%)"],
+    rows: [
+      ["10°", "0.6257", "0.5926", "−5.27"],
+      ["40°", "1.0760", "1.0523", "−2.19"],
+      ["80°", "1.7255", "1.8262", "5.84"],
+    ],
+    caption: "Yaw study at 10 m/s, counterclockwise angles: wind tunnel vs CFD drag area, converted to full scale.",
+  },
+  breakdown: {
+    headers: ["Component", <>C<sub>D</sub>A (m²)</>, "Share of total (%)"],
+    rows: [
+      ["Rider", "0.2643", "52.98"],
+      ["Motorcycle body", "0.0884", "17.73"],
+      ["Front fairing", "0.0801", "16.05"],
+      ["Front wheel", "0.0343", "6.88"],
+      ["Front fork", "0.0193", "3.88"],
+      ["Rear wheel", "0.0060", "1.21"],
+      ["Front fender", "0.0059", "1.17"],
+      ["Wheel plate", "0.0005", "0.10"],
+      ["Total", "0.4989", "100"],
+    ],
+    caption:
+      "Drag by component for the full motorcycle and rider at 30 m/s, sampled at one converged time step. The total differs by about 1.2% from the time-averaged drag area of 0.493 m².",
+  },
+  wheels: {
+    headers: ["", "Rotating", "Stationary", "Change (%)"],
+    rows: [
+      [<>Total C<sub>D</sub>A (m²)</>, "0.4929", "0.4851", "+1.61"],
+      [<>Wheels C<sub>D</sub>A (m²)</>, "0.0395", "0.0359", "+9.84"],
+      ["Wheels share of total (%)", "8.01", "7.41", ""],
+    ],
+    caption: "Effect of wheel rotation on drag area. Both cases use a moving ground.",
+  },
+  frontDesign: {
+    headers: ["Design", <>C<sub>D</sub>A (m²)</>, "Change (%)"],
+    rows: [
+      ["Original", "0.4929", ""],
+      ["New front end with hand covers", "0.4483", "−9.1"],
+    ],
+    caption: "Drag area of the original and new front designs.",
+  },
+};
 
 // Mapping for speedway methodology images
 const speedwayMethodologyImages: Record<string, {src: string;caption: string;}> = {
   "3D Scanned Motorcycle Geometry": {
     src: geometryImg,
-    caption: "Geometry of speedway and rider. Side view."
+    caption: "Side view of the 3D-scanned motorcycle and rider. Overall length 2070 mm, wheelbase 1370 mm, wheel diameter 700 mm and total height with the rider 1520 mm."
   },
   "Computational Domain and Boundary Conditions": {
     src: domainImg,
@@ -554,7 +619,7 @@ const gearboxImages: Record<string, { src: string; caption: string; size?: "sm" 
 };
 
 const gripperSupplementaryImages: Record<string, {src: string; caption: string;}> = {
-  "Manufacturing & Testing": {
+  "Manufacturing and testing": {
     src: gripperManufacturing,
     caption: "Laser cutting of the optimised PMMA gripper profile from a 10 mm acrylic sheet. The CO₂ laser follows the DXF contour exported from SolidWorks."
   }
@@ -569,45 +634,26 @@ const gripperOptimisationData = [
 ];
 
 const GripperOptimisationChart = ({ figureNumber }: { figureNumber: number }) => (
-  <figure className="my-10">
-    <div className="w-full max-w-2xl mx-auto overflow-hidden rounded-lg border border-ink/10 bg-paper">
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="border-b border-border bg-muted/50">
-            <th className="px-4 py-3 text-left font-semibold text-foreground">Parameter</th>
-            <th className="px-4 py-3 text-right font-semibold text-foreground">Initial Design</th>
-            <th className="px-4 py-3 text-right font-semibold text-foreground">Optimised Design</th>
-            <th className="px-4 py-3 text-right font-semibold text-foreground">Change</th>
-          </tr>
-        </thead>
-        <tbody>
-          {gripperOptimisationData.map((row, i) => {
-            const change = ((row.optimised - row.initial) / row.initial * 100);
-            const isPositive = change > 0;
-            return (
-              <tr key={i} className="border-b border-border last:border-0">
-                <td className="px-4 py-3 text-muted-foreground font-medium">{row.parameter}</td>
-                <td className="px-4 py-3 text-right text-muted-foreground">{row.initial.toLocaleString(undefined, {maximumFractionDigits: 2})}</td>
-                <td className="px-4 py-3 text-right text-muted-foreground">{row.optimised.toLocaleString(undefined, {maximumFractionDigits: 2})}</td>
-                <td className={`px-4 py-3 text-right font-semibold ${isPositive ? "text-teal" : "text-flame"}`}>
-                  {isPositive ? "+" : ""}{change.toFixed(1)}%
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-    <figcaption className="mx-auto mt-3 max-w-2xl text-[13px] leading-relaxed text-ink-soft">
-      <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.08em] text-flame">Table {figureNumber}</span> Comparison of initial and optimised gripper designs. Volume and mass reduced by ~70%, while mechanical and mass efficiency significantly improved.
-    </figcaption>
-  </figure>
+  <DataTable
+    headers={["Parameter", "Initial", "Optimised", "Change"]}
+    rows={gripperOptimisationData.map((row) => {
+      const change = ((row.optimised - row.initial) / row.initial) * 100;
+      return [
+        row.parameter,
+        row.initial.toLocaleString("en-GB", { maximumFractionDigits: 2 }),
+        row.optimised.toLocaleString("en-GB", { maximumFractionDigits: 2 }),
+        `${change > 0 ? "+" : "−"}${Math.abs(change).toFixed(1)}%`,
+      ];
+    })}
+    caption="Initial vs optimised gripper. Volume and mass drop by about 70% while the mechanical and mass efficiency go up."
+    tableNumber={figureNumber}
+  />
 );
 
 // Results section text blocks (from the paper)
 const speedwayResultsText = {
   accumulatedDrag:
-  "The accumulated drag force along the longitudinal axis compares the full motorcycle-rider configuration with a simulation excluding the rider, isolating the aerodynamic influence of the human body. The region between 0.20 and 0.30 x/L exhibits the steepest gradient, corresponding to the front fairing, front fork, handlebars, and the rider's hands, accounting for approximately 28% of total drag. Between 0.35 and 0.40, a sharp increase is attributed to the helmet and forearms. The rider contributes approximately 52.4% of the total drag, confirming the dominant aerodynamic role of the rider's posture and body geometry.",
+  "The accumulated drag force along the longitudinal axis compares the full motorcycle-rider configuration with a simulation excluding the rider, isolating the aerodynamic influence of the human body. The region between 0.20 and 0.30 x/L has the steepest gradient. It holds the front fairing, front fork, handlebars and the rider's hands, and accounts for about 27% of the total drag. Between 0.35 and 0.40 a sharp rise comes from the helmet and forearms, and from 0.45 to 0.75 the legs and upper torso keep adding drag, while the case without the rider barely changes beyond 0.40. The component breakdown below confirms the rider as the largest single contributor, at about 53% of the total.",
   pressureCoefficient:
   "Streamwise pressure coefficient contours are plotted on the motorcycle and rider surfaces, and pressure coefficient is plotted on the centre plane. High values are observed on forward-facing surfaces including the rider's chest, helmet, legs, and the front fairing, fork, and wheel, where stagnation pressure produces strong aerodynamic resistance. Low-pressure regions develop in the wake behind the motorcycle and rider, particularly behind the back and lower torso, contributing to drag through suction effects.",
   meanVelocity:
@@ -615,9 +661,13 @@ const speedwayResultsText = {
   vorticity:
   "Time-averaged axial vorticity contours are evaluated on vertical YZ planes positioned downstream of the front fairing. In the first plane, high vorticity concentrations are evident near the fork edges, handlebars, and rider's hands. Counter-rotating vortex structures in this region result from flow separation, confirming the aerodynamic inefficiency of the front geometry. As the flow progresses downstream, the vorticity field expands and intensifies around the helmet, arms, and rider's legs.",
   newDesign:
-  "The front fairing was identified as one of the primary contributors to the motorcycle's aerodynamic drag. Early concepts generated extensive high-pressure regions and failed to deliver significant drag reductions. Ultimately, the front fairing was removed entirely, leading to a 5.6% drag reduction. The front forks and handlebar were then redesigned with more streamlined profiles, reducing drag by 6.3%. Hand covers were developed to reduce frontal area, improve alignment with the freestream, and guide airflow more efficiently around the rider's arms. The final configuration reduces total drag by 9.1%, primarily due to diminished stagnation pressure, smoother pressure recovery, and a narrower, less turbulent wake.",
+  "The front fairing was identified as one of the primary contributors to the motorcycle's aerodynamic drag. Early concepts generated extensive high-pressure regions and failed to deliver significant drag reductions. Since the fairing mainly carries sponsor graphics, it was removed entirely, which alone reduced drag by 6.4%. That exposed the cylindrical tubes of the fork and handlebar, so these were redesigned with streamlined profiles, bringing the reduction to 8.4% compared with the original. Finally, hand covers shield the hands, grips and levers, reduce the local frontal area and guide the air around the rider's arms. The final configuration reduces the drag area by 9.1%, thanks to lower stagnation pressure at the front, smoother pressure recovery and a narrower, less turbulent wake.",
+  wheels:
+  "Rotating the wheels increases the total drag area by 1.61%, while the wheels themselves carry a similar share of the drag in both cases, about 8.0% rotating and 7.4% stationary. Most of the increase therefore comes from the turbulent structures the rotating wheels shed onto the rest of the geometry. Locally the picture reverses: the stationary front wheel produces 5.8% more drag than the rotating one, because of a stronger low-pressure region on the inner face of the rim. Wheel rotation changes the local flow more than the total drag.",
+  raceGain:
+  "What does 9.1% mean on track? At 30 m/s the lower drag area frees 23.8 N of force, which accelerates a 157 kg bike and rider at 0.151 m/s². Over the shortest and longest straights allowed by FIM rules (63.65 m and 77.95 m), that adds up to 0.34 to 0.51 m, between one sixth and one quarter of a bike length, and 1.2 to 1.4 km/h more speed at the end of each straight. Starts, traction and the rider matter far more in a single race, but this gain is there on every straight and does not depend on the rider.",
   newDesignAnalysis:
-  "The streamwise pressure coefficient contours clearly illustrate the aerodynamic advantages of the final design. Compared to the initial configuration, the new front eliminates the large high-pressure zone at the front fairing surface, promoting smoother flow attachment. The redesigned hand covers feature a more streamlined geometry, generating lower-pressure regions that contribute to reduced aerodynamic resistance. Lambda-2 vortex visualisations reveal that the original design induces larger vortices around the front fairing and handlebar, whereas the optimised configuration produces smaller structures, thereby reducing pressure drag."
+  "The streamwise pressure coefficient contours clearly illustrate the aerodynamic advantages of the final design. Compared to the initial configuration, the new front eliminates the large high-pressure zone at the front fairing surface, promoting smoother flow attachment. The redesigned hand covers feature a more streamlined geometry, generating lower-pressure regions that contribute to reduced aerodynamic resistance. λ₂ vortex visualisations reveal that the original design induces larger vortices around the front fairing and handlebar, whereas the optimised configuration produces smaller structures, thereby reducing pressure drag."
 };
 
 const FormulaRow = ({ label, formula, result }: { label: string; formula: string; result: string }) => (
@@ -678,8 +728,8 @@ const GearboxFormulas = () => (
       <h3 className="mb-3 text-[15px] font-semibold text-ink">Bearing Life Verification (n = 1,450 rpm, p = 3)</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <FormulaRow label="Required dynamic load capacity" formula="C = (Lₕ · 60n / 10⁶)^(1/3) · F_comb" result="" />
-        <FormulaRow label="Bearing A life (C = 11 kN vs required)" formula="SKF 7203 BECBP → L_hA =" result="44 h ✕ (target: 10,000 h)" />
-        <FormulaRow label="Bearing B life (C = 36.5 kN vs required)" formula="SKF 7208 BECBP → L_hB =" result="3,147 h ✕ (target: 10,000 h)" />
+        <FormulaRow label="Bearing A life (C = 11 kN vs required)" formula="SKF 7203 BECBP → L_hA =" result="44 h (target 10,000 h)" />
+        <FormulaRow label="Bearing B life (C = 36.5 kN vs required)" formula="SKF 7208 BECBP → L_hB =" result="3,147 h (target 10,000 h)" />
       </div>
       <p className="text-xs text-muted-foreground mt-3 pl-1">Both angular contact bearings are undersized for this application. Significantly larger bearings would be required in production to meet the 10,000-hour design life.</p>
     </div>
@@ -714,8 +764,8 @@ const SpecList = ({ specs, dense = false }: { specs: Spec[]; dense?: boolean }) 
   </dl>
 );
 
-const PartCard = ({ part, index }: { part: ProductPart; index: number }) => (
-  <article className="flex flex-col">
+const PartCard = ({ part, index, wide = false }: { part: ProductPart; index: number; wide?: boolean }) => (
+  <article className={wide ? "sm:col-span-2 sm:grid sm:grid-cols-2 sm:items-start sm:gap-x-6" : "flex flex-col"}>
     <div className="relative aspect-square overflow-hidden rounded-lg bg-sand">
       {part.image ? (
         <img src={part.image} alt={`${part.name}, render`} loading="lazy" className="h-full w-full object-contain p-4" />
@@ -724,13 +774,15 @@ const PartCard = ({ part, index }: { part: ProductPart; index: number }) => (
       )}
       <span className="absolute left-3 top-3 font-mono text-[11px] text-flame">{String(index + 1).padStart(2, "0")}</span>
     </div>
-    <h4 className="mt-4 text-[15px] font-semibold uppercase tracking-[0.04em]">{part.name}</h4>
-    <p className="mt-2 text-[14px] leading-relaxed text-ink-soft">{part.description}</p>
-    {part.specs && part.specs.length > 0 && (
-      <div className="mt-4">
-        <SpecList specs={part.specs} dense />
-      </div>
-    )}
+    <div>
+      <h4 className={`${wide ? "mt-4 sm:mt-0" : "mt-4"} text-[15px] font-semibold uppercase tracking-[0.04em]`}>{part.name}</h4>
+      <p className="mt-2 text-[14px] leading-relaxed text-ink-soft">{part.description}</p>
+      {part.specs && part.specs.length > 0 && (
+        <div className="mt-4">
+          <SpecList specs={part.specs} dense />
+        </div>
+      )}
+    </div>
   </article>
 );
 
@@ -801,7 +853,7 @@ const PublicationCard = ({ project }: { project: Project }) => {
             className="pill border border-mint/60 text-mint hover:bg-mint hover:text-teal"
           >
             <FileText className="h-4 w-4" />
-            Submitted preprint (PDF)
+            Article PDF
           </a>
         )}
         <span className="font-mono text-[12px] text-mint/60">DOI {pub.doi}</span>
@@ -825,6 +877,9 @@ const ProjectPage = () => {
   const figureCountRef = useRef(0);
   figureCountRef.current = 0;
   const nextFigure = () => ++figureCountRef.current;
+  const tableCountRef = useRef(0);
+  tableCountRef.current = 0;
+  const nextTable = () => ++tableCountRef.current;
 
   const projectIndex = projectsData.findIndex((p) => p.id === id);
   const project = projectsData[projectIndex];
@@ -856,7 +911,8 @@ const ProjectPage = () => {
   const renderSpeedwayResults = () => (
     <>
       <Prose>{speedwayResultsText.accumulatedDrag}</Prose>
-      <Figure src={accumulatedDragImg} alt="Accumulated drag" caption="Comparison of accumulated drag forces along the speedway profile." figureNumber={nextFigure()} />
+      <Figure src={accumulatedDragImg} alt="Accumulated drag" caption="Accumulated drag area along the length of the motorcycle, with and without the rider." figureNumber={nextFigure()} />
+      <DataTable {...speedwayTables.breakdown} tableNumber={nextTable()} boldLast />
 
       <Prose>{speedwayResultsText.pressureCoefficient}</Prose>
       <Figure src={cpContourImg} legendSrc={cpLegendImg} alt="Pressure coefficient contour" caption="Contour of pressure coefficient on mid-plane in flow direction. The mid-plane pressure coefficient contour illustrates pressure variations along the centreline of the speedway motorcycle. It highlights stagnation zones, areas of low pressure, and key separation regions." figureNumber={nextFigure()} />
@@ -877,8 +933,13 @@ const ProjectPage = () => {
         figureNumber={nextFigure()}
       />
 
+      <SubHeading>Rotating wheels</SubHeading>
+      <Prose>{speedwayResultsText.wheels}</Prose>
+      <DataTable {...speedwayTables.wheels} tableNumber={nextTable()} />
+
       <SubHeading>New front design</SubHeading>
       <Prose>{speedwayResultsText.newDesign}</Prose>
+      <DataTable {...speedwayTables.frontDesign} tableNumber={nextTable()} />
       <Figure src={cpNewDesign} legendSrc={cpLegendImg} alt="Pressure coefficient new design" caption="Streamwise pressure coefficient for the new front design." figureNumber={nextFigure()} />
       <Prose>{speedwayResultsText.newDesignAnalysis}</Prose>
       <MultiFigure
@@ -890,6 +951,9 @@ const ProjectPage = () => {
         caption="Instantaneous vortex structures visualised with λ₂ criterion. Comparison between new front design and standard front fairing."
         figureNumber={nextFigure()}
       />
+
+      <SubHeading>What it means on track</SubHeading>
+      <Prose>{speedwayResultsText.raceGain}</Prose>
     </>
   );
 
@@ -953,7 +1017,7 @@ const ProjectPage = () => {
           {project.printer && (
             <div className="self-start rounded-lg bg-paper p-6">
               <p className="eyebrow text-ink-soft">Printed on</p>
-              <p className="mt-3 font-display text-[26px] font-black uppercase leading-none tracking-[-0.02em]">
+              <p className="mt-3 font-display text-[22px] font-black uppercase leading-[1.05] tracking-[-0.02em] [text-wrap:balance]">
                 {project.printer.name}
               </p>
               <p className="mt-3 text-[14px] leading-relaxed text-ink-soft">{project.printer.notes}</p>
@@ -987,8 +1051,8 @@ const ProjectPage = () => {
             </figure>
           )}
           <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2">
-            {project.parts.map((part, i) => (
-              <PartCard key={part.name} part={part} index={i} />
+            {project.parts.map((part, i, all) => (
+              <PartCard key={part.name} part={part} index={i} wide={all.length % 2 === 1 && i === all.length - 1} />
             ))}
           </div>
         </>
@@ -1044,18 +1108,19 @@ const ProjectPage = () => {
         {isSpeedway && project.supplementary && project.supplementary.length > 0 && (
           <>
             <SubHeading>Convergence studies</SubHeading>
+            <Prose>The charts below come from my master&apos;s thesis. The published versions of these studies, together with the IDDES comparison, are in the article&apos;s Supplementary Material.</Prose>
             {project.supplementary.map((item, i) => (
               <div key={i} className="mt-8">
                 <h4 className="mb-3 text-[15px] font-semibold">{item.title}</h4>
                 <Prose>{item.content}</Prose>
-                {item.title === "Mesh Convergence: Base Size" ? (
+                {item.title === "Mesh convergence: base size" ? (
                   <BaseSizeChart figureNumber={nextFigure()} />
-                ) : item.title === "Mesh Convergence: Prism Layers" ? (
+                ) : item.title === "Mesh convergence: prism layers" ? (
                   <>
                     <PrismLayerChart figureNumber={nextFigure()} />
                     <Figure src={wallYPlusImg} alt="Wall Y+ histogram" caption="Wall y⁺ histogram for 8 prism layers." figureNumber={nextFigure()} />
                   </>
-                ) : item.title === "Time Step Convergence" ? (
+                ) : item.title === "Time step convergence" ? (
                   <TimeStepChart figureNumber={nextFigure()} />
                 ) : null}
               </div>
@@ -1075,8 +1140,9 @@ const ProjectPage = () => {
           <Prose>{project.validation}</Prose>
           {isSpeedway ? (
             <>
-              <Figure src={windTunnelSetupImg} alt="Wind tunnel test setup" caption="3D-printed model used for wind tunnel testing. The model was printed in PLA plastic and split into four parts for manufacturing feasibility." figureNumber={nextFigure()} />
-              <ValidationTable figureNumber={nextFigure()} />
+              <Figure src={windTunnelSetupImg} alt="Wind tunnel test setup" caption="The 1:6 model used in the wind tunnel, printed in PLA and split into four parts so it fits the printer." figureNumber={nextFigure()} />
+              <DataTable {...speedwayTables.reynolds} tableNumber={nextTable()} />
+              <DataTable {...speedwayTables.yaw} tableNumber={nextTable()} />
             </>
           ) : (
             project.validationPlaceholders?.map((label, i) => <ImagePlaceholder key={i} label={label} />)
@@ -1087,7 +1153,16 @@ const ProjectPage = () => {
   }
 
   if (project.gallery && project.gallery.length > 0) {
-    sections.push({ id: "gallery", title: "In real life", content: <Gallery items={project.gallery} /> });
+    sections.push({
+      id: "gallery",
+      title: project.galleryTitle ?? "In real life",
+      content: (
+        <>
+          {project.galleryNote && <p className="-mt-2 mb-6 text-[14px] text-ink-soft">{project.galleryNote}</p>}
+          <Gallery items={project.gallery} />
+        </>
+      ),
+    });
   }
 
   sections.push({
@@ -1116,8 +1191,8 @@ const ProjectPage = () => {
         content: (
           <>
             <Prose>{item.content}</Prose>
-            {isGripper && item.title === "Design Optimisation" && <GripperOptimisationChart figureNumber={nextFigure()} />}
-            {isGripper && item.title === "Manufacturing & Testing" && (
+            {isGripper && item.title === "Design optimisation" && <GripperOptimisationChart figureNumber={nextTable()} />}
+            {isGripper && item.title === "Manufacturing and testing" && (
               <>
                 <Figure src={gripperManufacturing} alt="Laser cutting of PMMA gripper" caption="Laser cutting of the optimised PMMA gripper profile from a 10 mm acrylic sheet. The CO₂ laser follows the DXF contour exported from SolidWorks." figureNumber={nextFigure()} />
                 <Figure src={gripperVacuumTestPhoto} alt="Vacuum test photo" caption="Physical vacuum test setup. The manufactured PMMA gripper is loaded in a universal testing machine to verify the vacuum force prediction of F = 20.77 N." figureNumber={nextFigure()} />
