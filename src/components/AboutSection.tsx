@@ -31,14 +31,15 @@ const AboutSection = () => (
 
         <div className="mt-10 space-y-5 text-[17px] leading-[1.7] text-ink/80">
           <p>
-            I&apos;m a mechanical engineer at Alfa Laval in Copenhagen, designing components for fresh water
-            generators that run on offshore platforms.
+            I&apos;m a mechanical engineer in Copenhagen. At Alfa Laval I work on fresh water generators, the systems
+            that make fresh water from seawater on offshore platforms.
           </p>
           <p>
-            I moved here for my master&apos;s at DTU. My thesis on speedway motorcycle aerodynamics became a paper in
-            Scientific Reports, and I stayed.
+            I came to Denmark for my master&apos;s at DTU. My thesis looked at the aerodynamics of a speedway
+            motorcycle, in CFD and in the wind tunnel, and it ended up published in Scientific Reports. I liked
+            Copenhagen too much to leave.
           </p>
-          <p>At home I design lamps and print them myself. Two of them are up in the projects.</p>
+          <p>Away from work I design things for my 3D printer, mostly lamps. Two of them are in the projects above.</p>
         </div>
 
         <h3 className="eyebrow mt-16 text-ink-soft">Experience &amp; education</h3>
